@@ -49,5 +49,6 @@
 			}
 		}
 	%>
+	<a href="profilePage.jsp" role="button">Back to My Profile</a>	
 </body>
 </html>

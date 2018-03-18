@@ -25,7 +25,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>imageTest.jsp</welcome-file>
+		<welcome-file>welcomePage.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>
