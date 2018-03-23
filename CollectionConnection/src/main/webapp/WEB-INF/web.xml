@@ -13,6 +13,11 @@
 		<servlet-name>Serve</servlet-name>
 		<servlet-class>collectionconnection.ImageServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>Profile</servlet-name>
+		<servlet-class>collectionconnection.ProfileServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>Upload</servlet-name>
@@ -22,6 +27,11 @@
 	<servlet-mapping>
 		<servlet-name>Serve</servlet-name>
 		<url-pattern>/serve</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Profile</servlet-name>
+		<url-pattern>/profile</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

@@ -20,8 +20,10 @@
 </head>
 <body>
 	<%
-		String profileName = "NickShlapkou";
-		String collectionName = "StampsAndStars";
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		String profileName = user.getNickname();
+		String collectionName = "defaultCollection";
 		
 		pageContext.setAttribute("profileName", profileName);
 		pageContext.setAttribute("collectionName", collectionName);

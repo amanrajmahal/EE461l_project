@@ -9,35 +9,38 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
-public class Photo implements Comparable<Photo> {
-    @Parent Key<CollectionKey> user;
+public class Profile implements Comparable<Photo> {
+    @Parent Key<ProfileKey> user;
     @Id Long id;
-    @Index String profileName;
-    @Index String collectionName;
-    @Index String blobKey;
+    @Index User actualUser;
+    @Index String firstName;
+    @Index String lastName;
     @Index Date date;
     
-    private Photo() {}
-    public Photo(User user, String profileName, String collectionName, String blobKey) { 
-    	this.user = Key.create(CollectionKey.class, user.getNickname());
-    	this.profileName = profileName;
-    	this.collectionName = collectionName;
-    	this.blobKey = blobKey;
+    private Profile() {}
+    public Profile(User user, String firstName, String lastName) { 
+    	this.user = Key.create(ProfileKey.class, user.getNickname());
+    	this.actualUser = user;
+    	this.firstName = firstName;
+    	this.lastName = lastName;
         this.date = new Date();
     }
     
-    public String getProfileName() {
-        return profileName;
+    public User getUser()
+    {
+    	return actualUser;
     }
     
-    public String getCollectionName() {
-        return collectionName;
+    public String getFirstName()
+    {
+    	return firstName;
     }
     
-    public String getBlobKey() {
-        return blobKey;
+    public String getLastName()
+    {
+    	return lastName;
     }
-
+    
     @Override
     public int compareTo(Photo other) {
         if (date.after(other.date)) {

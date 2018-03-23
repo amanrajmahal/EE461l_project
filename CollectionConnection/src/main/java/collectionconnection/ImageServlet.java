@@ -36,12 +36,12 @@ public class ImageServlet extends HttpServlet {
 		List<BlobKey> blobKeys = blobs.get("myFile");
 		if(blobKeys == null || blobKeys.size() == 0)
 		{
-			res.sendRedirect("/");
+			res.sendRedirect("/imageTest.jsp");
 		}
 		else
 		{
 			ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
-			res.sendRedirect("/");
+			res.sendRedirect("/imageTest.jsp");
 		}
 	}
 
