@@ -22,7 +22,6 @@ public class ProfileServlet extends HttpServlet {
 		User user = userService.getCurrentUser();
 		String lastName = req.getParameter("lastName");
 		String firstName = req.getParameter("firstName");
-		System.out.println(lastName + " " + firstName);
 		ofy().save().entity(new Profile(user, firstName, lastName)).now();
 		resp.sendRedirect("/");
 	}

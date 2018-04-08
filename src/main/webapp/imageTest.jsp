@@ -5,6 +5,8 @@
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page import="com.googlecode.objectify.*"%>
+<%@ page import="collectionconnection.Profile"%>
+<%@ page import="collectionconnection.Collection"%>
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -37,17 +39,35 @@
 	</form>
 
 	<%
-		ObjectifyService.register(Photo.class);
-		List<Photo> photos = ObjectifyService.ofy().load().type(Photo.class).list();
-		Collections.sort(photos);
-		for(Photo photo : photos)
+		ObjectifyService.register(Profile.class);
+		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
+		for(Profile profile : profiles)
 		{
-			if(profileName.equals(photo.getProfileName()) && collectionName.equals(photo.getCollectionName()))
+			if(profile.getUser().equals(user))
 			{
-				pageContext.setAttribute("blobkey", photo.getBlobKey());
-	%>
-					<img width="200" height="150" src = "serve?blob-key=${fn:escapeXml(blobkey)}">
-	<% 
+				ArrayList<Collection> collections = profile.getCollections();
+				if(collections == null) break;
+				for(Collection collection : collections)
+				{
+					pageContext.setAttribute("collectionname", collection.getCollectionName());
+		%>
+						<div>
+							<h1>${fn:escapeXml(collectionname)}</h1>
+		<% 
+					ArrayList<Photo> photos = collection.getPhotos();
+					if(photos == null) break;
+					for(Photo photo : photos)
+					{
+						pageContext.setAttribute("blobkey", photo.getBlobKey());
+						pageContext.setAttribute("photoname", photo.getName());				
+		%>
+							<img width="200" height="150" title = "${fn:escapeXml(photoname)}" src = "serve?blob-key=${fn:escapeXml(blobkey)}">
+						</div>
+		<% 
+					}
+				}
+				//we are done displaying for the current profile
+				break;
 			}
 		}
 	%>

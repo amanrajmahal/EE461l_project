@@ -21,7 +21,7 @@ import com.googlecode.objectify.ObjectifyService;
 
 public class ImageServlet extends HttpServlet {
 	static {
-		ObjectifyService.register(Photo.class);
+		ObjectifyService.register(Profile.class);
 	}
 	
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -40,7 +40,17 @@ public class ImageServlet extends HttpServlet {
 		}
 		else
 		{
-			ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
+			//ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
+			//find the right profile
+			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
+			for(Profile profile : profiles)
+			{
+				if(profile.getUser().equals(user))
+				{
+					if(!profile.containsCollection(collectionName)) profile.addCollection(collectionName);
+					profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
+				}
+			}
 			res.sendRedirect("/imageTest.jsp");
 		}
 	}
