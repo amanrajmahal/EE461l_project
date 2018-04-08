@@ -12,8 +12,14 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
+import java.util.*;
+
 @Entity
+<<<<<<< HEAD
 public class Profile extends Observable implements Comparable<Photo>, Observer {
+=======
+public class Profile implements Comparable<Profile> {
+>>>>>>> 6b1c3db93a4f68caa77d132e4d6ca481e3b635db
     @Parent Key<ProfileKey> user;
     @Id Long id;
     @Index User actualUser;
@@ -22,6 +28,8 @@ public class Profile extends Observable implements Comparable<Photo>, Observer {
     @Index Date date;
     Set<Profile> subscriptionList;
     Notification notificationStyle; 
+    
+    private ArrayList<Collection> collections;
     
     private Profile() {}
     public Profile(User user, String firstName, String lastName) { 
@@ -49,6 +57,7 @@ public class Profile extends Observable implements Comparable<Photo>, Observer {
     	return lastName;
     }
     
+<<<<<<< HEAD
     public void addToSubscriberList(Profile profile) {
     	subscriptionList.add(profile);
     	profile.addObserver(o);
@@ -60,10 +69,55 @@ public class Profile extends Observable implements Comparable<Photo>, Observer {
     
     public void setNotificationStyle(Notification notificationStyle) {
     	this.notificationStyle = notificationStyle;
+=======
+    public boolean addCollection(String collectionName)
+    {
+    	//quick check for duplicate collections for profile
+    	if(collections == null) this.collections = new ArrayList<Collection>();
+    	for(Collection collection : collections)
+    	{
+    		if(collection.getCollectionName().equals(collectionName)) return false;
+    	}
+    	collections.add(new Collection(collectionName));
+    	return true;
+    }
+    
+    public boolean addPhoto(String collectionName, String name, String blobKey)
+    {
+    	//find the collection
+    	if(collections == null) this.collections = new ArrayList<Collection>();
+    	for(Collection collection : collections)
+    	{
+    		if(collection.getCollectionName().equals(collectionName))
+    		{
+    			collection.addPhoto(name, blobKey);
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public boolean containsCollection(String collectionName)
+    {
+    	if(collections == null) this.collections = new ArrayList<Collection>();
+    	for(Collection collection : collections)
+    	{
+    		if(collection.getCollectionName().equals(collectionName))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public ArrayList<Collection> getCollections()
+    {
+    	return collections;
+>>>>>>> 6b1c3db93a4f68caa77d132e4d6ca481e3b635db
     }
     
     @Override
-    public int compareTo(Photo other) {
+    public int compareTo(Profile other) {
         if (date.after(other.date)) {
             return 1;
         } else if (date.before(other.date)) {
