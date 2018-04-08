@@ -40,13 +40,13 @@
 
 	<%
 		ObjectifyService.register(Profile.class);
-		ObjectifyService.ofy().clear();
 		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
 		for(Profile profile : profiles)
 		{
 			if(profile.getUser().equals(user))
 			{
 				ArrayList<Collection> collections = profile.getCollections();
+				if(collections == null) break;
 				for(Collection collection : collections)
 				{
 					pageContext.setAttribute("collectionname", collection.getCollectionName());
@@ -55,18 +55,17 @@
 							<h1>${fn:escapeXml(collectionname)}</h1>
 		<% 
 					ArrayList<Photo> photos = collection.getPhotos();
+					if(photos == null) break;
 					for(Photo photo : photos)
 					{
 						pageContext.setAttribute("blobkey", photo.getBlobKey());
 						pageContext.setAttribute("photoname", photo.getName());				
 		%>
 							<img width="200" height="150" title = "${fn:escapeXml(photoname)}" src = "serve?blob-key=${fn:escapeXml(blobkey)}">
+						</div>
 		<% 
 					}
 				}
-		%>
-			</div>
-		<%
 				//we are done displaying for the current profile
 				break;
 			}
