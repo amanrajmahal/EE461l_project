@@ -1,5 +1,9 @@
 package collectionconnection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
@@ -9,13 +13,15 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
-public class Profile implements Comparable<Photo> {
+public class Profile extends Observable implements Comparable<Photo>, Observer {
     @Parent Key<ProfileKey> user;
     @Id Long id;
     @Index User actualUser;
     @Index String firstName;
     @Index String lastName;
     @Index Date date;
+    Set<Profile> subscriptionList;
+    Notification notificationStyle; 
     
     private Profile() {}
     public Profile(User user, String firstName, String lastName) { 
@@ -24,6 +30,8 @@ public class Profile implements Comparable<Photo> {
     	this.firstName = firstName;
     	this.lastName = lastName;
         this.date = new Date();
+        subscriptionList = new HashSet<>();
+        this.notificationStyle = null;
     }
     
     public User getUser()
@@ -41,6 +49,19 @@ public class Profile implements Comparable<Photo> {
     	return lastName;
     }
     
+    public void addToSubscriberList(Profile profile) {
+    	subscriptionList.add(profile);
+    	profile.addObserver(o);
+    }
+    
+    public void removeFromSubscriberList(Profile profile) {
+    	subscriptionList.remove(profile);
+    }
+    
+    public void setNotificationStyle(Notification notificationStyle) {
+    	this.notificationStyle = notificationStyle;
+    }
+    
     @Override
     public int compareTo(Photo other) {
         if (date.after(other.date)) {
@@ -50,4 +71,11 @@ public class Profile implements Comparable<Photo> {
         }
         return 0;
      }
+    
+	@Override
+	public void update(Observable o, Object arg) {
+		if (this.notificationStyle.getClass() == RealTimeNotification.class) {
+			notificationStyle.alert();
+		}	
+	}
 }
