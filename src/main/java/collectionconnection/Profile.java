@@ -57,6 +57,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     		if(collection.getCollectionName().equals(collectionName)) return false;
     	}
     	collections.add(new Collection(collectionName));
+    	notifyFollowers(new CollectionNotificationText(actualUser.getNickname(), collectionName));
     	return true;
     }
     
@@ -68,6 +69,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     		if(collection.getCollectionName().equals(collectionName))
     		{
     			collection.addPhoto(name, blobKey);
+    			notifyFollowers(new PhotoNotificationText(actualUser.getNickname(), name));
     			return true;
     		}
     	}
@@ -118,16 +120,18 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	}
 	
 	@Override
-	public void notifyFollowers() {
+	public void notifyFollowers(NotificationText notification) {
 		for (Follower follower : followers) {
-			follower.update();
+			follower.update(notification);
 		}
 	}
 	
 	@Override
-	public void update() {
-		if (notificationStyle != null)
-			notificationStyle.alert();
+	public void update(NotificationText notification) {
+		if (notificationStyle instanceof RealTimeNotification)
+			notificationStyle.alert(notification);
+		else if (notificationStyle instanceof CustomNotification)
+			notificationStyle.alert(null);
 	}
     
 }

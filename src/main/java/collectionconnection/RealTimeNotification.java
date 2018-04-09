@@ -11,9 +11,9 @@ public class RealTimeNotification extends Notification {
 	}
 	
 	@Override
-	public String getContent(Date from, boolean getComments, boolean getCollections) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getContent(NotificationText text) {
+		assert text != null : "NotificationText shouldn't be null";
+		return text.getNotificationText();
 	}
 	
 

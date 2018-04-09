@@ -14,7 +14,8 @@ public class CustomNotification extends Notification {
 	}
 
 	@Override
-	public String getContent() {
+	public String getContent(NotificationText text) {
+		assert text == null : "NotificationText should be null";
 		NotificationOptions options = getOptions();
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR, -1 * options.getNumHours());
