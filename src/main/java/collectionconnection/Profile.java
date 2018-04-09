@@ -29,8 +29,8 @@ public class Profile extends Observable implements Comparable<Profile>, Observer
 	String lastName;
 	@Index
 	Date date;
-	Set<Profile> subscriptionList;
-	Notification notificationStyle;
+	private Set<Profile> subscriptionList;
+	private Notification notificationStyle;
 
 	private ArrayList<Collection> collections;
 
@@ -45,6 +45,10 @@ public class Profile extends Observable implements Comparable<Profile>, Observer
 		this.date = new Date();
 		subscriptionList = new HashSet<>();
 		this.notificationStyle = null;
+	}
+	
+	public String getEmail() {
+		return actualUser.getEmail();
 	}
 
 	public User getUser() {
@@ -61,7 +65,7 @@ public class Profile extends Observable implements Comparable<Profile>, Observer
 
 	public void addToSubscriberList(Profile profile) {
 		subscriptionList.add(profile);
-		profile.addObserver(o);
+		//profile.addObserver(o);
 	}
 
 	public void removeFromSubscriberList(Profile profile) {
