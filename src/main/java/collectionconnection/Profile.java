@@ -11,7 +11,7 @@ import com.googlecode.objectify.annotation.Parent;
 import java.util.*;
 
 @Entity
-public class Profile implements Comparable<Profile>{
+public class Profile implements Comparable<Profile>, Follower, Subject {
     @Id Long id;
     @Index User actualUser;
     
@@ -19,6 +19,8 @@ public class Profile implements Comparable<Profile>{
     private String lastName;
     private Date date;
     private ArrayList<Collection> collections;
+    private Set<Follower> followers;
+    private Notification notificationStyle;
     
     private Profile() {}
     public Profile(User user, String firstName, String lastName) { 
@@ -28,6 +30,8 @@ public class Profile implements Comparable<Profile>{
     	this.lastName = lastName;
         this.date = new Date();
         this.collections = new ArrayList<Collection>();
+        this.followers = new HashSet<>();
+        this.notificationStyle = null;
     }
     
     public User getUser()
@@ -103,5 +107,27 @@ public class Profile implements Comparable<Profile>{
         }
         return 0;
      }
+	@Override
+	public void addFollower(Follower f) {
+		followers.add(f);
+	}
+	
+	@Override
+	public void removeFollower(Follower f) {
+		followers.remove(f);
+	}
+	
+	@Override
+	public void notifyFollowers() {
+		for (Follower follower : followers) {
+			follower.update();
+		}
+	}
+	
+	@Override
+	public void update() {
+		if (notificationStyle != null)
+			notificationStyle.alert();
+	}
     
 }

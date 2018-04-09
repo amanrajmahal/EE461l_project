@@ -17,6 +17,47 @@ import javax.mail.internet.MimeMessage;
 import com.googlecode.objectify.ObjectifyService;
 
 public abstract class Notification {
+	private NotificationOptions options;
+
+	class NotificationOptions {
+		private boolean sendComments;
+		private boolean sendCollections;
+		private int numHours;
+
+		NotificationOptions() {
+			sendComments = true;
+			sendCollections = true;
+			numHours = 1;
+		}
+
+		public void setComments(boolean sendComments) {
+			this.sendComments = sendComments;
+		}
+
+		public void setCollections(boolean sendCollections) {
+			this.sendCollections = sendCollections;
+		}
+
+		public void setNumHoursBack(int hours) {
+			numHours = hours;
+		}
+		
+		public boolean getComments() {
+			return sendComments;
+		}
+		
+		public boolean getCollections() {
+			return sendCollections;
+		}
+		
+		public int getNumHours() {
+			return numHours;
+		}
+	}
+	
+	public NotificationOptions getOptions() {
+		return options;
+	}
 
 	public void alert() {
 		Properties properties = new Properties();
@@ -26,30 +67,26 @@ public abstract class Notification {
 		cal.add(Calendar.HOUR, -30);
 		Date yesterdayTime = cal.getTime();
 
-		/*ObjectifyService.register(BlogPost.class);
-		List<BlogPost> blogposts = ObjectifyService.ofy().load().type(BlogPost.class).list();
-		Collections.sort(blogposts);
-		if (!blogposts.isEmpty() && isWithin24Hours(yesterdayTime, blogposts.get(0).getDate())) {
-			String body = getBody(yesterdayTime, blogposts);
-			try {
-				ObjectifyService.register(Email.class);
-				Message msg = new MimeMessage(session);
-				msg.setFrom(new InternetAddress("admin@collectionconnection.appspotmail.com",
-						"Collection Connection Digest"));
-				List<Email> emails = ofy().load().type(Email.class).list();
-				InternetAddress[] addresses = new InternetAddress[emails.size()];
-				for (int i = 0; i < emails.size(); i++)
-					addresses[i] = emails.get(i).getEmail();
-				msg.addRecipients(Message.RecipientType.BCC, addresses);
-				msg.setSubject("Daily Digest");
-				msg.setText(body);
-				Transport.send(msg);
-			} catch (Exception e) {
-			}
-		}*/
+		/*
+		 * ObjectifyService.register(BlogPost.class); List<BlogPost> blogposts =
+		 * ObjectifyService.ofy().load().type(BlogPost.class).list();
+		 * Collections.sort(blogposts); if (!blogposts.isEmpty() &&
+		 * isWithin24Hours(yesterdayTime, blogposts.get(0).getDate())) { String body =
+		 * getBody(yesterdayTime, blogposts); try {
+		 * ObjectifyService.register(Email.class); Message msg = new
+		 * MimeMessage(session); msg.setFrom(new
+		 * InternetAddress("admin@collectionconnection.appspotmail.com",
+		 * "Collection Connection Digest")); List<Email> emails =
+		 * ofy().load().type(Email.class).list(); InternetAddress[] addresses = new
+		 * InternetAddress[emails.size()]; for (int i = 0; i < emails.size(); i++)
+		 * addresses[i] = emails.get(i).getEmail();
+		 * msg.addRecipients(Message.RecipientType.BCC, addresses);
+		 * msg.setSubject("Daily Digest"); msg.setText(body); Transport.send(msg); }
+		 * catch (Exception e) { } }
+		 */
 	}
-	
+
 	public abstract boolean isWithinTimePeriod(Date from);
-	
-	public abstract String getContent(Date from, boolean getComments, boolean getCollections);
+
+	public abstract String getContent();
 }
