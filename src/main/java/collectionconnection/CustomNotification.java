@@ -6,13 +6,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
 public class CustomNotification extends Notification {
-
-	@Override
-	public boolean isWithinTimePeriod(Date from) {
-		// use numHoursBack here
-		return false;
-	}
-
+	
 	@Override
 	public String getContent(NotificationText text) {
 		assert text == null : "NotificationText should be null";

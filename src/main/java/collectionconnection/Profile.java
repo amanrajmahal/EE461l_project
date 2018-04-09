@@ -1,6 +1,9 @@
 package collectionconnection;
 import java.util.Date;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
@@ -57,7 +60,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     		if(collection.getCollectionName().equals(collectionName)) return false;
     	}
     	collections.add(new Collection(collectionName));
-    	notifyFollowers(new CollectionNotificationText(actualUser.getNickname(), collectionName));
+    	notifyFollowers(new CollectionNotificationText(firstName + " " + lastName, collectionName));
     	return true;
     }
     
@@ -69,7 +72,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     		if(collection.getCollectionName().equals(collectionName))
     		{
     			collection.addPhoto(name, blobKey);
-    			notifyFollowers(new PhotoNotificationText(actualUser.getNickname(), name));
+    			notifyFollowers(new PhotoNotificationText(firstName + " " + lastName, name, collectionName));
     			return true;
     		}
     	}
@@ -109,6 +112,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         }
         return 0;
      }
+    
 	@Override
 	public void addFollower(Follower f) {
 		followers.add(f);
@@ -128,10 +132,28 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void update(NotificationText notification) {
-		if (notificationStyle instanceof RealTimeNotification)
-			notificationStyle.alert(notification);
-		else if (notificationStyle instanceof CustomNotification)
-			notificationStyle.alert(null);
+		try {
+			InternetAddress[] emails = getFollowerEmails();
+
+			if (notificationStyle instanceof RealTimeNotification)
+				notificationStyle.alert(notification, emails);
+			else if (notificationStyle instanceof CustomNotification)
+				notificationStyle.alert(null, emails);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public InternetAddress[] getFollowerEmails() throws AddressException {
+		InternetAddress[] emails = new InternetAddress[followers.size()];
+		int i = 0;
+		for (Follower follower : followers) {
+			Profile profile = (Profile)follower;
+			emails[i] = new InternetAddress(profile.actualUser.getEmail());
+			i++;
+		}
+		return emails;
 	}
     
 }

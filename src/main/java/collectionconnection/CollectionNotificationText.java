@@ -1,7 +1,5 @@
 package collectionconnection;
 
-import com.google.appengine.api.users.User;
-
 public class CollectionNotificationText implements NotificationText {
 	private String user;
 	private String collectionName;
@@ -13,7 +11,7 @@ public class CollectionNotificationText implements NotificationText {
 	
 	@Override
 	public String getNotificationText() {
-		return user + " added a new collection named " + collectionName;
+		return String.format("%s has added a new collection \"%s\"", user, collectionName);
 	}
 
 }
