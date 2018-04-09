@@ -42,13 +42,21 @@ public class ImageServlet extends HttpServlet {
 		{
 			//ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
 			//find the right profile
-			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
+			ofy().clear();
+			List<Profile> profiles = ofy().load().type(Profile.class).list();
 			for(Profile profile : profiles)
 			{
 				if(profile.getUser().equals(user))
 				{
+					//delete the old entity
+					ofy().clear();
+					ofy().delete().entity(profile).now();
 					if(!profile.containsCollection(collectionName)) profile.addCollection(collectionName);
 					profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
+					//save the new entity
+					ofy().clear();
+					ofy().save().entity(profile).now();
+					break;
 				}
 			}
 			res.sendRedirect("/imageTest.jsp");
