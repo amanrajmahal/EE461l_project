@@ -13,7 +13,7 @@ public class PhotoNotificationText implements NotificationText {
 	
 	@Override
 	public String getNotificationText() {
-		return String.format("User %s has uploaded a new photo \"%s\" in collection \"%s\"", 
+		return String.format("%s has uploaded a new photo \"%s\" in collection \"%s\"", 
 				user, photoName, collectionName);
 	}
 	
