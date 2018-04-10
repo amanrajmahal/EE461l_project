@@ -41,35 +41,31 @@
 	<%
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.ofy().clear();
-		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
-		for(Profile profile : profiles)
+		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).list();
+		if(profiles != null && profiles.size() == 1)
 		{
-			if(profile.getUser().equals(user))
+			Profile profile = profiles.get(0);
+			ArrayList<Collection> collections = profile.getCollections();
+			for(Collection collection : collections)
 			{
-				ArrayList<Collection> collections = profile.getCollections();
-				for(Collection collection : collections)
-				{
-					pageContext.setAttribute("collectionname", collection.getCollectionName());
+				pageContext.setAttribute("collectionname", collection.getCollectionName());
 		%>
 						<div>
 							<h1>${fn:escapeXml(collectionname)}</h1>
 		<% 
-					ArrayList<Photo> photos = collection.getPhotos();
-					for(Photo photo : photos)
-					{
-						pageContext.setAttribute("blobkey", photo.getBlobKey());
-						pageContext.setAttribute("photoname", photo.getName());				
+				ArrayList<Photo> photos = collection.getPhotos();
+				for(Photo photo : photos)
+				{
+					pageContext.setAttribute("blobkey", photo.getBlobKey());
+					pageContext.setAttribute("photoname", photo.getName());				
 		%>
 							<img width="200" height="150" title = "${fn:escapeXml(photoname)}" src = "serve?blob-key=${fn:escapeXml(blobkey)}">
 		<% 
-					}
 				}
+			}
 		%>
 			</div>
 		<%
-				//we are done displaying for the current profile
-				break;
-			}
 		}
 	%>
 	<a href="profilePage.jsp" role="button">Back to My Profile</a>	

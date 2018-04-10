@@ -27,21 +27,11 @@
 
 	<% 
 		} else {
-			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
-			Profile targetProfile = null;
-			for(Profile profile : profiles)
-			{
-				if(profile.getUser().equals(user))
-				{
-					targetProfile = profile;
-					break;
-				}
-			}
-			
-			if(targetProfile != null)
-			{
-				pageContext.setAttribute("firstName", targetProfile.getFirstName());
-				pageContext.setAttribute("lastName", targetProfile.getLastName());
+			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).list();
+			if(profiles != null && profiles.size() == 1) {
+				Profile profile = profiles.get(0);
+				pageContext.setAttribute("firstName", profile.getFirstName());
+				pageContext.setAttribute("lastName", profile.getLastName());
 	%>
 		<p> Hello ${fn:escapeXml(firstName)}! </p>
 		<a class="accountbutton btn btn-secondary btn-sm" href="<%=userService.createLogoutURL(request.getRequestURI()) %>" role="button">Sign Out</a>

@@ -5,29 +5,28 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import com.google.appengine.api.users.User;
-import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Parent;
 
 import java.util.*;
 
 @Entity
-public class Profile implements Comparable<Profile>, Follower, Subject {
+public class Profile implements Comparable<Profile>, Follower, Subject { //Follower, Subject
     @Id Long id;
     @Index User actualUser;
+    
+    private Set<Ref<Follower>> followers;
     
     private String firstName;
     private String lastName;
     private Date date;
     private ArrayList<Collection> collections;
-    private Set<Follower> followers;
     private Notification notificationStyle;
     
     private Profile() {}
-    public Profile(User user, String firstName, String lastName) { 
-    	//this.user = Key.create(ProfileKey.class, user.getNickname());
+    public Profile(User user, String firstName, String lastName) {
     	this.actualUser = user;
     	this.firstName = firstName;
     	this.lastName = lastName;
@@ -114,24 +113,28 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
      }
     
 	@Override
-	public void addFollower(Follower f) {
+	public void addFollower(Ref<Follower> f) {
+		checkFollowers();
 		followers.add(f);
 	}
 	
 	@Override
-	public void removeFollower(Follower f) {
+	public void removeFollower(Ref<Follower> f) {
+		checkFollowers();
 		followers.remove(f);
 	}
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
-		for (Follower follower : followers) {
-			follower.update(notification);
+		checkFollowers();
+		for (Ref<Follower> follower : followers) {
+			follower.get().update(notification);
 		}
 	}
 	
 	@Override
 	public void update(NotificationText notification) {
+		checkFollowers();
 		try {
 			InternetAddress[] emails = getFollowerEmails();
 
@@ -144,16 +147,22 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 		}
 
 	}
-
+    
 	public InternetAddress[] getFollowerEmails() throws AddressException {
+		checkFollowers();
 		InternetAddress[] emails = new InternetAddress[followers.size()];
 		int i = 0;
-		for (Follower follower : followers) {
-			Profile profile = (Profile)follower;
+		for (Ref<Follower> follower : followers) {
+			Profile profile = (Profile)follower.get();
 			emails[i] = new InternetAddress(profile.actualUser.getEmail());
 			i++;
 		}
 		return emails;
 	}
+	
+    private void checkFollowers()
+    {
+    	if(followers == null) this.followers = new HashSet<>();
+    }
     
 }

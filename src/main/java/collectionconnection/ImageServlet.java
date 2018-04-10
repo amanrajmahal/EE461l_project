@@ -43,21 +43,18 @@ public class ImageServlet extends HttpServlet {
 			//ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
 			//find the right profile
 			ofy().clear();
-			List<Profile> profiles = ofy().load().type(Profile.class).list();
-			for(Profile profile : profiles)
+			List<Profile> profiles = ofy().load().type(Profile.class).filter("actualUser", user).list();
+			if(profiles != null && profiles.size() == 1)
 			{
-				if(profile.getUser().equals(user))
-				{
-					//delete the old entity
-					ofy().clear();
-					ofy().delete().entity(profile).now();
-					if(!profile.containsCollection(collectionName)) profile.addCollection(collectionName);
-					profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
-					//save the new entity
-					ofy().clear();
-					ofy().save().entity(profile).now();
-					break;
-				}
+				Profile profile = profiles.get(0);
+				//delete the old entity
+				ofy().clear();
+				ofy().delete().entity(profile).now();
+				if(!profile.containsCollection(collectionName)) profile.addCollection(collectionName);
+				profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
+				//save the new entity
+				ofy().clear();
+				ofy().save().entity(profile).now();
 			}
 			res.sendRedirect("/imageTest.jsp");
 		}
