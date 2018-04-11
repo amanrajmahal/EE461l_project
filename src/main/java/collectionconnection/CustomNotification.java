@@ -6,19 +6,28 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
 public class CustomNotification extends Notification {
+	int numHours;
+	
+	public CustomNotification() {
+		super();
+		this.numHours = 1;
+	}
+	
+	public void setNumHours(int hours) {
+		numHours = hours;
+	}
 	
 	@Override
 	public String getContent(NotificationText text) {
-		NotificationOptions options = getOptions();
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.HOUR, -1 * options.getNumHours());
+		cal.add(Calendar.HOUR, -1 * numHours);
 		Date timeBack = cal.getTime();
-		if (options.getComments()) {
+		if (includeComments()) {
 			//List<Comment> comments = ofy().load().type(Comment.class).filter("date >=", timeBack).list();
 			//Collections.sort(comments);
 			//getComments
 		}
-		if (options.getCollections()) {
+		if (includeCollections()) {
 			//List<Collection>
 			//getCollections
 		}

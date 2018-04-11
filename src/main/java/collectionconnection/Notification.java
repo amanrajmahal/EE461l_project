@@ -8,53 +8,41 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public abstract class Notification {
-	private NotificationOptions options;
+	private boolean sendComments;
+	private boolean sendCollections;
+	private boolean sendPhotos;
 	
 	public Notification() {
-		options = new NotificationOptions();
-	}
-
-	class NotificationOptions {
-		private boolean sendComments;
-		private boolean sendCollections;
-		private int numHours;
-
-		NotificationOptions() {
-			sendComments = true;
-			sendCollections = true;
-			numHours = 1;
-		}
-
-		public void setComments(boolean sendComments) {
-			this.sendComments = sendComments;
-		}
-
-		public void setCollections(boolean sendCollections) {
-			this.sendCollections = sendCollections;
-		}
-
-		public void setNumHoursBack(int hours) {
-			numHours = hours;
-		}
-		
-		public boolean getComments() {
-			return sendComments;
-		}
-		
-		public boolean getCollections() {
-			return sendCollections;
-		}
-		
-		public int getNumHours() {
-			return numHours;
-		}
+		this.sendComments = false;
+		this.sendCollections = false;
+		this.sendPhotos = false;
 	}
 	
-	public NotificationOptions getOptions() {
-		return options;
+	public boolean includeComments() {
+		return sendComments;
+	}
+	
+	public boolean includeCollections() {
+		return sendCollections;
+	}
+	
+	public boolean includePhotos() {
+		return sendPhotos;
+	}
+	
+	public void setComments(boolean sendComments) {
+		this.sendComments = sendComments;
+	}
+	
+	public void setCollections(boolean sendCollections) {
+		this.sendCollections = sendCollections;
+	}
+	
+	public void setPhotos(boolean sendPhotos) {
+		this.sendPhotos = sendPhotos;
 	}
 
-	public void alert(NotificationText text, InternetAddress[] emails) {
+	public void alert(NotificationText text, InternetAddress[] emails) {	
 		Properties properties = new Properties();
 		Session session = Session.getDefaultInstance(properties, null);
 		String content = getContent(text);
@@ -62,7 +50,7 @@ public abstract class Notification {
 		try {
 			msg.setFrom(new InternetAddress("admin@collectionconnection.appspotmail.com","CollectionConnection Digest"));
 			msg.addRecipients(Message.RecipientType.BCC, emails);
-			msg.setSubject("Digest");
+			msg.setSubject("Notifications from CollectionConnection");
 			msg.setText(content);
 			Transport.send(msg);	
 		} catch (Exception e) {

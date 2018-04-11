@@ -9,6 +9,7 @@ import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     @Id Long id;
     @Index User actualUser;
     
-    private Set<Ref<Follower>> followers = new HashSet<>();
+    @Load private Set<Ref<Follower>> followers = new HashSet<>();
     
     private String firstName;
     private String lastName;
@@ -49,6 +50,10 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     public String getLastName()
     {
     	return lastName;
+    }
+    
+    public void changeNotificationStyle(Notification notification) {
+    	this.notificationStyle = notification;
     }
     
     public boolean addCollection(String collectionName)
@@ -135,7 +140,8 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	public void update(NotificationText notification) {
 		// checkFollowers();
 		try {
-			notificationStyle.alert(notification, getFollowerEmails());
+			if (notificationStyle != null)
+				notificationStyle.alert(notification, getFollowerEmails());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
