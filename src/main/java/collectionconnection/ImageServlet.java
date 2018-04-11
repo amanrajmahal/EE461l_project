@@ -25,7 +25,7 @@ public class ImageServlet extends HttpServlet {
 	}
 	
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-
+	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
@@ -43,14 +43,13 @@ public class ImageServlet extends HttpServlet {
 			//ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
 			//find the right profile
 			ofy().clear();
-			List<Profile> profiles = ofy().load().type(Profile.class).filter("actualUser", user).list();
-			if(profiles != null && profiles.size() == 1)
+			Profile profile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+			if(profile != null)
 			{
-				Profile profile = profiles.get(0);
 				//delete the old entity
 				ofy().clear();
 				ofy().delete().entity(profile).now();
-				if(!profile.containsCollection(collectionName)) profile.addCollection(collectionName);
+				profile.addCollection(collectionName);
 				profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
 				//save the new entity
 				ofy().clear();

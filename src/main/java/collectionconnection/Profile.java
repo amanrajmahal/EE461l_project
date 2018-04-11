@@ -13,16 +13,16 @@ import com.googlecode.objectify.annotation.Index;
 import java.util.*;
 
 @Entity
-public class Profile implements Comparable<Profile>, Follower, Subject { //Follower, Subject
+public class Profile implements Comparable<Profile>, Follower, Subject {
     @Id Long id;
     @Index User actualUser;
     
-    private Set<Ref<Follower>> followers;
+    private Set<Ref<Follower>> followers = new HashSet<>();
     
     private String firstName;
     private String lastName;
     private Date date;
-    private ArrayList<Collection> collections;
+    private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notificationStyle;
     
     private Profile() {}
@@ -53,54 +53,53 @@ public class Profile implements Comparable<Profile>, Follower, Subject { //Follo
     
     public boolean addCollection(String collectionName)
     {
-    	checkCollections();
-    	for(Collection collection : collections)
-    	{
-    		if(collection.getCollectionName().equals(collectionName)) return false;
+    	Collection collection = findCollection(collectionName);
+    	if (collection == null) {
+    		collections.add(new Collection(collectionName));
+    		notifyFollowers(new CollectionNotificationText(firstName + " " + lastName, collectionName));
+    		return true;
     	}
-    	collections.add(new Collection(collectionName));
-    	notifyFollowers(new CollectionNotificationText(firstName + " " + lastName, collectionName));
-    	return true;
+    	return false;
     }
     
     public boolean addPhoto(String collectionName, String name, String blobKey)
     {
-    	checkCollections();
-    	for(Collection collection : collections)
-    	{
-    		if(collection.getCollectionName().equals(collectionName))
-    		{
-    			collection.addPhoto(name, blobKey);
-    			notifyFollowers(new PhotoNotificationText(firstName + " " + lastName, name, collectionName));
-    			return true;
-    		}
+    	Collection collection = findCollection(collectionName);
+    	if (collection != null) {
+    		collection.addPhoto(name, blobKey);
+			notifyFollowers(new PhotoNotificationText(firstName + " " + lastName, name, collectionName));
+			return true;
     	}
     	return false;
     }
     
-    public boolean containsCollection(String collectionName)
+	public Collection findCollection(String collectionName)
     {
-    	checkCollections();
+    	//checkCollections();
     	for(Collection collection : collections)
     	{
     		if(collection.getCollectionName().equals(collectionName))
     		{
-    			return true;
+    			return collection;
     		}
     	}
-    	return false;
+    	return null;
     }
     
     public ArrayList<Collection> getCollections()
     {
-    	checkCollections();
+    	//checkCollections();
     	return collections;
     }
     
-    private void checkCollections()
+    /*private void checkCollections()
     {
-    	if(collections == null) this.collections = new ArrayList<Collection>();
-    }
+    	if(collections == null) {
+    		this.collections = new ArrayList<Collection>();
+    		LOG.info("Collections was null. Initializing collections");
+    	}
+    		
+    }*/
     
     @Override
     public int compareTo(Profile other) {
@@ -114,19 +113,19 @@ public class Profile implements Comparable<Profile>, Follower, Subject { //Follo
     
 	@Override
 	public void addFollower(Ref<Follower> f) {
-		checkFollowers();
+		//checkFollowers();
 		followers.add(f);
 	}
 	
 	@Override
 	public void removeFollower(Ref<Follower> f) {
-		checkFollowers();
+		//checkFollowers();
 		followers.remove(f);
 	}
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
-		checkFollowers();
+		//checkFollowers();
 		for (Ref<Follower> follower : followers) {
 			follower.get().update(notification);
 		}
@@ -134,14 +133,9 @@ public class Profile implements Comparable<Profile>, Follower, Subject { //Follo
 	
 	@Override
 	public void update(NotificationText notification) {
-		checkFollowers();
+		// checkFollowers();
 		try {
-			InternetAddress[] emails = getFollowerEmails();
-
-			if (notificationStyle instanceof RealTimeNotification)
-				notificationStyle.alert(notification, emails);
-			else if (notificationStyle instanceof CustomNotification)
-				notificationStyle.alert(null, emails);
+			notificationStyle.alert(notification, getFollowerEmails());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -149,7 +143,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject { //Follo
 	}
     
 	public InternetAddress[] getFollowerEmails() throws AddressException {
-		checkFollowers();
+		//checkFollowers();
 		InternetAddress[] emails = new InternetAddress[followers.size()];
 		int i = 0;
 		for (Ref<Follower> follower : followers) {
@@ -160,9 +154,13 @@ public class Profile implements Comparable<Profile>, Follower, Subject { //Follo
 		return emails;
 	}
 	
-    private void checkFollowers()
+    /*private void checkFollowers()
     {
-    	if(followers == null) this.followers = new HashSet<>();
-    }
+    	LOG.log(Level.WARNING, "In the checkFollowers method");
+    	if(followers == null) {
+    		LOG.log(Level.WARNING, "Followers is null. Initializing followers set");
+    		this.followers = new HashSet<>();
+    	}
+    }*/
     
 }

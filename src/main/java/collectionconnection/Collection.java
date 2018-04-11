@@ -6,7 +6,7 @@ import collectionconnection.Collection;
 
 public class Collection {
 	private String collectionName;
-	private ArrayList<Photo> photos;
+	private ArrayList<Photo> photos = new ArrayList<>();
 	
 	private Collection() {}
 	
@@ -18,13 +18,13 @@ public class Collection {
 	
 	public void addPhoto(String name, String blobKey)
 	{
-		checkPhotos();
+		//checkPhotos();
 		photos.add(new Photo(name, blobKey));
 	}
 	
 	public ArrayList<Photo> getPhotos()
 	{
-		checkPhotos();
+		//checkPhotos();
 		return photos;
 	}
 	
@@ -33,8 +33,8 @@ public class Collection {
 		return collectionName;
 	}
 	
-	private void checkPhotos()
+	/*private void checkPhotos()
 	{
     	if(photos == null) this.photos = new ArrayList<Photo>();
-	}
+	}*/
 }
