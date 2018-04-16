@@ -27,9 +27,8 @@
 
 	<% 
 		} else {
-			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).list();
-			if(profiles != null && profiles.size() == 1) {
-				Profile profile = profiles.get(0);
+			Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+			if (profile != null) {
 				pageContext.setAttribute("firstName", profile.getFirstName());
 				pageContext.setAttribute("lastName", profile.getLastName());
 	%>

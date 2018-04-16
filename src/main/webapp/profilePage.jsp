@@ -19,17 +19,7 @@
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		
-		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
-		Profile targetProfile = null;
-		for(Profile profile : profiles)
-		{
-			if(profile.getUser().equals(user))
-			{
-				targetProfile = profile;
-				break;
-			}
-		}
-		
+		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();		
 		if(targetProfile != null)
 		{
 			pageContext.setAttribute("firstName", targetProfile.getFirstName());

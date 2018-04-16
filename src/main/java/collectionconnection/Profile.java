@@ -101,7 +101,6 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     {
     	if(collections == null) {
     		this.collections = new ArrayList<Collection>();
-    		LOG.info("Collections was null. Initializing collections");
     	}
     		
     }*/
@@ -162,9 +161,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
     /*private void checkFollowers()
     {
-    	LOG.log(Level.WARNING, "In the checkFollowers method");
     	if(followers == null) {
-    		LOG.log(Level.WARNING, "Followers is null. Initializing followers set");
     		this.followers = new HashSet<>();
     	}
     }*/

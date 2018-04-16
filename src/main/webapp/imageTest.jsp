@@ -41,10 +41,9 @@
 	<%
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.ofy().clear();
-		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).list();
-		if(profiles != null && profiles.size() == 1)
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		if(profile != null)
 		{
-			Profile profile = profiles.get(0);
 			ArrayList<Collection> collections = profile.getCollections();
 			for(Collection collection : collections)
 			{
