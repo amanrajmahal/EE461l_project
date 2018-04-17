@@ -22,7 +22,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     @Load private Set<Ref<Follower>> followers = new HashSet<>();
     
     private Date date;
-    private HashSet<NotificationText> notificationLog = new HashSet<>();
+    private TreeSet<NotificationText> notificationLog = new TreeSet<>();
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notificationStyle;
     
