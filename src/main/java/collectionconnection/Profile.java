@@ -23,6 +23,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private String firstName;
     private String lastName;
     private Date date;
+    private HashSet<NotificationText> notificationLog = new HashSet<>();
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notificationStyle;
     
@@ -139,8 +140,9 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	public void update(NotificationText notification) {
 		// checkFollowers();
 		try {
-			if (notificationStyle != null)
+			if (notificationStyle instanceof RealTimeNotification)
 				notificationStyle.alert(notification, getFollowerEmails());
+			else notificationLog.add(notification);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
