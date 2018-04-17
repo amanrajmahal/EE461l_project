@@ -17,21 +17,19 @@ import java.util.*;
 public class Profile implements Comparable<Profile>, Follower, Subject {
     @Id Long id;
     @Index User actualUser;
+    @Index String username;
     
     @Load private Set<Ref<Follower>> followers = new HashSet<>();
     
-    private String firstName;
-    private String lastName;
     private Date date;
     private HashSet<NotificationText> notificationLog = new HashSet<>();
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notificationStyle;
     
     private Profile() {}
-    public Profile(User user, String firstName, String lastName) {
+    public Profile(User user, String username) {
     	this.actualUser = user;
-    	this.firstName = firstName;
-    	this.lastName = lastName;
+    	this.username = username;
         this.date = new Date();
         this.collections = new ArrayList<Collection>();
         this.followers = new HashSet<>();
@@ -43,14 +41,9 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return actualUser;
     }
     
-    public String getFirstName()
+    public String getUsername()
     {
-    	return firstName;
-    }
-    
-    public String getLastName()
-    {
-    	return lastName;
+    	return username;
     }
     
     public void changeNotificationStyle(Notification notification) {
@@ -62,7 +55,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	Collection collection = findCollection(collectionName);
     	if (collection == null) {
     		collections.add(new Collection(collectionName));
-    		notifyFollowers(new CollectionNotificationText(firstName + " " + lastName, collectionName));
+    		notifyFollowers(new CollectionNotificationText(username, collectionName));
     		return true;
     	}
     	return false;
@@ -73,7 +66,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	Collection collection = findCollection(collectionName);
     	if (collection != null) {
     		collection.addPhoto(name, blobKey);
-			notifyFollowers(new PhotoNotificationText(firstName + " " + lastName, name, collectionName));
+			notifyFollowers(new PhotoNotificationText(username, name, collectionName));
 			return true;
     	}
     	return false;
@@ -81,7 +74,6 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	public Collection findCollection(String collectionName)
     {
-    	//checkCollections();
     	for(Collection collection : collections)
     	{
     		if(collection.getCollectionName().equals(collectionName))
@@ -94,17 +86,8 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
     public ArrayList<Collection> getCollections()
     {
-    	//checkCollections();
     	return collections;
     }
-    
-    /*private void checkCollections()
-    {
-    	if(collections == null) {
-    		this.collections = new ArrayList<Collection>();
-    	}
-    		
-    }*/
     
     @Override
     public int compareTo(Profile other) {
@@ -118,19 +101,16 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	@Override
 	public void addFollower(Ref<Follower> f) {
-		//checkFollowers();
 		followers.add(f);
 	}
 	
 	@Override
 	public void removeFollower(Ref<Follower> f) {
-		//checkFollowers();
 		followers.remove(f);
 	}
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
-		//checkFollowers();
 		for (Ref<Follower> follower : followers) {
 			follower.get().update(notification);
 		}
@@ -138,7 +118,6 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void update(NotificationText notification) {
-		// checkFollowers();
 		try {
 			if (notificationStyle instanceof RealTimeNotification)
 				notificationStyle.alert(notification, getFollowerEmails());
@@ -150,7 +129,6 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	}
     
 	public InternetAddress[] getFollowerEmails() throws AddressException {
-		//checkFollowers();
 		InternetAddress[] emails = new InternetAddress[followers.size()];
 		int i = 0;
 		for (Ref<Follower> follower : followers) {
@@ -160,12 +138,4 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 		}
 		return emails;
 	}
-	
-    /*private void checkFollowers()
-    {
-    	if(followers == null) {
-    		this.followers = new HashSet<>();
-    	}
-    }*/
-    
 }

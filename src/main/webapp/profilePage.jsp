@@ -22,10 +22,9 @@
 		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();		
 		if(targetProfile != null)
 		{
-			pageContext.setAttribute("firstName", targetProfile.getFirstName());
-			pageContext.setAttribute("lastName", targetProfile.getLastName());
+			pageContext.setAttribute("username", targetProfile.getUsername());
 	%>		
-	<h1> ${fn:escapeXml(firstName)} ${fn:escapeXml(lastName)} </h1>
+	<h1> ${fn:escapeXml(username)} </h1>
 	<a href="imageTest.jsp" role="button">Add Collection</a>	
 	<br>
 	<br>

@@ -29,10 +29,9 @@
 		} else {
 			Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 			if (profile != null) {
-				pageContext.setAttribute("firstName", profile.getFirstName());
-				pageContext.setAttribute("lastName", profile.getLastName());
+				pageContext.setAttribute("username", profile.getUsername());
 	%>
-		<p> Hello ${fn:escapeXml(firstName)}! </p>
+		<p> Hello ${fn:escapeXml(username)}! </p>
 		<a class="accountbutton btn btn-secondary btn-sm" href="<%=userService.createLogoutURL(request.getRequestURI()) %>" role="button">Sign Out</a>
 		<br>
 		<br>
@@ -44,8 +43,7 @@
 	%>
 		<p> Hello new user! Please input your information below. </p>
 		<form action="/profile" method="post">
-			<div><textarea name = "firstName" rows="1" cols="60"></textarea></div>
-			<div><textarea name = "lastName"  rows="1" cols="60"></textarea></div>
+			<div><textarea name = "username" rows="1" cols="60"></textarea></div>
 			<input type="submit" value="Submit">
 		</form>
 	<%

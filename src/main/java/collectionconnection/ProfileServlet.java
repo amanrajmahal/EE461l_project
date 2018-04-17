@@ -20,9 +20,9 @@ public class ProfileServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		String lastName = req.getParameter("lastName");
-		String firstName = req.getParameter("firstName");
-		ofy().save().entity(new Profile(user, firstName, lastName)).now();
+		String username = req.getParameter("username");
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
+		if(profile == null) ofy().save().entity(new Profile(user, username)).now();
 		resp.sendRedirect("/");
 	}
 	

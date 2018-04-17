@@ -46,9 +46,6 @@ public class ImageServlet extends HttpServlet {
 			Profile profile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 			if(profile != null)
 			{
-				//delete the old entity
-				ofy().clear();
-				ofy().delete().entity(profile).now();
 				profile.addCollection(collectionName);
 				profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
 				//save the new entity
