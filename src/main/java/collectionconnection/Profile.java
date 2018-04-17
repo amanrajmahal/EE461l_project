@@ -22,7 +22,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     @Load private Set<Ref<Follower>> followers = new HashSet<>();
     
     private Date date;
-    private TreeSet<NotificationText> notificationLog = new TreeSet<>();
+    //private HashSet<NotificationText> notificationLog = new HashSet<>();
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notificationStyle;
     
@@ -32,6 +32,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	this.username = username;
         this.date = new Date();
         this.collections = new ArrayList<Collection>();
+        //this.notificationLog = new HashSet<>();
         this.followers = new HashSet<>();
         this.notificationStyle = null;
     }
@@ -121,7 +122,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 		try {
 			if (notificationStyle instanceof RealTimeNotification)
 				notificationStyle.alert(notification, getFollowerEmails());
-			else notificationLog.add(notification);
+			//else notificationLog.add(notification);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
