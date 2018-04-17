@@ -31,6 +31,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	this.actualUser = user;
     	this.username = username;
         this.date = new Date();
+        this.notificationLog = new TreeSet<>();
         this.collections = new ArrayList<Collection>();
         this.followers = new HashSet<>();
         this.notificationStyle = null;

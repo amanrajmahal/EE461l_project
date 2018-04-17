@@ -1,6 +1,6 @@
 package collectionconnection;
 
-public class CollectionNotificationText implements NotificationText {
+public class CollectionNotificationText extends NotificationText {
 	private String user;
 	private String collectionName;
 	

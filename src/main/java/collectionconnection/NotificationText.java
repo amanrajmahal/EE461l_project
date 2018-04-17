@@ -1,5 +1,5 @@
 package collectionconnection;
 
-public interface NotificationText {
-	public String getNotificationText();
+public abstract class NotificationText {
+	public abstract String getNotificationText();
 }

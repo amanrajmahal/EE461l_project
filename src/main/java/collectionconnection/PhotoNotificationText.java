@@ -1,6 +1,6 @@
 package collectionconnection;
 
-public class PhotoNotificationText implements NotificationText {
+public class PhotoNotificationText extends NotificationText {
 	private String user;
 	private String photoName;
 	private String collectionName;
