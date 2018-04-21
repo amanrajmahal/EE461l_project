@@ -8,6 +8,7 @@
 <%@ page import="collectionconnection.Profile"%>
 <%@ page import="collectionconnection.Collection"%>
 <%@ page import="collectionconnection.Photo"%>
+<%@ page import="collectionconnection.Comment"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -24,17 +25,14 @@
 	<%
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		String profileName = user.getNickname();
 		String collectionName = "defaultCollection";
 		
-		pageContext.setAttribute("profileName", profileName);
 		pageContext.setAttribute("collectionName", collectionName);
 	%>
 
 	<form action="<%=blobstoreService.createUploadUrl("/upload")%>" method="post" enctype="multipart/form-data">
 		<input type="file" name="myFile"> 
 		<input type="submit" value="Submit">
-		<input type="hidden" name="profileName" value="${fn:escapeXml(profileName)}"/>
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collectionName)}"/>
 	</form>
 
@@ -62,11 +60,45 @@
 		<% 
 				}
 			}
+			
+			pageContext.setAttribute("username", profile.getUsername());	
 		%>
-			</div>
-		<%
+		</div>
+		
+		<form action="/comment" method="post">
+	      <h1> Comments </h1>
+	      <div><textarea name = "comment" placeholder="My comment here..." rows="1" cols="30"></textarea></div>
+	      <div><input class="btn btn-outline-success" type="submit" value="Post Blog" onclick="return checkEmpty()"/></div>
+	      <input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
+	      <input type="hidden" name="collection" value="${fn:escapeXml(collectionName)}"/>
+	    </form>
+	    <%
+	    	
+	    	//pull up comments for this profile and this collection
+	    	for(Collection collection : collections)
+	    	{
+	    		if(collection.getCollectionName().equals(collectionName))
+	    		{
+	    			ArrayList<Comment> comments = collection.getComments();
+	    			
+	    			for(Comment comment : comments)
+	    			{
+	    				Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", comment.getUser()).first().now();
+	    				
+	    				pageContext.setAttribute("comment", comment.getComment());
+	    				pageContext.setAttribute("usernameOfComment", profile.getUsername());
+	    				%>
+	    					<div>
+	    						<div><p> ${fn:escapeXml(comment)} </p></div>
+	    						<div><p> From ${fn:escapeXml(usernameOfComment)} </p></div>
+	    					</div>
+	    				<%
+	    			}
+	    		}
+	    	}
 		}
-	%>
+		 %>
+	
 	<a href="profilePage.jsp" role="button">Back to My Profile</a>	
 </body>
 </html>

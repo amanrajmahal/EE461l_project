@@ -33,7 +33,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         this.date = new Date();
         this.notificationLog = new TreeSet<>();
         this.collections = new ArrayList<Collection>();
-        //this.notificationLog = new HashSet<>();
+        this.notificationLog = new TreeSet<>();
         this.followers = new HashSet<>();
         this.notificationStyle = null;
     }
@@ -48,8 +48,12 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return username;
     }
     
+    public TreeSet<NotificationText> getNotificationLog() {
+    	return notificationLog;
+    }
+    
     public void changeNotificationStyle(Notification notification) {
-    	this.notificationStyle = notification;
+    		this.notificationStyle = notification;
     }
     
     public boolean addCollection(String collectionName)
@@ -121,23 +125,26 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	@Override
 	public void update(NotificationText notification) {
 		try {
-			if (notificationStyle instanceof RealTimeNotification)
-				notificationStyle.alert(notification, getFollowerEmails());
-			//else notificationLog.add(notification);
+			InternetAddress[] realTimeEmails = getFollowerEmails(true);
+			Notification.alert(notification, realTimeEmails);
+			notificationLog.add(notification);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
     
-	public InternetAddress[] getFollowerEmails() throws AddressException {
-		InternetAddress[] emails = new InternetAddress[followers.size()];
-		int i = 0;
+	public InternetAddress[] getFollowerEmails(Boolean realTime) throws AddressException {
+		ArrayList<InternetAddress> addresses = new ArrayList<>();
+		//InternetAddress[] emails = new InternetAddress[followers.size()];
+		//int i = 0;
 		for (Ref<Follower> follower : followers) {
 			Profile profile = (Profile)follower.get();
-			emails[i] = new InternetAddress(profile.actualUser.getEmail());
-			i++;
+			if (realTime && profile.notificationStyle instanceof RealTimeNotification) {
+				addresses.add(new InternetAddress(profile.actualUser.getEmail()));
+				//emails[i] = new InternetAddress(profile.actualUser.getEmail());
+				//i++;
+			}
 		}
-		return emails;
+		return (InternetAddress[])addresses.toArray();
 	}
 }
