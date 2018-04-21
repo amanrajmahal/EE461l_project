@@ -7,15 +7,25 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public abstract class Notification {
+enum NotificationType {
+	DAILY, REALTIME, NONE
+}
+
+public class Notification {
+	private NotificationType notificationType;
 	private boolean sendComments;
 	private boolean sendCollections;
 	private boolean sendPhotos;
 	
 	public Notification() {
+		this.notificationType = NotificationType.NONE;
 		this.sendComments = false;
 		this.sendCollections = false;
 		this.sendPhotos = false;
+	}
+	
+	public NotificationType getNotificationType() {
+		return notificationType;
 	}
 	
 	public boolean includeComments() {
@@ -42,6 +52,10 @@ public abstract class Notification {
 		this.sendPhotos = sendPhotos;
 	}
 
+	public void setNotificationType(NotificationType notificationType) {
+		this.notificationType = notificationType;
+	}
+	
 	public static void alert(NotificationText text, InternetAddress[] emails) {	
 		Properties properties = new Properties();
 		Session session = Session.getDefaultInstance(properties, null);
@@ -57,6 +71,4 @@ public abstract class Notification {
 			e.printStackTrace();
 		}	 
 	}
-
-	public abstract String getContent(NotificationText text);
 }
