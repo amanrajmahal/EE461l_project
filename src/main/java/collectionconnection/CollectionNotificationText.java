@@ -5,6 +5,7 @@ public class CollectionNotificationText extends NotificationText {
 	private String collectionName;
 	
 	public CollectionNotificationText(String user, String collectionName) {
+		super();
 		this.user = user;
 		this.collectionName = collectionName;
 	}
