@@ -15,7 +15,7 @@ import com.googlecode.objectify.ObjectifyService;
 
 public class CommentServlet extends HttpServlet {
 	static {
-		//ObjectifyService.register(Comment.class);
+		ObjectifyService.register(Profile.class);
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -41,7 +41,7 @@ public class CommentServlet extends HttpServlet {
 			ofy().clear();
 			ofy().save().entity(profile).now();
 		}
-		resp.sendRedirect("/");
+		resp.sendRedirect("/imageTest.jsp");
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -31,7 +31,6 @@ public class ImageServlet extends HttpServlet {
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		String profileName = req.getParameter("profileName");
 		String collectionName = req.getParameter("collectionName");
 		List<BlobKey> blobKeys = blobs.get("myFile");
 		if(blobKeys == null || blobKeys.size() == 0)
