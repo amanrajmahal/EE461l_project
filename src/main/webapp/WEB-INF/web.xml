@@ -23,6 +23,21 @@
 		<servlet-name>Comment</servlet-name>
 		<servlet-class>collectionconnection.CommentServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>Follower</servlet-name>
+		<servlet-class>collectionconnection.FollowerServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ProfileRedirect</servlet-name>
+		<servlet-class>collectionconnection.ProfileRedirectServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>Collection</servlet-name>
+		<servlet-class>collectionconnection.CollectionServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>Upload</servlet-name>
@@ -42,6 +57,21 @@
 	<servlet-mapping>
 		<servlet-name>Comment</servlet-name>
 		<url-pattern>/comment</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Follower</servlet-name>
+		<url-pattern>/follower</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ProfileRedirect</servlet-name>
+		<url-pattern>/profileredirect</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Collection</servlet-name>
+		<url-pattern>/collection</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

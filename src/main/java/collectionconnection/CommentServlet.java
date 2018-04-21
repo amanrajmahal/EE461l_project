@@ -25,7 +25,8 @@ public class CommentServlet extends HttpServlet {
 		//the logged in user is commenting on this profile and collection
 		String profileUsername = req.getParameter("username");
 		String collection = req.getParameter("collection");
-		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", profileUsername).first().now();
+		ofy().clear();
+		Profile profile = ofy().load().type(Profile.class).filter("username", profileUsername).first().now();
 		//shouldn't happen, but just in case
 		if(profile != null)
 		{
@@ -41,7 +42,7 @@ public class CommentServlet extends HttpServlet {
 			ofy().clear();
 			ofy().save().entity(profile).now();
 		}
-		resp.sendRedirect("/imageTest.jsp");
+		resp.sendRedirect("/imageTest.jsp?collectionName=" + collection + "&targetProfile=" + profileUsername);
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
