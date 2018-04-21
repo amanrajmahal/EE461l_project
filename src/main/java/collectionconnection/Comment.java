@@ -8,6 +8,8 @@ public class Comment {
 	private String comment;
 	private Date date;
 	
+	private Comment() {}
+	
 	public Comment(User user, String comment) {
 		this.user = user;
 		this.comment = comment;
