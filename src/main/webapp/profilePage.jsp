@@ -11,6 +11,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+	$("body").css("background-color","blue").fadeIn(3000);
+	$("#addCollection").css("color","blue");
+	$("#homePage").css("color","green")
+	$("#name").css("color","cyan")
+    $("#addCollection").click(function(){
+    	//href = "imageTest.jsp"
+    	window.location = "imageTest.jsp";
+    });
+    $("#homePage").click(function(){
+    	window.location = "welcomePage.jsp";
+    });
+});
+
+
+</script>
 <title>My Profile</title>
 </head>
 <body>
@@ -24,11 +43,12 @@
 		{
 			pageContext.setAttribute("username", targetProfile.getUsername());
 	%>		
-	<h1> ${fn:escapeXml(username)} </h1>
-	<a href="imageTest.jsp" role="button">Add Collection</a>	
+	<h1 id = "name"> ${fn:escapeXml(username)} </h1>
+	<!--  a href="imageTest.jsp" role="button">Add Collection</a>	-->
+	<button id="addCollection" > Add Collection</button>
 	<br>
-	<br>
-	<a href="welcomePage.jsp" role="button">Back to Home</a>
+	<br>	
+	<button id ="homePage">Back to Homepage</button>
 	<% 
 		}
 	%>
