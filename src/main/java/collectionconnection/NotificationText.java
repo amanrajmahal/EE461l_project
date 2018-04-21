@@ -9,6 +9,10 @@ public abstract class NotificationText implements Comparable<NotificationText> {
 		this.date = new Date();
 	}
 	
+	public Date getDate() {
+		return date;
+	}
+	
 	public abstract String getNotificationText();
 	
 	@Override
