@@ -108,6 +108,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	@Override
 	public void addFollower(Ref<Follower> f) {
 		followers.add(f);
+		update(new FollowerNotificationText(((Profile)(f.get())).getUsername())); 
 	}
 	
 	@Override
