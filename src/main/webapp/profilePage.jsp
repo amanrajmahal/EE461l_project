@@ -5,31 +5,14 @@
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="collectionconnection.Profile"%>
+<%@ page import="collectionconnection.Follower"%>
+<%@ page import="collectionconnection.Collection"%>
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script>
-$(document).ready(function(){
-	$("body").css("background-color","blue").fadeIn(3000);
-	$("#addCollection").css("color","blue");
-	$("#homePage").css("color","green")
-	$("#name").css("color","cyan")
-    $("#addCollection").click(function(){
-    	//href = "imageTest.jsp"
-    	window.location = "imageTest.jsp";
-    });
-    $("#homePage").click(function(){
-    	window.location = "welcomePage.jsp";
-    });
-});
-
-
-</script>
 <title>My Profile</title>
 </head>
 <body>
@@ -37,19 +20,70 @@ $(document).ready(function(){
 		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		
-		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();		
+		String desiredProfile = request.getParameter("targetProfile");
+		pageContext.setAttribute("currentProfile", desiredProfile);
+		ObjectifyService.ofy().clear();
+		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("username", desiredProfile).first().now();
+		ObjectifyService.ofy().clear();
+		Profile userProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		if(targetProfile != null)
 		{
+			Set<Ref<Follower>> followers = targetProfile.getFollowers();
 			pageContext.setAttribute("username", targetProfile.getUsername());
-	%>		
-	<h1 id = "name"> ${fn:escapeXml(username)} </h1>
-	<!--  a href="imageTest.jsp" role="button">Add Collection</a>	-->
-	<button id="addCollection" > Add Collection</button>
-	<br>
-	<br>	
-	<button id ="homePage">Back to Homepage</button>
+			%>
+			<h1> ${fn:escapeXml(username)} </h1>
+			<%
+			if(!userProfile.equals(targetProfile))
+			{
+				String buttonValue = "Follow";
+				if(followers.contains(Ref.create(userProfile)))
+				{
+					buttonValue = "Unfollow";
+				}
+				pageContext.setAttribute("buttonValue", buttonValue);
+	%>
+	<form action="/follower" method="post">
+	    <div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
+	    <input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
+	</form>
+	
 	<% 
+			}
+			else
+			{
+				%>
+				<form action="/collection" method="post">
+					<div><input name="collection"/></div>
+	   	 			<div><input type="submit" value="Add Collection"/></div>
+	    			<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
+	    			<input type="hidden" name="currentProfile" value="${fn:escapeXml(currentProfile)}"/>
+				</form>
+				<br>
+				<% 
+			}
+			
+			%>
+			<h1> Collections </h1>
+			<%
+			ArrayList<Collection> collections = targetProfile.getCollections();
+				
+			for(Collection collection : collections)
+			{
+				pageContext.setAttribute("collectionName", collection.getCollectionName());
+				%>
+					<br>
+					<a href="imageTest.jsp?collectionName=${fn:escapeXml(collectionName)}&targetProfile=${fn:escapeXml(currentProfile)}" role="button"> ${fn:escapeXml(collectionName)} </a>
+				<%
+			}
+	%>
+	<br>
+	<a href="welcomePage.jsp" role="button">Back to Home</a>
+	<% 
+			System.out.println("RELOADING");
+			for(Ref<Follower> follower : followers)
+			{
+				System.out.println(((Profile)follower.get()).getUsername());
+			}
 		}
 	%>
 </body>

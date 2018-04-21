@@ -42,10 +42,10 @@ public abstract class Notification {
 		this.sendPhotos = sendPhotos;
 	}
 
-	public static void alert(NotificationText text, InternetAddress[] emails) {	
+	public void alert(NotificationText text, InternetAddress[] emails) {	
 		Properties properties = new Properties();
 		Session session = Session.getDefaultInstance(properties, null);
-		String content = text.getNotificationText();
+		String content = getContent(text);
 		Message msg = new MimeMessage(session);
 		try {
 			msg.setFrom(new InternetAddress("admin@collectionconnection.appspotmail.com","CollectionConnection Digest"));
@@ -55,7 +55,7 @@ public abstract class Notification {
 			Transport.send(msg);	
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}	 
 	}
 
 	public abstract String getContent(NotificationText text);

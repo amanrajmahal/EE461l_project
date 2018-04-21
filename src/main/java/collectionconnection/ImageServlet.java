@@ -35,12 +35,10 @@ public class ImageServlet extends HttpServlet {
 		List<BlobKey> blobKeys = blobs.get("myFile");
 		if(blobKeys == null || blobKeys.size() == 0)
 		{
-			res.sendRedirect("/imageTest.jsp");
+			res.sendRedirect("/imageTest.jsp?collectionName="+collectionName);
 		}
 		else
 		{
-			//ofy().save().entity(new Photo(user, profileName, collectionName, blobKeys.get(0).getKeyString())).now();
-			//find the right profile
 			ofy().clear();
 			Profile profile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 			if(profile != null)
@@ -51,7 +49,7 @@ public class ImageServlet extends HttpServlet {
 				ofy().clear();
 				ofy().save().entity(profile).now();
 			}
-			res.sendRedirect("/imageTest.jsp");
+			res.sendRedirect("/imageTest.jsp?collectionName="+collectionName);
 		}
 	}
 

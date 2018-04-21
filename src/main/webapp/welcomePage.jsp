@@ -35,8 +35,22 @@
 		<a class="accountbutton btn btn-secondary btn-sm" href="<%=userService.createLogoutURL(request.getRequestURI()) %>" role="button">Sign Out</a>
 		<br>
 		<br>
-		<a href="profilePage.jsp">My Profile</a>
+		<a href="profilePage.jsp?targetProfile=${fn:escapeXml(username)}">My Profile</a>
 	<%
+			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
+			for(Profile otherprofile : profiles)
+			{
+				if(!profile.equals(otherprofile))
+				{
+					pageContext.setAttribute("otherUsername", otherprofile.getUsername());
+				%>
+					<br>
+					<a href="profilePage.jsp?targetProfile=${fn:escapeXml(otherUsername)}">${fn:escapeXml(otherUsername)}</a>
+				<%
+				}
+			}
+			
+			
 			}
 			else
 			{

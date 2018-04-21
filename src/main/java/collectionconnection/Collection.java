@@ -17,6 +17,7 @@ public class Collection {
 	{
 		this.collectionName = collectionName;
 		this.photos = new ArrayList<Photo>();
+		this.comments = new ArrayList<Comment>();
 	}
 	
 	public void addPhoto(String name, String blobKey)
