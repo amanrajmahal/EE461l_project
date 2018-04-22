@@ -24,7 +24,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private Date date;
     private TreeSet<NotificationText> notificationLog = new TreeSet<>();
     private ArrayList<Collection> collections = new ArrayList<>();
-    private Notification notificationStyle;
+    private Notification notification;
     
     private Profile() {}
     public Profile(User user, String username) {
@@ -35,7 +35,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         this.collections = new ArrayList<Collection>();
         this.notificationLog = new TreeSet<>();
         this.followers = new HashSet<>();
-        this.notificationStyle = null;
+        this.notification = new Notification();
     }
     
     public User getUser()
@@ -48,12 +48,16 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return username;
     }
     
+    public Set<Ref<Follower>> getFollowers() {
+    	return followers;
+    }
+    
     public TreeSet<NotificationText> getNotificationLog() {
     	return notificationLog;
     }
     
     public void changeNotificationStyle(Notification notification) {
-    		this.notificationStyle = notification;
+    		this.notification = notification;
     }
     
     public boolean addCollection(String collectionName)
@@ -126,24 +130,21 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	public void update(NotificationText notification) {
 		try {
 			InternetAddress[] realTimeEmails = getFollowerEmails(true);
-			Notification.alert(notification, realTimeEmails);
+			Notification.alert(notification.getNotificationText(), realTimeEmails);
 			notificationLog.add(notification);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
     
-	public InternetAddress[] getFollowerEmails(Boolean realTime) throws AddressException {
+	public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
 		ArrayList<InternetAddress> addresses = new ArrayList<>();
-		//InternetAddress[] emails = new InternetAddress[followers.size()];
-		//int i = 0;
 		for (Ref<Follower> follower : followers) {
 			Profile profile = (Profile)follower.get();
-			if (realTime && profile.notificationStyle instanceof RealTimeNotification) {
+			NotificationType type = profile.notification.getNotificationType();
+			if ((realTime && type == NotificationType.REALTIME) || (!realTime && type == NotificationType.DAILY)) {
 				addresses.add(new InternetAddress(profile.actualUser.getEmail()));
-				//emails[i] = new InternetAddress(profile.actualUser.getEmail());
-				//i++;
-			}
+			} 
 		}
 		return (InternetAddress[])addresses.toArray();
 	}

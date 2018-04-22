@@ -16,12 +16,22 @@ public class Notification {
 	private boolean sendComments;
 	private boolean sendCollections;
 	private boolean sendPhotos;
+	private boolean sendFollowers;
 	
 	public Notification() {
 		this.notificationType = NotificationType.NONE;
 		this.sendComments = false;
 		this.sendCollections = false;
 		this.sendPhotos = false;
+		this.sendFollowers = false;
+	}
+	
+	public Notification(NotificationType type, boolean sendComments, boolean sendCollections, boolean sendPhotos, boolean sendFollowers) {
+		this.notificationType = type;
+		this.sendComments = sendComments;
+		this.sendCollections = sendCollections;
+		this.sendPhotos = sendPhotos;
+		this.sendFollowers = sendFollowers;
 	}
 	
 	public NotificationType getNotificationType() {
@@ -56,16 +66,15 @@ public class Notification {
 		this.notificationType = notificationType;
 	}
 	
-	public static void alert(NotificationText text, InternetAddress[] emails) {	
+	public static void alert(String text, InternetAddress[] emails) {	
 		Properties properties = new Properties();
 		Session session = Session.getDefaultInstance(properties, null);
-		String content = text.getNotificationText();
 		Message msg = new MimeMessage(session);
 		try {
 			msg.setFrom(new InternetAddress("admin@collectionconnection.appspotmail.com","CollectionConnection Digest"));
 			msg.addRecipients(Message.RecipientType.BCC, emails);
 			msg.setSubject("Notifications from CollectionConnection");
-			msg.setText(content);
+			msg.setText(text);
 			Transport.send(msg);	
 		} catch (Exception e) {
 			e.printStackTrace();

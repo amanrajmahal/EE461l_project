@@ -23,9 +23,9 @@
 		String desiredProfile = request.getParameter("targetProfile");
 		pageContext.setAttribute("currentProfile", desiredProfile);
 		ObjectifyService.ofy().clear();
-		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("username", desiredProfile).first().now();
+		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("username", desiredProfile).first().now();	// who the user is going to follow
 		ObjectifyService.ofy().clear();
-		Profile userProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile userProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now(); // current user who is logged in
 		if(targetProfile != null)
 		{
 			Set<Ref<Follower>> followers = targetProfile.getFollowers();
@@ -33,13 +33,15 @@
 			%>
 			<h1> ${fn:escapeXml(username)} </h1>
 			<%
-			if(!userProfile.equals(targetProfile))
+			if (!userProfile.getUsername().equals(targetProfile.getUsername()))
 			{
-				String buttonValue = "Follow";
-				if(followers.contains(Ref.create(userProfile)))
-				{
-					buttonValue = "Unfollow";
-				}
+				System.out.println("userProfile: " + userProfile + "\ntargetProfile: " + targetProfile);
+				String buttonValue = followers.contains(Ref.create(userProfile)) ? "Unfollow" : "Follow";
+				//String buttonValue = "Follow";
+				//if(followers.contains(Ref.create(userProfile)))
+				//{
+					//buttonValue = "Unfollow";
+				//}
 				pageContext.setAttribute("buttonValue", buttonValue);
 	%>
 	<form action="/follower" method="post">
@@ -71,11 +73,12 @@
 			{
 				pageContext.setAttribute("collectionName", collection.getCollectionName());
 				%>
-					<br>
 					<a href="imageTest.jsp?collectionName=${fn:escapeXml(collectionName)}&targetProfile=${fn:escapeXml(currentProfile)}" role="button"> ${fn:escapeXml(collectionName)} </a>
+					<br>
 				<%
 			}
 	%>
+	<br>
 	<br>
 	<a href="welcomePage.jsp" role="button">Back to Home</a>
 	<% 

@@ -32,10 +32,13 @@
 				pageContext.setAttribute("username", profile.getUsername());
 	%>
 		<p> Hello ${fn:escapeXml(username)}! </p>
+		<a href="profilePage.jsp?targetProfile=${fn:escapeXml(username)}">My Profile</a>
+		<br>		
 		<a class="accountbutton btn btn-secondary btn-sm" href="<%=userService.createLogoutURL(request.getRequestURI()) %>" role="button">Sign Out</a>
 		<br>
 		<br>
-		<a href="profilePage.jsp?targetProfile=${fn:escapeXml(username)}">My Profile</a>
+		<br>
+		<h2>Other Profiles</h2>
 	<%
 			List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
 			for(Profile otherprofile : profiles)
@@ -44,8 +47,8 @@
 				{
 					pageContext.setAttribute("otherUsername", otherprofile.getUsername());
 				%>
-					<br>
 					<a href="profilePage.jsp?targetProfile=${fn:escapeXml(otherUsername)}">${fn:escapeXml(otherUsername)}</a>
+					<br>
 				<%
 				}
 			}

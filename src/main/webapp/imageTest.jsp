@@ -103,8 +103,7 @@
 	   				pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 	   				%>
 	   					<div>
-	   						<div><p> ${fn:escapeXml(comment)} </p></div>
-	   						<div><p> From ${fn:escapeXml(usernameOfComment)} </p></div>
+	   						<div><p><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)} </p></div>
 	   					</div>
 	   				<%
 	   			}
