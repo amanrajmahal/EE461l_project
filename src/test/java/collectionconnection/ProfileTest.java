@@ -1,24 +1,31 @@
 package collectionconnection;
 
 import static org.junit.Assert.*;
-import collectionconnection.Profile;
 
 import org.junit.Test;
 
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Ref;
-
 public class ProfileTest {
-
 	@Test
-	public void test() {
-		ObjectifyService.register(Profile.class);
+	public void collectionTest() {
 		Profile p1 = new Profile(null, "John");
-		Profile p2 = new Profile(null, "Nick");
-		p2.id =(long)2;
-		Follower f = p2;
-		//Ref.create(f);
-		//p1.addFollower(Ref.create(p2));
+		p1.addCollection("Collection1");
+		assertTrue(p1.getCollections().get(0).getCollectionName().equals("Collection1"));
 	}
-
+	
+	@Test
+	public void photoTest() {
+		Profile p1 = new Profile(null, "John");
+		p1.addCollection("Collection1");
+		p1.addPhoto("Collection1", "Photo1", "blob");
+		assertTrue(p1.getCollections().get(0).getPhotos().get(0).getName().equals("Photo1"));
+	}
+	
+	@Test
+	public void commentTest() {
+		Profile p1 = new Profile(null, "John");
+		p1.addCollection("Collection1");
+		p1.addPhoto("Collection1", "Photo1", "blob");
+		p1.getCollections().get(0).addComment("Great", null);
+		assertTrue(p1.getCollections().get(0).getComments().get(0).getComment().equals("Great"));
+	}
 }
