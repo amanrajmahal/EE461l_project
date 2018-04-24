@@ -75,14 +75,13 @@ $(document).ready(function(){
 				//}
 				pageContext.setAttribute("buttonValue", buttonValue);
 	%>
-	 
-	 	<form action="/follower" method="post">
+	
+		<!--<button id = "follow">${fn:escapeXml(buttonValue)}</button> -->
+
+		<form action="/follower" method="post">
 	    	<div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
 	    	<input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
 		</form>
-	
-	
-		<button id = "follow">${fn:escapeXml(buttonValue)}</button>
 	<% 
 			}
 			else
@@ -98,19 +97,21 @@ $(document).ready(function(){
 				<% 
 			}
 			
-			%>							
+			%>
 			<h3 style ="color:green" style = "font-family: serif" style = "text-align:center"> Collections </h3>
 			<%
 			ArrayList<Collection> collections = targetProfile.getCollections();
+				
 			%>
 			<div class = "container">
 				<div class="row">
-			<%			  	
+			<%	
+			
 			for(Collection collection : collections)
 			{
 				pageContext.setAttribute("collectionName", collection.getCollectionName());
 				%>	<div class="col-sm-4" style="background-color:lavender;">
-					<a href="imageTest.jsp?collectionName=${fn:escapeXml(collectionName)}&targetProfile=${fn:escapeXml(currentProfile)}" role="button"> ${fn:escapeXml(collectionName)} </a>
+					<a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>
 					</div>
 					<br>
 				<%
