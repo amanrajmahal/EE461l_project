@@ -21,8 +21,8 @@
 <script>
 $(document).ready(function(){
 	$("#body").css("background-color","lavender");
-    $("#home").click(function(){
-    	window.location = "welcomePage.jsp";
+    $("#follow").click(function(){
+    	
     });
 });
 
@@ -31,22 +31,25 @@ $(document).ready(function(){
 <title>My Profile</title>
 </head>
 <body id = "body">
+<%
+	UserService userService = UserServiceFactory.getUserService();
+%>
 	<nav class="navbar navbar-default" style = "background-color:lavender">
   		<div class="container-fluid">
     		<div class="navbar-header">
       	<a class="navbar-brand" href="welcomePage.jsp" style = "background-color:lavender">Collection Connection</a>
     	</div>
     	<ul class="nav navbar-nav" style = "background-color:lavender">
-      		<li class="active" ><a href="welcomePage.jsp">Home</a></li>
-      		<li><a href="#">Add Collection</a></li>
-      		<li><a href="#">Page 2</a></li>
-      		<li><a href="#">Page 3</a></li>
+      		<li class="active" ><a style = "background-color:lavender" href="welcomePage.jsp">Home</a></li>
+      		<li class="active"><a style = "background-color:lavender" href="imageTest.jsp">Add Collection</a></li>
+      		<li><a style = "background-color:lavender" href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+      		 
     	</ul>
   		</div>
 	</nav>
 	<% 
 		ObjectifyService.register(Profile.class);
-		UserService userService = UserServiceFactory.getUserService();
+		
 		User user = userService.getCurrentUser();
 		String desiredProfile = request.getParameter("targetProfile");
 		pageContext.setAttribute("currentProfile", desiredProfile);
@@ -72,23 +75,25 @@ $(document).ready(function(){
 				//}
 				pageContext.setAttribute("buttonValue", buttonValue);
 	%>
-
-		<form action="/follower" method="post">
+	 
+	 	<form action="/follower" method="post">
 	    	<div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
 	    	<input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
 		</form>
 	
+	
+		<button id = "follow">${fn:escapeXml(buttonValue)}</button>
 	<% 
 			}
 			else
 			{
 				%>
-				<form action="/collection" method="post">
+				 <!-- <form action="/collection" method="post">
 					<div><input name="collection"/></div>
 	   	 			<div><input type="submit" value="Add Collection"/></div>
 	    			<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 	    			<input type="hidden" name="currentProfile" value="${fn:escapeXml(currentProfile)}"/>
-				</form>
+				</form> -->
 				<br>
 				<% 
 			}
