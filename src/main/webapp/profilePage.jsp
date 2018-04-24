@@ -12,10 +12,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!--  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#body").css("background-color","lavender");
+    $("#home").click(function(){
+    	window.location = "welcomePage.jsp";
+    });
+});
+
+</script>
+
 <title>My Profile</title>
 </head>
-<body>
+<body id = "body">
+	<nav class="navbar navbar-default" style = "background-color:lavender">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      	<a class="navbar-brand" href="welcomePage.jsp" style = "background-color:lavender">Collection Connection</a>
+    	</div>
+    	<ul class="nav navbar-nav" style = "background-color:lavender">
+      		<li class="active" ><a href="welcomePage.jsp">Home</a></li>
+      		<li><a href="#">Add Collection</a></li>
+      		<li><a href="#">Page 2</a></li>
+      		<li><a href="#">Page 3</a></li>
+    	</ul>
+  		</div>
+	</nav>
 	<% 
 		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
@@ -31,7 +59,7 @@
 			Set<Ref<Follower>> followers = targetProfile.getFollowers();
 			pageContext.setAttribute("username", targetProfile.getUsername());
 			%>
-			<h1> ${fn:escapeXml(username)} </h1>
+			<h3 style ="color:green" style = "font-family: serif" style = "text-align:center"> ${fn:escapeXml(username)} </h3>
 			<%
 			if (!userProfile.getUsername().equals(targetProfile.getUsername()))
 			{
@@ -44,10 +72,11 @@
 				//}
 				pageContext.setAttribute("buttonValue", buttonValue);
 	%>
-	<form action="/follower" method="post">
-	    <div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
-	    <input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
-	</form>
+
+		<form action="/follower" method="post">
+	    	<div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
+	    	<input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
+		</form>
 	
 	<% 
 			}
@@ -64,23 +93,30 @@
 				<% 
 			}
 			
-			%>
-			<h1> Collections </h1>
+			%>							
+			<h3 style ="color:green" style = "font-family: serif" style = "text-align:center"> Collections </h3>
 			<%
 			ArrayList<Collection> collections = targetProfile.getCollections();
-				
+			%>
+			<div class = "container">
+				<div class="row">
+			<%			  	
 			for(Collection collection : collections)
 			{
 				pageContext.setAttribute("collectionName", collection.getCollectionName());
-				%>
+				%>	<div class="col-sm-4" style="background-color:lavender;">
 					<a href="imageTest.jsp?collectionName=${fn:escapeXml(collectionName)}&targetProfile=${fn:escapeXml(currentProfile)}" role="button"> ${fn:escapeXml(collectionName)} </a>
+					</div>
 					<br>
 				<%
 			}
-	%>
+	%>		
+				</div>
+			</div>
 	<br>
 	<br>
-	<a href="welcomePage.jsp" role="button">Back to Home</a>
+	<!--  
+	<a href="welcomePage.jsp" role="button">Back to Home</a> -->
 	<% 
 			System.out.println("RELOADING");
 			for(Ref<Follower> follower : followers)
