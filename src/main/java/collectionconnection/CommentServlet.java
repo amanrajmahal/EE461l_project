@@ -42,7 +42,7 @@ public class CommentServlet extends HttpServlet {
 			ofy().clear();
 			ofy().save().entity(profile).now();
 		}
-		resp.sendRedirect("/imageTest.jsp?collectionName=" + collection + "&targetProfile=" + profileUsername);
+		resp.sendRedirect("/collectionPage.jsp?targetProfile=" + profileUsername + "&collectionName=" + collection);
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
