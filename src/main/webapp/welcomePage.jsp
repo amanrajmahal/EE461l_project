@@ -11,10 +11,8 @@
 <head>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Collection Connection Home</title>
 <style>
@@ -36,9 +34,7 @@
 		<h1>Collection Connection</h1>
 		<div>
 			<p>Hello user!</p>
-			<a class="btn btn-primary"
-				href="<%=userService.createLoginURL(request.getRequestURI())%>">
-				Sign In </a>
+			<a class="btn btn-primary" href="<%=userService.createLoginURL(request.getRequestURI())%>">Sign In</a>
 		</div>
 	</div>
 
@@ -52,11 +48,10 @@
 		<h1>Collection Connection</h1>
 		<div class="center">
 			<p>Hello ${fn:escapeXml(username)}!</p>
-			<a href="profilePage.jsp?username=${fn:escapeXml(username)}">My
-				Profile</a> <br> <a style="margin-top: .8em"
-				class="btn btn-primary"
-				href="<%=userService.createLogoutURL(request.getRequestURI())%>">
-				Sign Out </a> <br> <br> <br>
+			<a href="profilePage.jsp?username=${fn:escapeXml(username)}">My Profile</a>
+			<br>
+			<a style="margin-top: .8em" class="btn btn-primary" href="<%=userService.createLogoutURL(request.getRequestURI())%>">Sign Out</a>
+			<br> <br> <br>
 			<h2>Other Profiles</h2>
 		</div>
 	</div>
@@ -67,8 +62,7 @@
 						pageContext.setAttribute("username", otherprofile.getUsername());
 	%>
 	<div class="center">
-		<a style="text-align: center;"
-			href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
+		<a style="text-align: center;" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
 	</div>
 	<%
 					}
@@ -78,8 +72,7 @@
 	%>
 	<p class="center">Hello! Please input a Username below.</p>
 	<form class="center" action="/profile" method="post">
-		<input type="text"
-			style="margin: auto; margin-bottom: 1em; width: 40%;"
+		<input type="text" style="margin: auto; margin-bottom: 1em; width: 40%;"
 			class="form-control center" name="username" placeholder="Username">
 		<input type="submit" class="btn btn-success" value="Submit">
 	</form>

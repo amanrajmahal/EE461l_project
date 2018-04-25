@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page
-	import="com.google.appengine.api.blobstore.BlobstoreServiceFactory"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory"%>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
@@ -22,12 +21,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
 		//$("#body").css("background-color","black");
@@ -35,7 +31,7 @@
 </script>
 <title>Upload Test</title>
 </head>
-<body>
+<body style="margin:10px">
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -87,23 +83,17 @@
 	%>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="welcomePage.jsp" style=>Collection
-					Connection</a>
-			</div>
-			<ul class="nav navbar-nav" style=>
-				<li class="active"><a href="welcomePage.jsp">Home</a></li>
-				<li class="active"><a href="profilePage.jsp?targetProfile=">Back
-						to My Profile BROKEN</a></li>
-				<!-- <li><a href="#">Page 2</a></li>
-	      		<li><a href="#">Page 3</a></li> -->
+			<a class="navbar-brand navbar-header" href="welcomePage.jsp" style=>Collection Connection</a>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
 			</ul>
 		</div>
 	</nav>
 	<form action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
 		<input type="file" name="myFile" accept="image/*">
-		<input class="btn btn-success" type="submit" id="fileSub" value="Submit" disabled>
+		<input style="margin-top:10px" class="btn btn-success" type="submit" id="fileSub" value="Submit" disabled>
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
 
@@ -114,7 +104,6 @@
 			if (collection != null) {
 				pageContext.setAttribute("collection", collection.getCollectionName());
 	%>
-	<div>
 		<h1>${fn:escapeXml(collection)}</h1>
 		<%
 			ArrayList<Photo> photos = collection.getPhotos();
@@ -129,20 +118,8 @@
 
 					pageContext.setAttribute("username", profile.getUsername());
 		%>
-		<form action="/comment" method="post">
-			<h1>Comments</h1>
-			<div>
-				<textarea name="comment" class = "form-control" id="txtArea"
-					placeholder="My comment here..." rows="1" cols="30"></textarea>
-			</div>
-			<div>
-				<input class="btn btn-success" id="txtSub" type="submit"
-					value="Post comment" disabled>
-			</div>
-			<input type="hidden" name="username"
-				value="${fn:escapeXml(username)}" /> <input type="hidden"
-				name="collection" value="${fn:escapeXml(collection)}" />
-		</form>
+		<br><br><br>
+		<h2>Comments</h2>
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
@@ -153,22 +130,21 @@
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-		<div>
-			<div>
-				<p>
-					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
-				</p>
-			</div>
-		</div>
+				<p><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}</p>
 		<%
 			}
 				}
 		%>
-	</div>
+	<br>
+	<form action="/comment" method="post">
+			<textarea name="comment" class = "form-control" id="txtArea" placeholder="Comment here..." rows="1" cols="30"></textarea>
+			<input style="margin-top:10px" class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
+			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+		</form>
 	<%
 		}
 	%>
-	<a href="profilePage.jsp?username=${fn:escapeXml(username)}"
-		role="button">Back to My Profile</a>
+	<!-- <a href="profilePage.jsp?username=${fn:escapeXml(username)}" role="button">Back to My Profile</a> -->
 </body>
 </html>

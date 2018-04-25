@@ -23,7 +23,7 @@ public class ProfileServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		if(profile == null) ofy().save().entity(new Profile(user, username)).now();
-		resp.sendRedirect("/");
+		resp.sendRedirect("/welcomePage.jsp");
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

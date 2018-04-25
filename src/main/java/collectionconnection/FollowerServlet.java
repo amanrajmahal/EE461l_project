@@ -46,7 +46,7 @@ public class FollowerServlet extends HttpServlet {
 			ofy().save().entity(profile).now();
 		}
 		
-		resp.sendRedirect("/profilePage.jsp?profile=" + profile.getUsername());
+		resp.sendRedirect("/profilePage.jsp?username=" + profile.getUsername());
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

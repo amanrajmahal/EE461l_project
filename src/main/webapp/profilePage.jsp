@@ -14,12 +14,9 @@
 <!--  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
 		//$("#body").css("background-color","lavender");
@@ -31,7 +28,7 @@
 
 <title>My Profile</title>
 </head>
-<body id="body">
+<body id="body" style="margin:10px">
 	<%
 		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
@@ -47,44 +44,29 @@
 		if (profile != null) {
 			Set<Ref<Follower>> followers = profile.getFollowers();
 	%>
-	<h3 style="color: green; font-family: serif; text-align: center">
-		${fn:escapeXml(username)}</h3>
+	<h3 style="color: green; font-family: serif; text-align: center">${fn:escapeXml(username)}</h3>
 	<%
 		if (!myProfile.getUsername().equals(profile.getUsername())) {
 				//System.out.println("userProfile: " + myProfile + "\ntargetProfile: " + profile);
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
-				//String buttonValue = "Follow";
-				//if(followers.contains(Ref.create(userProfile)))
-				//{
-				//buttonValue = "Unfollow";
-				//}
 				pageContext.setAttribute("buttonValue", buttonValue);
 	%>
-
-	<!-- 	<form action="/follower" method="post">
-	    	<div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
-	    	<input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
-		</form>
-	-->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="welcomePage.jsp">Collection
-					Connection</a>
+				<a class="navbar-brand" href="welcomePage.jsp">Collection Connection</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="welcomePage.jsp">Home</a></li>
-				<li class="active"><a href="collectionPage.jsp">Add
-						Collection</a></li>
-				<li><a role="button"
-					href="<%=userService.createLogoutURL(request.getRequestURI())%>">Sign
-						Out</a></li>
-
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
 			</ul>
 		</div>
 	</nav>
-
-	<button id="follow">${fn:escapeXml(buttonValue)}</button>
+	
+	<form action="/follower" method="post">
+	    	<input type="submit" value="${fn:escapeXml(buttonValue)}"/>
+	    	<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
+	</form>
 	<%
 		} else {
 	%>
@@ -96,25 +78,16 @@
 				</form> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="welcomePage.jsp">Collection
-					Connection</a>
-			</div>
+			<a class="navbar-brand navbar-header" href="welcomePage.jsp">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="welcomePage.jsp">Home</a></li>
-				<li class="active"><a href="collectionPage.jsp">Add
-						Collection</a></li>
-				<li><a role="button"
-					href="<%=userService.createLogoutURL(request.getRequestURI())%>">Sign
-						Out</a></li>
-
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
 			</ul>
-			<form class="navbar-form navbar-left" action="/collection"
-				method="post">
+			
+			<form class="navbar-form navbar-left" action="/collection" method="post">
 				<div class="form-group">
-					<input type="text" name="collection" class="form-control"
-						placeholder="Collection Name"> <input type="hidden"
-						name="username" value="${fn:escapeXml(username)}">
+					<input type="text" name="collection" class="form-control" placeholder="Collection Name">
+					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 				</div>
 				<input type="submit" class="btn btn-default" value="Add Collection">
 			</form>
@@ -124,21 +97,17 @@
 	<%
 		}
 	%>
-	<h3 style="color: green; font-family: serif; text-align: center">
-		Collections</h3>
+	<h3 style="color: green; font-family: serif; text-align: center">Collections</h3>
 	<%
 		ArrayList<Collection> collections = profile.getCollections();
 	%>
-	<div class="container text-center">
+		<div class="container text-center">
 		<div class="row">
 			<%
 				for (Collection collection : collections) {
 					pageContext.setAttribute("collection", collection.getCollectionName());
 			%>
 			<div class="col-sm-4">
-
-
-
 				<%
 					ArrayList<Photo> photos = collection.getPhotos();
 							if (!photos.isEmpty()) {
@@ -146,14 +115,12 @@
 								pageContext.setAttribute("photoname", photos.get(0).getName());
 				%>
 				<!-- <a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>-->
-				<img width="200" height="150" class="img-rounded"
-					src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
 				<%
 					}
 				%>
 				<p>
-					<strong><a
-						href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
+					<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
 						role="button"> ${fn:escapeXml(collection)} </a></strong>
 				</p>
 			</div>
