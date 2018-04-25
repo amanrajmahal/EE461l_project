@@ -35,31 +35,33 @@ public class SeleniumTest {
 	}
 	
 	@Test
-	public void testCollection() throws InterruptedException {
-		System.out.println("In testCollection");
+	public void testSelenium() {
 		// test adding collection
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("My Profile")));
 		driver.findElement(By.linkText("My Profile")).click();
 		WebElement textField = driver.findElement(By.name("collection"));
 		textField.sendKeys("testCollection");
 		textField.submit();
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Back to My Profile")));
-		driver.findElement(By.linkText("Back to My Profile")).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("My Profile")));
+		driver.findElement(By.linkText("My Profile")).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("testCollection")));
 		WebElement element = driver.findElement(By.linkText("testCollection"));
 		element.click();
+		assertEquals(driver.getCurrentUrl(), "http://localhost:8080/collectionPage.jsp?username=bob&collection=testCollection");
 		
 		// test comment
-		WebElement txtArea = driver.findElement(By.id("txtArea"));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.name("comment")));
+		WebElement txtArea = driver.findElement(By.name("comment"));
 		txtArea.sendKeys("Test comment");
 		txtArea.submit();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("commentTest")));
-		List<WebElement> comments = driver.findElements(By.className("commentTest"));
-		System.out.println(comments.size());
+		driver.navigate().refresh();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("commentTest")));
+		List<WebElement> comments = driver.findElements(By.id("commentTest"));
 		String commentContent = comments.get(0).getText();
 		assertEquals(commentContent, "bob: Test comment");
 		
-		// test Follower
+		// test comment from different user
 		driver.navigate().to("http://localhost:8080");
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Sign Out")));
 		driver.findElement(By.linkText("Sign Out")).click();
@@ -78,11 +80,27 @@ public class SeleniumTest {
 		driver.findElement(By.linkText("bob")).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("testCollection")));
 		driver.findElement(By.linkText("testCollection")).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("commentTest")));
-		List<WebElement> commentsAgain = driver.findElements(By.className("commentTest"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("commentTest")));
+		List<WebElement> commentsAgain = driver.findElements(By.id("commentTest"));
 		assertTrue(commentsAgain.size() == 1);
 		assertEquals(commentsAgain.get(0).getText(), "bob: Test comment");
 		
+		// test follower
+		driver.navigate().back();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("followerTest")));
+		WebElement followButton = driver.findElement(By.id("followerTest"));
+		driver.findElement(By.id("followerTest")).click();
+		driver.navigate().refresh();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("followerTest")));
+		followButton = driver.findElement(By.id("followerTest"));
+		wait.until(ExpectedConditions.attributeToBe(followButton, "value", "Unfollow"));
+		assertEquals(followButton.getAttribute("value"), "Unfollow");
+		driver.findElement(By.id("followerTest")).click();
+		driver.navigate().refresh();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("followerTest")));
+		followButton = driver.findElement(By.id("followerTest")); 
+		wait.until(ExpectedConditions.attributeToBe(followButton, "value", "Follow"));
+		assertEquals(followButton.getAttribute("value"), "Follow");
 	}
 	
 	

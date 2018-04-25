@@ -29,12 +29,12 @@
 		//$("#body").css("background-color","black");
 	});
 </script>
-<title>Upload Test</title>
+<title id="pageTitle">Collection</title>
 </head>
 <body style="margin:10px">
 
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$(document).ready(function() {		
 			$('input:file').change(function() {
 				if ($(this).val()) {
 					$('#fileSub').attr('disabled', false);
@@ -130,7 +130,7 @@
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-				<p><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}</p>
+				<p id="commentTest"><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}</p>
 		<%
 			}
 				}

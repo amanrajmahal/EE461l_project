@@ -64,7 +64,7 @@
 	</nav>
 	
 	<form action="/follower" method="post">
-	    	<input type="submit" value="${fn:escapeXml(buttonValue)}"/>
+	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
 	    	<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 	</form>
 	<%
