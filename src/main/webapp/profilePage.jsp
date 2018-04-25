@@ -26,6 +26,15 @@
 	});
 </script>
 
+<style>
+
+.navbar-text {
+	text-align:center;
+	color:red;
+}
+
+</style>
+
 <title>My Profile</title>
 </head>
 <body id="body" style="margin:10px">
@@ -44,7 +53,6 @@
 		if (profile != null) {
 			Set<Ref<Follower>> followers = profile.getFollowers();
 	%>
-	<h3 style="color: green; font-family: serif; text-align: center">${fn:escapeXml(username)}</h3>
 	<%
 		if (!myProfile.getUsername().equals(profile.getUsername())) {
 				//System.out.println("userProfile: " + myProfile + "\ntargetProfile: " + profile);
@@ -56,6 +64,7 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="welcomePage.jsp">Collection Connection</a>
 			</div>
+			<h3 class="navbar-nav navbar-text">${fn:escapeXml(username)}</h3>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
