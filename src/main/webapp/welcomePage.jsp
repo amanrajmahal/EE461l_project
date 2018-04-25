@@ -40,6 +40,7 @@
 
 	<%
 		} else {
+			//ObjectifyService.ofy().clear();
 			Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 			if (profile != null) {
 				pageContext.setAttribute("username", profile.getUsername());
@@ -56,6 +57,7 @@
 		</div>
 	</div>
 	<%
+				//ObjectifyService.ofy().clear();
 				List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
 				for (Profile otherprofile : profiles) {
 					if (!profile.equals(otherprofile)) {

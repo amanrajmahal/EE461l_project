@@ -62,7 +62,7 @@
 		String username = request.getParameter("username");
 		pageContext.setAttribute("username", username);
 		pageContext.setAttribute("collection", collectionName);
-		ObjectifyService.ofy().clear();
+		//ObjectifyService.ofy().clear();
 
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
 		/*
@@ -77,7 +77,7 @@
 			profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		}
 		*/
-
+		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		if (myProfile.equals(profile)) {
 	%>
@@ -125,6 +125,7 @@
 					ArrayList<Comment> comments = collection.getComments();
 
 					for (Comment comment : comments) {
+						//ObjectifyService.ofy().clear();
 						Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", comment.getUser()).first().now();
 
 						pageContext.setAttribute("comment", comment.getComment());

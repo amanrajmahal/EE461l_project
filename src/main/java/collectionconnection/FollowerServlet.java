@@ -25,24 +25,25 @@ public class FollowerServlet extends HttpServlet {
 		User user = userService.getCurrentUser();
 		String username = req.getParameter("username");
 		
-		ofy().clear();
+		//ofy().clear();
 		Profile myProfile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
-		ofy().clear();
+		//ofy().clear();
 		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		
 		if(myProfile != null && profile != null && !myProfile.equals(profile))
 		{
 			Set<Ref<Follower>> followers = profile.getFollowers();
-			if(followers.contains(Ref.create(myProfile)))
+			Ref<Follower> follower = Ref.create(myProfile);
+			if(followers.contains(follower))
 			{
-				profile.removeFollower(Ref.create(myProfile));
+				profile.removeFollower(follower);
 			}
 			else
 			{
-				profile.addFollower(Ref.create(myProfile));
+				profile.addFollower(follower);
 			}
 			System.out.println(followers);
-			ofy().clear();
+			//ofy().clear();
 			ofy().save().entity(profile).now();
 		}
 		

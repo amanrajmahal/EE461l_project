@@ -44,9 +44,9 @@
 		User user = userService.getCurrentUser();
 		String username = request.getParameter("username");
 		pageContext.setAttribute("username", username);
-		ObjectifyService.ofy().clear();
+		//ObjectifyService.ofy().clear();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now(); // who the user is going to follow
-		ObjectifyService.ofy().clear();
+		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now(); // current user who is logged in
 	%>
 	<%

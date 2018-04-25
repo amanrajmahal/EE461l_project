@@ -39,14 +39,14 @@ public class ImageServlet extends HttpServlet {
 		}
 		else
 		{
-			ofy().clear();
+			//ofy().clear();
 			Profile profile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 			if(profile != null)
 			{
 				profile.addCollection(collectionName);
 				profile.addPhoto(collectionName, "PhotoNameTest",  blobKeys.get(0).getKeyString());
 				//save the new entity
-				ofy().clear();
+				//ofy().clear();
 				ofy().save().entity(profile).now();
 			}
 			res.sendRedirect("/collectionPage.jsp?username="+profile.getUsername()+"&collection="+collectionName);
