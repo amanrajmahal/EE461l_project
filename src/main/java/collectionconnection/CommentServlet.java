@@ -23,10 +23,10 @@ public class CommentServlet extends HttpServlet {
 		User user = userService.getCurrentUser();
 		String comment = req.getParameter("comment");
 		//the logged in user is commenting on this profile and collection
-		String profileUsername = req.getParameter("username");
+		String username = req.getParameter("username");
 		String collection = req.getParameter("collection");
 		ofy().clear();
-		Profile profile = ofy().load().type(Profile.class).filter("username", profileUsername).first().now();
+		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		//shouldn't happen, but just in case
 		if(profile != null)
 		{
@@ -42,7 +42,7 @@ public class CommentServlet extends HttpServlet {
 			ofy().clear();
 			ofy().save().entity(profile).now();
 		}
-		resp.sendRedirect("/collectionPage.jsp?targetProfile=" + profileUsername + "&collectionName=" + collection);
+		resp.sendRedirect("/collectionPage.jsp?username=" + username + "&collection=" + collection);
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
