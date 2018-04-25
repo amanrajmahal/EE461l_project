@@ -23,30 +23,30 @@ public class FollowerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		String profileToAdd = req.getParameter("profileToAdd");
+		String username = req.getParameter("username");
 		
 		ofy().clear();
-		Profile userProfile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile myProfile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		ofy().clear();
-		Profile userToAdd = ofy().load().type(Profile.class).filter("username", profileToAdd).first().now();
+		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		
-		if(userProfile != null && userToAdd != null && !userProfile.equals(userToAdd))
+		if(myProfile != null && profile != null && !myProfile.equals(profile))
 		{
-			Set<Ref<Follower>> followers = userToAdd.getFollowers();
-			if(followers.contains(Ref.create(userProfile)))
+			Set<Ref<Follower>> followers = profile.getFollowers();
+			if(followers.contains(Ref.create(myProfile)))
 			{
-				userToAdd.removeFollower(Ref.create(userProfile));
+				profile.removeFollower(Ref.create(myProfile));
 			}
 			else
 			{
-				userToAdd.addFollower(Ref.create(userProfile));
+				profile.addFollower(Ref.create(myProfile));
 			}
 			System.out.println(followers);
 			ofy().clear();
-			ofy().save().entity(userToAdd).now();
+			ofy().save().entity(profile).now();
 		}
 		
-		resp.sendRedirect("/profilePage.jsp?targetProfile=" + userToAdd.getUsername());
+		resp.sendRedirect("/profilePage.jsp?profile=" + profile.getUsername());
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

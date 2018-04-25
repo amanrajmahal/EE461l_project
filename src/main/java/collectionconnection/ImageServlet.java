@@ -35,7 +35,7 @@ public class ImageServlet extends HttpServlet {
 		List<BlobKey> blobKeys = blobs.get("myFile");
 		if(blobKeys == null || blobKeys.size() == 0)
 		{
-			res.sendRedirect("/collectionPage.jsp?collectionName="+collectionName);
+			res.sendRedirect("/");
 		}
 		else
 		{
@@ -49,7 +49,7 @@ public class ImageServlet extends HttpServlet {
 				ofy().clear();
 				ofy().save().entity(profile).now();
 			}
-			res.sendRedirect("/collectionPage.jsp?targetProfile="+profile.getUsername()+"&collectionName="+collectionName);
+			res.sendRedirect("/collectionPage.jsp?username="+profile.getUsername()+"&collection="+collectionName);
 		}
 	}
 

@@ -26,8 +26,8 @@ public class ProfileRedirectServlet extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String targetProfile = req.getParameter("username");
-		res.sendRedirect("/profilePage.jsp?targetProfile=" + targetProfile);
+		String username = req.getParameter("username");
+		res.sendRedirect("/profilePage.jsp?username=" + username);
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
