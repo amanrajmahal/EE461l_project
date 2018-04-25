@@ -149,7 +149,7 @@ $(document).ready(function(){
 	   				pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 	   				%>
 	   					<div>
-	   						<div><p><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)} </p></div>
+	   						<div class="commentTest"><p><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)} </p></div>
 	   					</div>
 	   				<%
 	   			}
