@@ -19,11 +19,19 @@
 
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	//$("#body").css("background-color","black");
+});
+</script>
 <title>Upload Test</title>
 </head>
-<body>
-
-	
+<body>	
 	<%
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
@@ -52,10 +60,47 @@
 		if(userProfile.equals(profile))
 		{
 			%>
-		
+			<script type="text/javascript">
+				$(document).ready(
+					    function(){
+					        $('input:file').change(
+					            function(){
+					                if ($(this).val()) {
+					                    $('#fileSub').attr('disabled',false);
+					                    // or, as has been pointed out elsewhere:
+					                    // $('input:submit').removeAttr('disabled'); 
+					                } 
+					            }
+					            );
+							$("#txtArea").keypress( 
+								function(){
+									if($("#txtArea").val().trim().length < 1){
+										$('#txtSub').attr('disabled',true);
+									}else{
+										$('#txtSub').attr('disabled',false);
+									}
+								}
+								
+							)
+					    });
+
+			</script>
+			<nav class="navbar navbar-default">
+	  		<div class="container-fluid">
+	    		<div class="navbar-header">
+	      	<a class="navbar-brand" href="welcomePage.jsp" style = >Collection Connection</a>
+	    	</div>
+	    		<ul class="nav navbar-nav" style = >
+	      		<li class="active" ><a href="welcomePage.jsp">Home</a></li>
+	      		<li class="active"><a href="profilePage.jsp?targetProfile=">Back to My Profile BROKEN</a></li>
+	      		<!-- <li><a href="#">Page 2</a></li>
+	      		<li><a href="#">Page 3</a></li> -->
+	    		</ul>
+	  			</div>
+			</nav>
 			<form action="<%=blobstoreService.createUploadUrl("/upload")%>" method="post" enctype="multipart/form-data">
-				<input type="file" name="myFile"> 
-				<input type="submit" value="Submit">
+				<input type="file" name="myFile" accept="image/*"> 
+				<input class="btn btn-success" type="submit" id="fileSub" value="Submit" disabled>
 				<input type="hidden" name="collectionName" value="${fn:escapeXml(collectionName)}"/>
 			</form>
 		
@@ -77,7 +122,8 @@
 					pageContext.setAttribute("blobkey", photo.getBlobKey());
 					pageContext.setAttribute("photoname", photo.getName());				
 			%>
-								<img width="200" height="150" title = "${fn:escapeXml(photoname)}" src = "serve?blob-key=${fn:escapeXml(blobkey)}">
+				<img width="200" height="150" title = "${fn:escapeXml(photoname)}" 
+					src = "serve?blob-key=${fn:escapeXml(blobkey)}">
 			<% 
 				}
 				
@@ -85,8 +131,8 @@
 				%>			
 				<form action="/comment" method="post">
 			      <h1> Comments </h1>
-			      <div><textarea name = "comment" placeholder="My comment here..." rows="1" cols="30"></textarea></div>
-			      <div><input class="btn btn-outline-success" type="submit" value="Post Blog" onclick="return checkEmpty()"/></div>
+			      <div><textarea name = "comment" id="txtArea" placeholder="My comment here..." rows="1" cols="30"></textarea></div>
+			      <div><input class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled></div>
 			      <input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 			      <input type="hidden" name="collection" value="${fn:escapeXml(collectionName)}"/>
 			    </form>

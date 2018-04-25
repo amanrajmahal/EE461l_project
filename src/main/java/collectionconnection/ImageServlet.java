@@ -49,7 +49,7 @@ public class ImageServlet extends HttpServlet {
 				ofy().clear();
 				ofy().save().entity(profile).now();
 			}
-			res.sendRedirect("/collectionPage.jsp?collectionName="+collectionName);
+			res.sendRedirect("/collectionPage.jsp?targetProfile="+profile.getUsername()+"&collectionName="+collectionName);
 		}
 	}
 

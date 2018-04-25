@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
@@ -7,9 +6,9 @@
 <%@ page import="collectionconnection.Profile"%>
 <%@ page import="collectionconnection.Follower"%>
 <%@ page import="collectionconnection.Collection"%>
+<%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <!--  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
@@ -20,7 +19,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
-	$("#body").css("background-color","lavender");
+	//$("#body").css("background-color","lavender");
     $("#follow").click(function(){
     	
     });
@@ -33,36 +32,22 @@ $(document).ready(function(){
 <body id = "body">
 <%
 	UserService userService = UserServiceFactory.getUserService();
+	ObjectifyService.register(Profile.class);
+	User user = userService.getCurrentUser();
+	String desiredProfile = request.getParameter("targetProfile");
+	pageContext.setAttribute("currentProfile", desiredProfile);
+	ObjectifyService.ofy().clear();
+	Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("username", desiredProfile).first().now();	// who the user is going to follow
+	ObjectifyService.ofy().clear();
+	Profile userProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now(); // current user who is logged in
 %>
-	<nav class="navbar navbar-default" style = "background-color:lavender">
-  		<div class="container-fluid">
-    		<div class="navbar-header">
-      	<a class="navbar-brand" href="welcomePage.jsp" style = "background-color:lavender">Collection Connection</a>
-    	</div>
-    	<ul class="nav navbar-nav" style = "background-color:lavender">
-      		<li class="active" ><a style = "background-color:lavender" href="welcomePage.jsp">Home</a></li>
-      		<li class="active"><a style = "background-color:lavender" href="imageTest.jsp">Add Collection</a></li>
-      		<li><a style = "background-color:lavender" href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
-      		 
-    	</ul>
-  		</div>
-	</nav>
 	<% 
-		ObjectifyService.register(Profile.class);
-		
-		User user = userService.getCurrentUser();
-		String desiredProfile = request.getParameter("targetProfile");
-		pageContext.setAttribute("currentProfile", desiredProfile);
-		ObjectifyService.ofy().clear();
-		Profile targetProfile = ObjectifyService.ofy().load().type(Profile.class).filter("username", desiredProfile).first().now();	// who the user is going to follow
-		ObjectifyService.ofy().clear();
-		Profile userProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now(); // current user who is logged in
-		if(targetProfile != null)
+	if(targetProfile != null)
 		{
 			Set<Ref<Follower>> followers = targetProfile.getFollowers();
 			pageContext.setAttribute("username", targetProfile.getUsername());
 			%>
-			<h3 style ="color:green" style = "font-family: serif" style = "text-align:center"> ${fn:escapeXml(username)} </h3>
+			<h3 style ="color:green; font-family: serif; text-align:center"> ${fn:escapeXml(username)} </h3>
 			<%
 			if (!userProfile.getUsername().equals(targetProfile.getUsername()))
 			{
@@ -75,50 +60,97 @@ $(document).ready(function(){
 				//}
 				pageContext.setAttribute("buttonValue", buttonValue);
 	%>
-	
-		<!--<button id = "follow">${fn:escapeXml(buttonValue)}</button> -->
-
-		<form action="/follower" method="post">
+	 
+	<!-- 	<form action="/follower" method="post">
 	    	<div><input type="submit" value="${fn:escapeXml(buttonValue)}"/></div>
 	    	<input type="hidden" name="profileToAdd" value="${fn:escapeXml(username)}"/>
 		</form>
+	-->
+			<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<a class="navbar-brand" href="welcomePage.jsp">Collection Connection</a>
+    		</div>
+    	<ul class="nav navbar-nav navbar-right">
+      		<li class="active" ><a href="welcomePage.jsp">Home</a></li>
+      		<li class="active"><a href="collectionPage.jsp">Add Collection</a></li>
+      		<li><a role="button" href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+      		 
+    	</ul>
+  		</div>
+	</nav>
+	
+		<button id = "follow">${fn:escapeXml(buttonValue)}</button>
 	<% 
 			}
 			else
 			{
 				%>
-				 <!-- <form action="/collection" method="post">
+				<!-- <form action="/collection" method="post">
 					<div><input name="collection"/></div>
 	   	 			<div><input type="submit" value="Add Collection"/></div>
 	    			<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 	    			<input type="hidden" name="currentProfile" value="${fn:escapeXml(currentProfile)}"/>
 				</form> -->
-				<br>
+					<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<a class="navbar-brand" href="welcomePage.jsp">Collection Connection</a>
+    		</div>
+    	<ul class="nav navbar-nav navbar-right">
+      		<li class="active" ><a href="welcomePage.jsp">Home</a></li>
+      		<li class="active"><a href="collectionPage.jsp">Add Collection</a></li>
+      		<li><a role="button" href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+      		 
+    	</ul>
+		<form class="navbar-form navbar-left" action="/collection" method="post">
+	      <div class="form-group">
+	        <input type="text" name="collection" class="form-control" placeholder="Collection Name">
+	        <input type="hidden" name="username" value="${fn:escapeXml(username)}">
+	      </div>
+	      <input type="submit" class="btn btn-default" value="Add Collection" >
+ 		</form>
+  		</div>
+	</nav>
+	<br>
 				<% 
 			}
 			
-			%>
-			<h3 style ="color:green" style = "font-family: serif" style = "text-align:center"> Collections </h3>
+			%>							
+			<h3 style ="color:green; font-family: serif; text-align:center"> Collections </h3>
 			<%
 			ArrayList<Collection> collections = targetProfile.getCollections();
-				
 			%>
-			<div class = "container">
-				<div class="row">
-			<%	
-			
-			for(Collection collection : collections)
-			{
-				pageContext.setAttribute("collectionName", collection.getCollectionName());
-				%>	<div class="col-sm-4" style="background-color:lavender;">
-					<a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>
-					</div>
-					<br>
-				<%
-			}
-	%>		
-				</div>
-			</div>
+<div class = "container text-center">
+                <div class="row">
+            <%    
+            
+            for(Collection collection : collections)
+            {
+                pageContext.setAttribute("collectionName", collection.getCollectionName());
+                %>    <div class="col-sm-4">
+    
+                    
+                    
+                    <% ArrayList<Photo> photos = collection.getPhotos();
+                    if(!photos.isEmpty()){
+                    pageContext.setAttribute("blobkey", photos.get(0).getBlobKey());
+                    pageContext.setAttribute("photoname", photos.get(0).getName());
+                    %>
+                    <!-- <a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>-->
+                    <img width="200" height="150" class="img-rounded" src = "serve?blob-key=${fn:escapeXml(blobkey)}">
+                    <%
+                    }
+                    %>
+                    <p><strong><a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}"
+                     role="button"> ${fn:escapeXml(collectionName)} </a></strong></p>
+                    </div>
+
+                <%
+            }
+    %>        
+                </div>
+            </div>
 	<br>
 	<br>
 	<!--  
