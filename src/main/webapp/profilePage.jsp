@@ -64,13 +64,13 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="welcomePage.jsp">Collection Connection</a>
 			</div>
-			<h3 class="navbar-nav navbar-text">${fn:escapeXml(username)}</h3>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
 			</ul>
 		</div>
 	</nav>
+	<h3 style="text-align:center; color:green; font-family:serif;">${fn:escapeXml(username)}</h3>
 	
 	<form action="/follower" method="post">
 	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
@@ -85,6 +85,7 @@
 	    			<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 	    			<input type="hidden" name="currentProfile" value="${fn:escapeXml(currentProfile)}"/>
 				</form> -->
+	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="welcomePage.jsp">Collection Connection</a>
@@ -102,6 +103,7 @@
 			</form>
 		</div>
 	</nav>
+	<h3 style="text-align:center; color:green; font-family:serif;">My Profile</h3>
 	<br>
 	<%
 		}
@@ -144,7 +146,7 @@
 	<!--  
 	<a href="welcomePage.jsp" role="button">Back to Home</a> -->
 	<%
-		System.out.println("RELOADING");
+		//System.out.println("RELOADING");
 			for (Ref<Follower> follower : followers) {
 				System.out.println(((Profile) follower.get()).getUsername());
 			}
