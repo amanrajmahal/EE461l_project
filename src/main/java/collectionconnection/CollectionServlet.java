@@ -31,14 +31,14 @@ public class CollectionServlet extends HttpServlet {
 		String collection = req.getParameter("collection");
 		//String currentProfile = req.getParameter("currentProfile");
 		
-		ofy().clear();
+		//ofy().clear();
 		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		
 		if(profile != null && collection != null && !collection.isEmpty())
 		{
 			profile.addCollection(collection);
 			
-			ofy().clear();
+			//ofy().clear();
 			ofy().save().entity(profile).now();
 		}
 		

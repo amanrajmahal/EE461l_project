@@ -25,7 +25,7 @@ public class CommentServlet extends HttpServlet {
 		//the logged in user is commenting on this profile and collection
 		String username = req.getParameter("username");
 		String collection = req.getParameter("collection");
-		ofy().clear();
+		//ofy().clear();
 		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		//shouldn't happen, but just in case
 		if(profile != null)
@@ -39,7 +39,7 @@ public class CommentServlet extends HttpServlet {
 					profileCollection.addComment(comment, user);
 				}
 			}
-			ofy().clear();
+			//ofy().clear();
 			ofy().save().entity(profile).now();
 		}
 		resp.sendRedirect("/collectionPage.jsp?username=" + username + "&collection=" + collection);
