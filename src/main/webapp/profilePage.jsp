@@ -62,7 +62,7 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="welcomePage.jsp">Collection Connection</a>
+				<a class="navbar-brand" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
@@ -89,7 +89,7 @@
 	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<a class="navbar-brand navbar-header" href="welcomePage.jsp">Collection Connection</a>
+			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
