@@ -22,6 +22,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
@@ -53,6 +55,11 @@
 			)
 		});
 	</script>
+<style>
+#fileIn{
+    display: none;
+}
+</style>
 	
 	<%
 		ObjectifyService.register(Profile.class);
@@ -92,8 +99,11 @@
 	</nav>
 	<form action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
-		<input type="file" name="myFile" accept="image/*">
-		<input style="margin-top:10px" class="btn btn-success" type="submit" id="fileSub" value="Submit" disabled>
+		<label class="btn btn-default">
+			<input type="file" id="fileIn" name="myFile" accept="image/*"
+				onchange="javascript:this.form.submit();">
+			File Upload
+		</label>
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
 
@@ -105,16 +115,25 @@
 				pageContext.setAttribute("collection", collection.getCollectionName());
 	%>
 		<h1>${fn:escapeXml(collection)}</h1>
+		<div class="container text-center">
+		<div class="row">
 		<%
 			ArrayList<Photo> photos = collection.getPhotos();
 					for (Photo photo : photos) {
 						pageContext.setAttribute("blobkey", photo.getBlobKey());
 						pageContext.setAttribute("photoname", photo.getName());
 		%>
-		<img width="200" height="150" title="${fn:escapeXml(photoname)}"
-			src="serve?blob-key=${fn:escapeXml(blobkey)}">
+			<div class="col-sm-4">
+			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
+				<img width="200" height="150" title="${fn:escapeXml(photoname)}"
+									src="serve?blob-key=${fn:escapeXml(blobkey)}"></a>
+			</div>
 		<%
 			}
+					%>
+					</div>
+					</div>
+		<% 
 
 					pageContext.setAttribute("username", profile.getUsername());
 		%>
@@ -137,7 +156,7 @@
 				}
 		%>
 	<br>
-		<form action="/comment" method="post">
+	<form action="/comment" method="post">
 			<textarea name="comment" class = "form-control" id="txtArea" placeholder="Comment here..." rows="1" cols="30"></textarea>
 			<input style="margin-top:10px" class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />

@@ -57,8 +57,13 @@
 		if (!myProfile.getUsername().equals(profile.getUsername())) {
 				//System.out.println("userProfile: " + myProfile + "\ntargetProfile: " + profile);
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
-				pageContext.setAttribute("buttonValue", buttonValue);
+				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
+	<script type="text/javascript">
+	
+	document.getElementById("followerTest").value = buttonValue
+	
+	</script>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -74,7 +79,7 @@
 	<h3 style="text-align:center; color:green; font-family:serif;">${fn:escapeXml(username)}</h3>
 	
 	<form action="/follower" method="post">
-	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
+	    	<input style="text-align:center" id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
 	    	<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 	</form>
 	<%
@@ -128,7 +133,10 @@
 								pageContext.setAttribute("photoname", photos.get(0).getName());
 				%>
 				<!-- <a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>-->
+				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
+						role="button">
 				<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				</a>
 				<%
 					}
 				%>
