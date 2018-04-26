@@ -31,6 +31,15 @@
 		//$("#body").css("background-color","black");
 	});
 </script>
+<style>
+#fileIn{
+    display: none;
+}
+.center {
+	text-align: center;
+	align: center;
+}
+</style>
 <title id="pageTitle">Collection</title>
 </head>
 <body style="margin:10px">
@@ -53,6 +62,13 @@
 			}
 
 			)
+			$('#txtArea').each(function () {
+				  this.setAttribute('style', 'height:' + (this.scrollHeight) + 
+						  'px;overflow-y:hidden;margin:auto;');
+				}).on('input', function () {
+				  this.style.height = 'auto';
+				  this.style.height = (this.scrollHeight) + 'px';
+				});
 		});
 	</script>
 <style>
@@ -109,7 +125,10 @@ div.show-image input {
 			<a class="navbar-brand navbar-header" href="welcomePage.jsp" style=>Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
-				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
+					<span class="glyphicon glyphicon-log-out"></span>
+					Sign Out</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -133,6 +152,7 @@ div.show-image input {
 		<h1>${fn:escapeXml(collection)}</h1>
 		<div class="container text-center">
 		<div class="row">
+		<h1 align="center">${fn:escapeXml(collection)}</h1>
 		<%
 			ArrayList<Photo> photos = collection.getPhotos();
 					for (Photo photo : photos) {
@@ -151,6 +171,8 @@ div.show-image input {
 			</a>
 			 
 			</div>
+		<img width="200" height="150" title="${fn:escapeXml(photoname)}"
+			src="serve?blob-key=${fn:escapeXml(blobkey)}">
 		<%
 			}
 					%>
@@ -159,9 +181,18 @@ div.show-image input {
 		<% 
 
 			pageContext.setAttribute("username", profile.getUsername());
+					pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
 		<h2>Comments</h2>
+		<h2 align="center">Comments</h2>
+		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
+			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
+			<input type="submit"  id="txtSub"  value="Post comment" style="margin-top:10px;float:right" class="btn btn-success"   disabled>
+			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+		</form>
+		
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
