@@ -45,6 +45,11 @@
 	</servlet>
 	
 	<servlet>
+		<servlet-name>Delete</servlet-name>
+		<servlet-class>collectionconnection.DeleteServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
 		<servlet-name>cron</servlet-name>
 		<servlet-class>collectionconnection.CronJobServlet</servlet-class>
     </servlet>
@@ -77,6 +82,11 @@
 	<servlet-mapping>
 		<servlet-name>Collection</servlet-name>
 		<url-pattern>/collection</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Delete</servlet-name>
+		<url-pattern>/delete</url-pattern>
 	</servlet-mapping>
 
     <servlet-mapping>

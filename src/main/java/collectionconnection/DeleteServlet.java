@@ -31,6 +31,8 @@ public class DeleteServlet extends HttpServlet {
 		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
 		ArrayList<Collection> collections = profile.getCollections();
 		
+		System.out.println("TEST");
+		
 		switch(command)
 		{
 			case "collection":
@@ -53,7 +55,9 @@ public class DeleteServlet extends HttpServlet {
 				resp.sendRedirect("/profilePage.jsp?username=" + username);
 				break;
 			case "photo":
+				System.out.println("Photo");
 				String photoKey = req.getParameter("photo");
+				System.out.println("Passed key:" + photoKey);
 				for(Collection collection : collections)
 				{
 					if(collection.getCollectionName().equals(collectionname))
@@ -62,8 +66,10 @@ public class DeleteServlet extends HttpServlet {
 						Photo photoToRemove = null;
 						for(Photo photo : photos)
 						{
+							System.out.println(photo.getBlobKey());
 							if(photo.getBlobKey().equals(photoKey))
 							{
+								//System.out.println("WUT");
 								photoToRemove = photo;
 								blobstoreService.delete(new BlobKey(photo.getBlobKey()));
 							}
@@ -99,7 +105,7 @@ public class DeleteServlet extends HttpServlet {
 				resp.sendRedirect("/profilePage.jsp?username=" + username);
 				break;
 		}
-		
+		ofy().save().entity(profile).now();
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
