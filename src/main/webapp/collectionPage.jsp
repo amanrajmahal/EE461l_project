@@ -29,6 +29,11 @@
 		//$("#body").css("background-color","black");
 	});
 </script>
+<style>
+#fileIn{
+    display: none;
+}
+</style>
 <title id="pageTitle">Collection</title>
 </head>
 <body style="margin:10px">
@@ -92,8 +97,11 @@
 	</nav>
 	<form action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
-		<input type="file" name="myFile" accept="image/*">
-		<input style="margin-top:10px" class="btn btn-success" type="submit" id="fileSub" value="Submit" disabled>
+		<label class="btn btn-default">
+			<input type="file" id="fileIn" name="myFile" accept="image/*"
+				onchange="javascript:this.form.submit();">
+			File Upload
+		</label>
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
 
