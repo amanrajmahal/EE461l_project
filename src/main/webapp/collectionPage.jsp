@@ -104,7 +104,7 @@
 			if (collection != null) {
 				pageContext.setAttribute("collection", collection.getCollectionName());
 	%>
-		<h1 align="center">${fn:escapeXml(collection)}</h1>
+		<h1>${fn:escapeXml(collection)}</h1>
 		<%
 			ArrayList<Photo> photos = collection.getPhotos();
 					for (Photo photo : photos) {
@@ -119,7 +119,7 @@
 					pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
-		<h2 align="center">Comments</h2>
+		<h2>Comments</h2>
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
