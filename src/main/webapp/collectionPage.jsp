@@ -137,7 +137,7 @@
 				}
 		%>
 	<br>
-	<form action="/comment" method="post">
+		<form action="/comment" method="post">
 			<textarea name="comment" class = "form-control" id="txtArea" placeholder="Comment here..." rows="1" cols="30"></textarea>
 			<input style="margin-top:10px" class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />

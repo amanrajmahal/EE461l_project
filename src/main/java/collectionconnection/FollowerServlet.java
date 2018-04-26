@@ -42,11 +42,11 @@ public class FollowerServlet extends HttpServlet {
 			{
 				profile.addFollower(follower);
 			}
-			System.out.println(followers);
+			//System.out.println(follower.isLoaded());
+			System.out.println("Followers @ servlet: " + followers);
 			//ofy().clear();
 			ofy().save().entity(profile).now();
 		}
-		
 		resp.sendRedirect("/profilePage.jsp?username=" + profile.getUsername());
 	}
 	

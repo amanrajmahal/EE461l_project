@@ -40,11 +40,6 @@
 	</servlet>
 	
 	<servlet>
-		<servlet-name>ProfileRedirect</servlet-name>
-		<servlet-class>collectionconnection.ProfileRedirectServlet</servlet-class>
-	</servlet>
-	
-	<servlet>
 		<servlet-name>Collection</servlet-name>
 		<servlet-class>collectionconnection.CollectionServlet</servlet-class>
 	</servlet>
@@ -72,11 +67,6 @@
 	<servlet-mapping>
 		<servlet-name>Follower</servlet-name>
 		<url-pattern>/follower</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>ProfileRedirect</servlet-name>
-		<url-pattern>/profileredirect</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
