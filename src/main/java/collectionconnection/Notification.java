@@ -73,7 +73,7 @@ public class Notification {
 		try {
 			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
 			msg.addRecipients(Message.RecipientType.BCC, emails);
-			msg.setSubject("Notifications from CollectionConnection");
+			msg.setSubject("Notifications from Collection Connection");
 			msg.setText(text);
 			Transport.send(msg);	
 		} catch (Exception e) {
