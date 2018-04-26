@@ -10,6 +10,7 @@ public class Collection {
 	private String collectionName;
 	private ArrayList<Photo> photos = new ArrayList<>();
 	private ArrayList<Comment> comments = new ArrayList<>();
+	private int commentId = 0;
 	
 	private Collection() {}
 	
@@ -18,6 +19,7 @@ public class Collection {
 		this.collectionName = collectionName;
 		this.photos = new ArrayList<Photo>();
 		this.comments = new ArrayList<Comment>();
+		this.commentId = 0;
 	}
 	
 	public void addPhoto(String name, String blobKey)
@@ -27,7 +29,8 @@ public class Collection {
 
 	public void addComment(String comment, User user)
 	{
-		comments.add(new Comment(user, comment));
+		commentId++;
+		comments.add(new Comment(user, comment, commentId));
 	}
 	
 	public ArrayList<Photo> getPhotos()

@@ -84,7 +84,7 @@ public class DeleteServlet extends HttpServlet {
 						Comment commentToRemove = null;
 						for(Comment comment : comments)
 						{
-							if(comment.getId() == commentId)
+							if(comment.getCommentId() == commentId)
 							{
 								commentToRemove = comment;
 								break;
