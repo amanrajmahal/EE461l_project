@@ -144,10 +144,7 @@
 	</div>
 	<br>
 	<br>
-	<!--  
-	<a href="welcomePage.jsp" role="button">Back to Home</a> -->
 	<%
-		//System.out.println("RELOADING");
 			for (Ref<Follower> follower : followers) {
 				System.out.println(((Profile) follower.get()).getUsername());
 			}

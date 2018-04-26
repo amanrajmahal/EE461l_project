@@ -57,7 +57,7 @@ div.show-image input {
     display:none;
 }
 </style>
-<title id="pageTitle">Collection</title>
+<title>Collection</title>
 </head>
 <body class="body-margins">
 
@@ -100,18 +100,6 @@ div.show-image input {
 		//ObjectifyService.ofy().clear();
 
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
-		/*
-		System.out.println("Desired profile: " + username);
-		if (username != null && username.length() > 0) {
-			//pull up desired one
-			profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
-		} 
-		
-		else {
-			//pull up your own 
-			profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
-		}
-		*/
 		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		if (myProfile.equals(profile)) {
@@ -178,7 +166,6 @@ div.show-image input {
 			pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
-		<h2>Comments</h2>
 		<h2 align="center">Comments</h2>
 		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
 			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
@@ -200,6 +187,7 @@ div.show-image input {
 		%>
 				<div id="commentTest" style="margin:auto;">
 					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
+					<br>
 				</div>
 		<%
 					}
