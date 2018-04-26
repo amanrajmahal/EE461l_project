@@ -14,6 +14,12 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.center {
+	text-align: center;
+	align: center;
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Browse</title>
 </head>
@@ -27,7 +33,7 @@
 		%>
 		<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<a class="navbar-brand navbar-header" href="welcomePage.jsp">Collection Connection</a>
+			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=profile.getUsername()%>">My Profile</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
@@ -42,8 +48,8 @@
 				<input type="submit" class="btn btn-default" value="Add Collection">
 			</form>
 		</div>
-	</nav>
-	<h1 style="text-align:center">Browse Other Profiles</h1>
+		</nav>
+		<h1 style="text-align:center">Browse Other Profiles</h1>
 		<%
 		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
 			for (Profile otherprofile : profiles) {
@@ -51,7 +57,7 @@
 					pageContext.setAttribute("username", otherprofile.getUsername());
 					%>
 					<div class="center">
-						<a style="text-align:center;" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
+						<a href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
 					</div>	
 					<% 				
 				}
