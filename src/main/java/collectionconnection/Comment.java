@@ -3,7 +3,7 @@ package collectionconnection;
 import java.util.Date;
 import com.google.appengine.api.users.User;
 
-public class Comment {
+public class Comment implements Comparable<Comment>{
 	private User user;
 	private String comment;
 	private Date date;
@@ -32,6 +32,16 @@ public class Comment {
 
 	public int getCommentId() {
 		return commentId;
+	}
+
+	@Override
+	public int compareTo(Comment o) {
+		if (date.after(o.date)) {
+            return -1;
+        } else if (date.before(o.date)) {
+            return 1;
+        }
+        return 0;
 	}
 
 }

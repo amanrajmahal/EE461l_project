@@ -32,6 +32,31 @@
 		//$("#body").css("background-color","black");
 	});
 </script>
+<style>
+#fileIn{
+    display: none;
+}
+.center {
+	text-align: center;
+	align: center;
+}
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;
+}
+
+div.show-image:hover input{
+  display: block;
+}
+
+div.show-image input {
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+}
+</style>
 <title id="pageTitle">Collection</title>
 </head>
 <body class="body-margins">
@@ -54,6 +79,13 @@
 			}
 
 			)
+			$('#txtArea').each(function () {
+				  this.setAttribute('style', 'height:' + (this.scrollHeight) + 
+						  'px;overflow-y:hidden;margin:auto;');
+				}).on('input', function () {
+				  this.style.height = 'auto';
+				  this.style.height = (this.scrollHeight) + 'px';
+				});
 		});
 	</script>
 	
@@ -90,7 +122,8 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
-				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
+					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -111,7 +144,7 @@
 			if (collection != null) {
 				pageContext.setAttribute("collection", collection.getCollectionName());
 	%>
-		<h1>${fn:escapeXml(collection)}</h1>
+		<h1 align="center">${fn:escapeXml(collection)}</h1>
 		<div class="container text-center">
 		<div class="row">
 		<%
@@ -121,15 +154,18 @@
 						pageContext.setAttribute("photoname", photo.getName());
 		%>
 			<div class="col-sm-4">
-			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
+			<!-- <a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}"> -->
 			<div class="show-image">
-				<img width="250" height="150" title="${fn:escapeXml(photoname)}"
-									src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				<img width="250" height="150" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
 				<form action ="/delete" method = "post">
-				<input class="the-buttons" type="button" value="X" />
+					<input class="the-buttons" type="submit" value="X" />
+					<input type="hidden" name="command" value="photo" />
+					<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+					<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+					<input type="hidden" name="photo" value="${fn:escapeXml(blobkey)}" />
 				</form>
 			</div>
-			</a>
+			<!--</a>-->
 			 
 			</div>
 		<%
@@ -143,9 +179,17 @@
 		%>
 		<br><br><br>
 		<h2>Comments</h2>
+		<h2 align="center">Comments</h2>
+		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
+			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
+			<input type="submit"  id="txtSub"  value="Post comment" style="margin-top:10px;float:right" class="btn btn-success"   disabled>
+			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+		</form>
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
+					Collections.sort(comments);
 
 					for (Comment comment : comments) {
 						//ObjectifyService.ofy().clear();
@@ -154,21 +198,13 @@
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-				<p id="commentTest"><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}</p>
+				<div id="commentTest" style="margin:auto;">
+					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
+				</div>
 		<%
-			}
+					}
 				}
-		%>
-	<br>
-	<form action="/comment" method="post">
-			<textarea name="comment" class = "form-control" id="txtArea" placeholder="Comment here..." rows="1" cols="30"></textarea>
-			<input class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
-			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
-			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
-	</form>
-	<%
 		}
 	%>
-	<!-- <a href="profilePage.jsp?username=${fn:escapeXml(username)}" role="button">Back to My Profile</a> -->
 </body>
 </html>

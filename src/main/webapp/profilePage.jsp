@@ -63,7 +63,10 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
-				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
+					<span class="glyphicon glyphicon-log-out"></span>
+					Sign Out</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -83,7 +86,10 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
-				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
+				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
+					<span class="glyphicon glyphicon-log-out"></span>
+					Sign Out</a>
+				</li>
 			</ul>
 			
 			<form class="navbar-form navbar-left" action="/collection" method="post">
