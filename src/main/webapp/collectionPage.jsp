@@ -22,8 +22,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
@@ -39,6 +37,23 @@
 	text-align: center;
 	align: center;
 }
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;
+}
+
+div.show-image:hover input{
+  display: block;
+}
+
+div.show-image input {
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+}
+
 </style>
 <title id="pageTitle">Collection</title>
 </head>
@@ -71,8 +86,6 @@
 				});
 		});
 	</script>
-<style>
-#fileIn{
     display: none;
 }
 div.show-image {
@@ -82,16 +95,8 @@ div.show-image {
 
 div.show-image:hover input
   {
-  display: block;
-  }
-
-div.show-image input {
-    position:absolute;
-    top:0;
-    left:0;
     display:none;
 }
-+</style>
 	
 	<%
 		ObjectifyService.register(Profile.class);
@@ -152,27 +157,24 @@ div.show-image input {
 		<h1>${fn:escapeXml(collection)}</h1>
 		<div class="container text-center">
 		<div class="row">
-		<h1 align="center">${fn:escapeXml(collection)}</h1>
 		<%
 			ArrayList<Photo> photos = collection.getPhotos();
 					for (Photo photo : photos) {
 						pageContext.setAttribute("blobkey", photo.getBlobKey());
 						pageContext.setAttribute("photoname", photo.getName());
 		%>
-			<div class="col-sm-4">
+		<div class="col-sm-4">
 			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
 			<div class="show-image">
-				<img width="250" height="150" title="${fn:escapeXml(photoname)}"
-									src="serve?blob-key=${fn:escapeXml(blobkey)}">
-				<form action ="/delete" method = "post">
+		<img width="200" height="150" title="${fn:escapeXml(photoname)}"
+			src="serve?blob-key=${fn:escapeXml(blobkey)}">
+							<form action ="/delete" method = "post">
 				<input class="the-buttons" type="button" value="X" />
-				</form>
+			</form>
 			</div>
 			</a>
 			 
 			</div>
-		<img width="200" height="150" title="${fn:escapeXml(photoname)}"
-			src="serve?blob-key=${fn:escapeXml(blobkey)}">
 		<%
 			}
 					%>
@@ -180,11 +182,9 @@ div.show-image input {
 					</div>
 		<% 
 
-			pageContext.setAttribute("username", profile.getUsername());
 					pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
-		<h2>Comments</h2>
 		<h2 align="center">Comments</h2>
 		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
 			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
@@ -204,18 +204,14 @@ div.show-image input {
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-				<p id="commentTest"><b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}</p>
+				<div id="commentTest" style="margin:auto;">
+					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
+				</div>
 		<%
 			}
 				}
 		%>
-	<br>
-	<form action="/comment" method="post">
-			<textarea name="comment" class = "form-control" id="txtArea" placeholder="Comment here..." rows="1" cols="30"></textarea>
-			<input style="margin-top:10px" class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
-			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
-			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
-	</form>
+
 	<%
 		}
 	%>
