@@ -40,7 +40,7 @@
 		} else {
 			Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 			if (profile != null) {
-				response.sendRedirect("/profilePage.jsp?username" + profile.getUsername());
+				response.sendRedirect("/profilePage.jsp?username=" + profile.getUsername());
 			}
 			else {
 	%>
