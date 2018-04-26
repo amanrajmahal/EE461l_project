@@ -59,7 +59,23 @@
 #fileIn{
     display: none;
 }
-</style>
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;}
+
+div.show-image:hover input
+  {
+  display: block;
+  }
+
+div.show-image input {
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+}
++</style>
 	
 	<%
 		ObjectifyService.register(Profile.class);
@@ -90,7 +106,7 @@
 	%>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>" style=>Collection Connection</a>
+			<a class="navbar-brand navbar-header" href="welcomePage.jsp" style=>Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
@@ -125,8 +141,15 @@
 		%>
 			<div class="col-sm-4">
 			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
-				<img width="200" height="150" title="${fn:escapeXml(photoname)}"
-									src="serve?blob-key=${fn:escapeXml(blobkey)}"></a>
+			<div class="show-image">
+				<img width="250" height="150" title="${fn:escapeXml(photoname)}"
+									src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				<form action ="/delete" method = "post">
+				<input class="the-buttons" type="button" value="X" />
+				</form>
+			</div>
+			</a>
+			 
 			</div>
 		<%
 			}
@@ -135,7 +158,7 @@
 					</div>
 		<% 
 
-					pageContext.setAttribute("username", profile.getUsername());
+			pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
 		<h2>Comments</h2>
@@ -161,7 +184,7 @@
 			<input style="margin-top:10px" class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
-		</form>
+	</form>
 	<%
 		}
 	%>
