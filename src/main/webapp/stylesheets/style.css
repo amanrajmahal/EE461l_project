@@ -1,0 +1,52 @@
+.navbar-text {
+	text-align:center;
+	color:red;
+}
+
+.center {
+	text-align: center;
+	align: center;
+}
+
+div.center {
+	margin-top: 30%;
+}
+
+#txtSub {
+	margin-top:10px;
+}
+
+.body-margins {
+	margin:10px;
+}
+
+#followerTest {
+	text-align:center;
+}
+
+.header {
+	text-align: center;
+	color: green;
+	font-family: serif;
+}
+
+#fileIn {
+    display: none;
+}
+
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;}
+
+div.show-image:hover input
+  {
+  display: block;
+  }
+
+div.show-image input {
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+}

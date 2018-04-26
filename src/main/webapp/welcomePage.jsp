@@ -8,28 +8,24 @@
 <%@ page import="collectionconnection.Profile"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
+
 <head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" /> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Collection Connection</title>
-<style>
-.center {
-	text-align: center;
-	align: center;
-}
-</style>
 </head>
-<body>
+
+<body class="body-margins">
 	<%
 		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		if (user == null) {
 	%>
-			<div class="center" style="margin-top: 30%">
+			<div class="center">
 				<h1>Collection Connection</h1>
 				<div>
 					<p>Hello user!</p>

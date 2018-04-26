@@ -21,6 +21,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
@@ -33,7 +34,7 @@
 </script>
 <title id="pageTitle">Collection</title>
 </head>
-<body style="margin:10px">
+<body class="body-margins">
 
 	<script type="text/javascript">
 		$(document).ready(function() {		
@@ -55,27 +56,6 @@
 			)
 		});
 	</script>
-<style>
-#fileIn{
-    display: none;
-}
-div.show-image {
-    position: relative;
-    float:left;
-    margin:5px;}
-
-div.show-image:hover input
-  {
-  display: block;
-  }
-
-div.show-image input {
-    position:absolute;
-    top:0;
-    left:0;
-    display:none;
-}
-+</style>
 	
 	<%
 		ObjectifyService.register(Profile.class);
@@ -106,9 +86,10 @@ div.show-image input {
 	%>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<a class="navbar-brand navbar-header" href="welcomePage.jsp" style=>Collection Connection</a>
+			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a href="browse.jsp">Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">Sign Out</a></li>
 			</ul>
 		</div>
@@ -181,7 +162,7 @@ div.show-image input {
 	<br>
 	<form action="/comment" method="post">
 			<textarea name="comment" class = "form-control" id="txtArea" placeholder="Comment here..." rows="1" cols="30"></textarea>
-			<input style="margin-top:10px" class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
+			<input class="btn btn-success" id="txtSub" type="submit" value="Post comment" disabled>
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 	</form>

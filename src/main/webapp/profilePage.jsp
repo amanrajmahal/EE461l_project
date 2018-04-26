@@ -11,9 +11,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
 <head>
-<!--  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -26,18 +26,9 @@
 	});
 </script>
 
-<style>
-
-.navbar-text {
-	text-align:center;
-	color:red;
-}
-
-</style>
-
 <title>My Profile</title>
 </head>
-<body id="body" style="margin:10px">
+<body id="body" class="body-margins">
 	<%
 		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
@@ -76,21 +67,15 @@
 			</ul>
 		</div>
 	</nav>
-	<h3 style="text-align:center; color:green; font-family:serif;">${fn:escapeXml(username)}</h3>
+	<h3>${fn:escapeXml(username)}</h3>
 	
 	<form action="/follower" method="post">
-	    	<input style="text-align:center" id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
+	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
 	    	<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
 	</form>
 	<%
 		} else {
 	%>
-	<!-- <form action="/collection" method="post">
-					<div><input name="collection"/></div>
-	   	 			<div><input type="submit" value="Add Collection"/></div>
-	    			<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
-	    			<input type="hidden" name="currentProfile" value="${fn:escapeXml(currentProfile)}"/>
-				</form> -->
 	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -110,12 +95,12 @@
 			</form>
 		</div>
 	</nav>
-	<h3 style="text-align:center; color:green; font-family:serif;">My Profile</h3>
+	<h3 class="header">My Profile</h3>
 	<br>
 	<%
 		}
 	%>
-	<h3 style="color: green; font-family: serif; text-align: center">Collections</h3>
+	<h3 class="header">Collections</h3>
 	<%
 		ArrayList<Collection> collections = profile.getCollections();
 	%>
