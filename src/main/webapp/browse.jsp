@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/scripts/browseScript.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Browse</title>
 </head>
@@ -51,8 +52,11 @@
 		<br>
 		<br> 
 		<div class="searchbar">
-			<div class="form-group"><input class="form-control" type="text" name="search" placeholder="Search..."></div>
+			<div class="form-group"><input id="searchText" onkeyup="search()" class="form-control" type="text" name="search" placeholder="Search..."></div>
 		</div>
+		
+		
+		<ul id="profileList">
 		 
 		<%
 		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
@@ -60,13 +64,16 @@
 				if (!profile.equals(otherprofile)) {
 					pageContext.setAttribute("username", otherprofile.getUsername());
 					%>
-					<div class="center">
-						<a href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
-					</div>	
+					<li class="profile">
+						<!-- <div class="center"> -->
+							<a class="profileLink" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
+						<!-- </div> -->
+					</li>	
 					<% 				
 				}
 			}
 					
 					%>
+			</ul>
 </body>
 </html>

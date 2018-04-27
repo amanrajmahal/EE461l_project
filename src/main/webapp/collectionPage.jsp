@@ -27,68 +27,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		//$("#body").css("background-color","black");
-	});
-</script>
-<style>
-#fileIn{
-    display: none;
-}
-.center {
-	text-align: center;
-	align: center;
-}
-div.show-image {
-    position: relative;
-    float:left;
-    margin:5px;
-}
-
-div.show-image:hover input{
-  display: block;
-}
-
-div.show-image input {
-    position:absolute;
-    top:0;
-    left:0;
-    display:none;
-}
-</style>
+<script src="/scripts/collectionScript.js"></script>
 <title>Collection</title>
 </head>
 <body class="body-margins">
-
-	<script type="text/javascript">
-		$(document).ready(function() {		
-			$('input:file').change(function() {
-				if ($(this).val()) {
-					$('#fileSub').attr('disabled', false);
-					// or, as has been pointed out elsewhere:
-					// $('input:submit').removeAttr('disabled'); 
-				}
-			});
-			$("#txtArea").on("input propertychange", function() {
-				if ($("#txtArea").val().trim().length < 1) {
-					$('#txtSub').attr('disabled', true);
-				} else {
-					$('#txtSub').attr('disabled', false);
-				}
-			}
-
-			)
-			$('#txtArea').each(function () {
-				  this.setAttribute('style', 'height:' + (this.scrollHeight) + 
-						  'px;overflow-y:hidden;margin:auto;');
-				}).on('input', function () {
-				  this.style.height = 'auto';
-				  this.style.height = (this.scrollHeight) + 'px';
-				});
-		});
-	</script>
-	
 	<%
 		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
