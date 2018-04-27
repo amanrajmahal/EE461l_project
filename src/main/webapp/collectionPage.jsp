@@ -56,10 +56,8 @@ div.show-image input {
     left:0;
     display:none;
 }
+<<<<<<< HEAD
 </style> -->
-=======
-</style>
->>>>>>> 5d368c2503808ea17033e881cf7b43c73d00600a
 <title>Collection</title>
 </head>
 <body class="body-margins">
@@ -123,9 +121,6 @@ div.show-image input {
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a>
 				</li>
-=======
-					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
->>>>>>> 5d368c2503808ea17033e881cf7b43c73d00600a
 			</ul>
 		</div>
 	</nav>
