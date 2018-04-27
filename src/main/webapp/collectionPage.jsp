@@ -32,7 +32,7 @@
 		//$("#body").css("background-color","black");
 	});
 </script>
-<style>
+<!-- <style>
 #fileIn{
     display: none;
 }
@@ -56,8 +56,8 @@ div.show-image input {
     left:0;
     display:none;
 }
-</style>
-<title id="pageTitle">Collection</title>
+</style> -->
+<title>Collection</title>
 </head>
 <body class="body-margins">
 
@@ -119,24 +119,28 @@ div.show-image input {
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
+			<div style="background-color:blue;align:center">
+			<ul class="nav navbar-nav">
+			<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
+					<span class="glyphicon glyphicon-plus-sign"></span>  File Upload
+			</label></a></li>
+			</ul>
+			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a></li>
+					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
-	<form action="<%=blobstoreService.createUploadUrl("/upload")%>"
+	<form id="form" action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
-		<label class="btn btn-default">
-			<input type="file" id="fileIn" name="myFile" accept="image/*"
+		<input type="file" id="fileIn" name="myFile" accept="image/*"
 				onchange="javascript:this.form.submit();">
-			File Upload
-		</label>
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
-
 	<%
 		}
 		if (profile != null) {
@@ -178,7 +182,6 @@ div.show-image input {
 			pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
-		<h2>Comments</h2>
 		<h2 align="center">Comments</h2>
 		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
 			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
