@@ -63,7 +63,7 @@
 					<div class="center">
 						<a href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
 					</div>	
-					<% 				
+					<% 		
 				}
 			}
 					

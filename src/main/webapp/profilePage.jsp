@@ -130,6 +130,14 @@
 				</a>
 				<%
 					}
+					else
+					{
+				%>
+				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+				<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
+				</a>
+				<%
+					}
 				%>
 				<p>
 					<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
