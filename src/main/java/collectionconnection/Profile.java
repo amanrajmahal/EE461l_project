@@ -120,9 +120,12 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
+		/*
 		for (Ref<Follower> follower : followers) {
 			follower.get().update(notification);
 		}
+		*/
+		this.update(notification);
 	}
 	
 	@Override
@@ -138,6 +141,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
 		ArrayList<InternetAddress> addresses = new ArrayList<>();
+		System.out.println(actualUser.getEmail());
 		for (Ref<Follower> follower : followers) {
 			Profile profile = (Profile)follower.get();
 			NotificationType type = profile.notification.getNotificationType();
@@ -145,6 +149,11 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				addresses.add(new InternetAddress(profile.actualUser.getEmail()));
 			} 
 		}
-		return (InternetAddress[])addresses.toArray();
+		InternetAddress[] add = new InternetAddress[addresses.size()];
+		for(int i = 0; i < addresses.size(); i++)
+		{
+			add[i] = addresses.get(i);
+		}
+		return add;
 	}
 }

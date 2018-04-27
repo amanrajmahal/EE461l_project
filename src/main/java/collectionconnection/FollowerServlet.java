@@ -18,6 +18,10 @@ import com.googlecode.objectify.Ref;
 public class FollowerServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

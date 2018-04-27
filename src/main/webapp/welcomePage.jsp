@@ -6,6 +6,10 @@
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="collectionconnection.Profile"%>
+<%@ page import="collectionconnection.CollectionNotificationText"%>
+<%@ page import="collectionconnection.CommentNotificationText"%>
+<%@ page import="collectionconnection.FollowerNotificationText"%>
+<%@ page import="collectionconnection.PhotoNotificationText"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
 
@@ -18,14 +22,18 @@
 <title>Collection Connection</title>
 </head>
 
-<body class="body-margins">
+<body class="body-margins" >
 	<%
 		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		if (user == null) {
 	%>
-			<div style="text-align:center">
+			<div class="center">
 				<h1>Collection Connection</h1>
 				<div>
 					<p>Hello user!</p>
@@ -42,7 +50,7 @@
 	%>
 				<p class="center">Hello! Please input a Username below.</p>
 				<form class="center" action="/profile" method="post">
-					<input type="text" style="margin:auto; margin-bottom: 1em; width: 40%;"
+					<input type="text" style="margin: auto; margin-bottom: 1em; width: 40%;"
 						class="form-control center" name="username" placeholder="Username">
 					<input type="submit" class="btn btn-success" value="Submit">
 				</form>

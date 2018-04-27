@@ -7,6 +7,10 @@
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="collectionconnection.Profile"%>
 <%@ page import="collectionconnection.Collection"%>
+<%@ page import="collectionconnection.CollectionNotificationText"%>
+<%@ page import="collectionconnection.CommentNotificationText"%>
+<%@ page import="collectionconnection.FollowerNotificationText"%>
+<%@ page import="collectionconnection.PhotoNotificationText"%>
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="collectionconnection.Comment"%>
 <%@ page import="java.util.*"%>
@@ -28,12 +32,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/scripts/collectionScript.js"></script>
-
 <title>Collection</title>
 </head>
 <body class="body-margins">
 	<%
 		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		String collectionName = request.getParameter("collection");
@@ -72,6 +79,7 @@
 				onchange="javascript:this.form.submit();">
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
+
 	<%
 		}
 		if (profile != null) {

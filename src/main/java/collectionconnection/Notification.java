@@ -19,7 +19,7 @@ public class Notification {
 	private boolean sendFollowers;
 	
 	public Notification() {
-		this.notificationType = NotificationType.NONE;
+		this.notificationType = NotificationType.REALTIME;
 		this.sendComments = false;
 		this.sendCollections = false;
 		this.sendPhotos = false;
@@ -66,7 +66,8 @@ public class Notification {
 		this.notificationType = notificationType;
 	}
 	
-	public static void alert(String text, InternetAddress[] emails) {	
+	public static void alert(String text, InternetAddress[] emails) {
+		if(emails == null || emails.length == 0) return;
 		Properties properties = new Properties();
 		Session session = Session.getDefaultInstance(properties, null);
 		Message msg = new MimeMessage(session);
@@ -75,7 +76,27 @@ public class Notification {
 			msg.addRecipients(Message.RecipientType.BCC, emails);
 			msg.setSubject("Notifications from Collection Connection");
 			msg.setText(text);
-			Transport.send(msg);	
+			Transport.send(msg);
+
+			/* Properties props = new Properties();
+					Session session = Session.getDefaultInstance(props, null);
+					Message msg = new MimeMessage(session);
+					msg.setFrom(new InternetAddress("nickshlapkov@blogpostapplicationee461l.appspotmail.com"));
+					msg.addRecipient(Message.RecipientType.TO, new InternetAddress(strTo));
+					msg.setSubject(strSubject);
+					msg.setText(strBody);
+					Transport.send(msg);
+					*/
+			/*
+			for(InternetAddress address : emails)
+			{
+				msg.setFrom(new InternetAddress("nickshlapkov@blogpostapplicationee461l.appspotmail.com"));
+				msg.addRecipient(Message.RecipientType.TO, address);
+				msg.setSubject("Notifications from Collection Connection");
+				msg.setText(text);
+				Transport.send(msg);
+			}
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	 

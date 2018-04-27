@@ -1,7 +1,12 @@
 package collectionconnection;
 
+import com.googlecode.objectify.annotation.Subclass;
+
+@Subclass
 public class FollowerNotificationText extends NotificationText {
 	private String user;
+	
+	private FollowerNotificationText() {}
 	
 	public FollowerNotificationText(String user) {
 		super();

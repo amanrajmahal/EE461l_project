@@ -6,6 +6,10 @@
 <%@ page import="collectionconnection.Profile"%>
 <%@ page import="collectionconnection.Follower"%>
 <%@ page import="collectionconnection.Collection"%>
+<%@ page import="collectionconnection.CollectionNotificationText"%>
+<%@ page import="collectionconnection.CommentNotificationText"%>
+<%@ page import="collectionconnection.FollowerNotificationText"%>
+<%@ page import="collectionconnection.PhotoNotificationText"%>
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -31,6 +35,10 @@
 <body id="body" class="body-margins">
 	<%
 		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		String username = request.getParameter("username");
