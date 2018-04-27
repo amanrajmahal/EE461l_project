@@ -28,6 +28,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/scripts/collectionScript.js"></script>
+
 <title>Collection</title>
 </head>
 <body class="body-margins">
@@ -49,24 +50,28 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
+			<div style="background-color:blue;align:center">
+			<ul class="nav navbar-nav">
+			<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
+					<span class="glyphicon glyphicon-plus-sign"></span>  File Upload
+			</label></a></li>
+			</ul>
+			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
-	<form action="<%=blobstoreService.createUploadUrl("/upload")%>"
+	<form id="form" action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
-		<label class="btn btn-default">
-			<input type="file" id="fileIn" name="myFile" accept="image/*"
+		<input type="file" id="fileIn" name="myFile" accept="image/*"
 				onchange="javascript:this.form.submit();">
-			File Upload
-		</label>
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
-
 	<%
 		}
 		if (profile != null) {

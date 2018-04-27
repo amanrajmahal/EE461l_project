@@ -25,7 +25,7 @@
 		User user = userService.getCurrentUser();
 		if (user == null) {
 	%>
-			<div class="center">
+			<div style="text-align:center">
 				<h1>Collection Connection</h1>
 				<div>
 					<p>Hello user!</p>
@@ -42,7 +42,7 @@
 	%>
 				<p class="center">Hello! Please input a Username below.</p>
 				<form class="center" action="/profile" method="post">
-					<input type="text" style="margin: auto; margin-bottom: 1em; width: 40%;"
+					<input type="text" style="margin:auto; margin-bottom: 1em; width: 40%;"
 						class="form-control center" name="username" placeholder="Username">
 					<input type="submit" class="btn btn-success" value="Submit">
 				</form>
