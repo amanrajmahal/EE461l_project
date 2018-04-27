@@ -84,8 +84,8 @@
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
-				<li><a href="browse.jsp">Browse</a></li>
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>
 					Sign Out</a>
@@ -130,6 +130,14 @@
 				</a>
 				<%
 					}
+					else
+					{
+				%>
+				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+				<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
+				</a>
+				<%
+					}
 				%>
 				<p>
 					<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
@@ -144,10 +152,7 @@
 	</div>
 	<br>
 	<br>
-	<!--  
-	<a href="welcomePage.jsp" role="button">Back to Home</a> -->
 	<%
-		//System.out.println("RELOADING");
 			for (Ref<Follower> follower : followers) {
 				System.out.println(((Profile) follower.get()).getUsername());
 			}

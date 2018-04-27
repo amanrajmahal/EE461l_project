@@ -22,18 +22,19 @@
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		String username = profile.getUsername();
+		pageContext.setAttribute("username", username);
 		
 		%>
 		<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=profile.getUsername()%>">My Profile</a></li>
-				<li><a href="browse.jsp">Browse</a></li>
+				<li><a href="profilePage.jsp?username=<%=profile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>
-					Sign Out</a>
-				</li>
+					Sign Out</a></li>
 			</ul>
 			
 			<form class="navbar-form navbar-left" action="/collection" method="post">
@@ -46,6 +47,12 @@
 		</div>
 		</nav>
 		<h2 class="header">Browse Other Profiles</h2>
+		<br>
+		<br> 
+		<div class="searchbar">
+			<div class="form-group"><input class="form-control" type="text" name="search" placeholder="Search..."></div>
+		</div>
+		 
 		<%
 		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
 			for (Profile otherprofile : profiles) {
@@ -55,7 +62,7 @@
 					<div class="center">
 						<a href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
 					</div>	
-					<% 				
+					<% 		
 				}
 			}
 					

@@ -50,3 +50,18 @@ div.show-image input {
     left:0;
     display:none;
 }
+
+input[type=text] {
+    width: 100px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 75%;
+}
+
+.searchbar {
+	align:center;
+	text-align:center;
+}

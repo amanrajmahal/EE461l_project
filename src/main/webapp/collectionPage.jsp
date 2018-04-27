@@ -57,6 +57,9 @@ div.show-image input {
     display:none;
 }
 </style> -->
+=======
+</style>
+>>>>>>> 5d368c2503808ea17033e881cf7b43c73d00600a
 <title>Collection</title>
 </head>
 <body class="body-margins">
@@ -100,18 +103,6 @@ div.show-image input {
 		//ObjectifyService.ofy().clear();
 
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
-		/*
-		System.out.println("Desired profile: " + username);
-		if (username != null && username.length() > 0) {
-			//pull up desired one
-			profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
-		} 
-		
-		else {
-			//pull up your own 
-			profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
-		}
-		*/
 		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		if (myProfile.equals(profile)) {
@@ -127,11 +118,14 @@ div.show-image input {
 			</ul>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
-				<li><a href="browse.jsp">Browse</a></li>
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a>
 				</li>
+=======
+					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+>>>>>>> 5d368c2503808ea17033e881cf7b43c73d00600a
 			</ul>
 		</div>
 	</nav>
@@ -189,6 +183,7 @@ div.show-image input {
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 		</form>
+		<br>
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
@@ -204,6 +199,7 @@ div.show-image input {
 				<div id="commentTest" style="margin:auto;">
 					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
 				</div>
+				<br>
 		<%
 					}
 				}
