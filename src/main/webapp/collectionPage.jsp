@@ -108,10 +108,10 @@ div.show-image input {
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
-				<li><a href="browse.jsp">Browse</a></li>
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a></li>
+					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -173,6 +173,7 @@ div.show-image input {
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 		</form>
+		<br>
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
@@ -187,8 +188,8 @@ div.show-image input {
 		%>
 				<div id="commentTest" style="margin:auto;">
 					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
-					<br>
 				</div>
+				<br>
 		<%
 					}
 				}
