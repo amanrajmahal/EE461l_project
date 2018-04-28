@@ -72,7 +72,7 @@ public class Notification {
 		Session session = Session.getDefaultInstance(properties, null);
 		Message msg = new MimeMessage(session);
 		try {
-			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
+			msg.setFrom(new InternetAddress("admin@collectionconnectiontest.appspotmail.com","Collection Connection Digest"));
 			msg.addRecipients(Message.RecipientType.BCC, emails);
 			msg.setSubject("Notifications from Collection Connection");
 			msg.setText(text);

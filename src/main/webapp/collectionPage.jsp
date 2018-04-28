@@ -52,17 +52,24 @@
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
 		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
-		if (myProfile.equals(profile)) {
 	%>
-	<nav class="navbar navbar-default">
+	
+		<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<div style="background-color:blue;align:center">
+	<% 
+		if(myProfile.equals(profile))
+		{
+	%>
 			<ul class="nav navbar-nav">
 			<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
 					<span class="glyphicon glyphicon-plus-sign"></span>  File Upload
 			</label></a></li>
 			</ul>
+	<%
+		}
+	%>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
@@ -73,6 +80,10 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<%
+		if (myProfile.equals(profile)) {
+	%>
 	<form id="form" action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
 		<input type="file" id="fileIn" name="myFile" accept="image/*"
