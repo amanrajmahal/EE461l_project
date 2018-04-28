@@ -108,9 +108,10 @@
 						pageContext.setAttribute("photoname", photo.getName());
 		%>
 			<div class="col-sm-4">
-			<!-- <a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}"> -->
 			<div class="show-image">
+			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
 				<img width="250" height="150" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				</a>
 		<%
 						if(myProfile.equals(profile))
 						{
@@ -126,14 +127,12 @@
 						}
 		%>
 			</div>
-			<!--</a>-->
-			 
 			</div>
 		<%
-			}
-					%>
-					</div>
-					</div>
+					}
+		%>
+		</div>	
+		</div>
 		<% 
 
 			pageContext.setAttribute("username", profile.getUsername());
