@@ -111,6 +111,10 @@
 			<!-- <a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}"> -->
 			<div class="show-image">
 				<img width="250" height="150" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+		<%
+						if(myProfile.equals(profile))
+						{
+		%>
 				<form action ="/delete" method = "post">
 					<input class="the-buttons" type="submit" value="X" />
 					<input type="hidden" name="command" value="photo" />
@@ -118,6 +122,9 @@
 					<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 					<input type="hidden" name="photo" value="${fn:escapeXml(blobkey)}" />
 				</form>
+		<%
+						}
+		%>
 			</div>
 			<!--</a>-->
 			 
