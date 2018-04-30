@@ -55,8 +55,20 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return notificationLog;
     }
     
-    public void changeNotificationStyle(Notification notification) {
-    		this.notification = notification;
+    public void changeNotificationType(String type) {
+    	if (type.equals("none")) {
+    		this.notification.setNotificationType(NotificationType.NONE); System.out.println("Set to none");
+    	}
+    	else if (type.equals("realtime")) {
+    		this.notification.setNotificationType(NotificationType.REALTIME); System.out.println("Set to realtime");
+    	}
+    	else if (type.equals("daily")) {
+    		this.notification.setNotificationType(NotificationType.DAILY); System.out.println("Set to realtime");
+    	}
+    }
+    
+    public void changeNotificationSettings(boolean sendCollections, boolean sendPhotos, boolean sendComments) {
+    	notification.set(sendCollections, sendPhotos, sendComments);
     }
     
     public boolean addCollection(String collectionName)

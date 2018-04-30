@@ -70,6 +70,7 @@
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>
@@ -93,6 +94,7 @@
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>

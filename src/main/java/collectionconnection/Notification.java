@@ -50,18 +50,13 @@ public class Notification {
 		return sendPhotos;
 	}
 	
-	public void setComments(boolean sendComments) {
-		this.sendComments = sendComments;
-	}
-	
-	public void setCollections(boolean sendCollections) {
+	public void set(boolean sendCollections, boolean sendPhotos, boolean sendComments) {
 		this.sendCollections = sendCollections;
+		this.sendPhotos = sendPhotos;
+		this.sendComments = sendComments;
+		System.out.println("Collections: " + this.sendCollections + "\nPhotos: " + this.sendPhotos + "\nComments: " + this.sendComments);
 	}
 	
-	public void setPhotos(boolean sendPhotos) {
-		this.sendPhotos = sendPhotos;
-	}
-
 	public void setNotificationType(NotificationType notificationType) {
 		this.notificationType = notificationType;
 	}
