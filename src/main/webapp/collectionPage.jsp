@@ -25,6 +25,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
@@ -33,7 +34,7 @@
 <script src="/scripts/collectionScript.js"></script>
 <title>Collection</title>
 </head>
-<body class="body-margins">
+<body class="body">
 	<%
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.register(CollectionNotificationText.class);
