@@ -164,7 +164,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
-		if (notification instanceof FollowerNotificationText) {
+		if (notification instanceof FollowerNotificationText && this.notification.includeFollowers()) {
 			if (this.notification.getNotificationType() == NotificationType.DAILY) {
 				this.notificationLog.add(notification);
 				ofy().save().entity(this).now();
@@ -229,7 +229,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 		DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 		for (NotificationText text : notificationLog) {
 			String date = dateFormat.format(text.getDate());
-			str.append(date).append(":  ").append(text.getNotificationText()).append("\n");
+			str.append(date).append(":  ").append(text.getNotificationText()).append("<br>");
 		}
 		notificationLog.clear();
 		return str.toString();
