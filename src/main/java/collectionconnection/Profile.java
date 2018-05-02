@@ -94,7 +94,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	Collection collection = findCollection(collectionName);
     	if (collection != null) {
     		collection.addPhoto(name, blobKey);
-			notifyFollowers(new PhotoNotificationText(username, name, collectionName));
+			notifyFollowers(new PhotoNotificationText(username, collectionName));
 			return true;
     	}
     	return false;
@@ -129,7 +129,8 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	@Override
 	public void addFollower(Ref<Follower> f) {
-		notifyFollowers(new FollowerNotificationText(username));
+		Profile other = (Profile)f.get();
+		notifyFollowers(new FollowerNotificationText(other.username));
 		followers.add(f);
 	}
 	
