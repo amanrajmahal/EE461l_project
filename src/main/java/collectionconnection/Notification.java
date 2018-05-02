@@ -64,7 +64,7 @@ public class Notification {
 			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 			msg.setSubject("Notifications from Collection Connection");
-			String html = "<div style=\"font-family:Georgia; font-size:13px\"><p>Hey " + username + ", <br><br>This is what you missed today.<br><br><br>" +
+			String html = "<div style=\"font-family:Georgia; font-size:12px\"><p>Hey " + username + ", <br><br>This is what you missed today.<br><br><br>" +
 					body + "</p><br><br>" + "<a href=\"https://collection-connection.appspot.com\">Visit Collection Connection</a><br><br>" +
 					"<b>Collection Connection Team</b></div>";
 					
