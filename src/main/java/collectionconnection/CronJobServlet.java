@@ -37,8 +37,9 @@ public class CronJobServlet extends HttpServlet {
 		ObjectifyService.register(Profile.class);
 		List<Profile> profiles = ofy().load().type(Profile.class).list();
 		for (Profile p : profiles) {
-			InternetAddress[] emails = p.getFollowerEmails(false);
-			Notification.alert(getLogString(p.getNotificationLog()), emails);	
+			if (p.getNotificationType() == NotificationType.DAILY) {
+				Notification.alert(getLogString(p.getNotificationLog()), p.actualUser.getEmail());
+			}
 		}
 	}
 	

@@ -45,6 +45,10 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return username;
     }
     
+    public NotificationType getNotificationType() {
+    	return this.notification.getNotificationType();
+    }
+    
     public Set<Ref<Follower>> getFollowers() {
     	return followers;
     }
@@ -145,10 +149,13 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void update(NotificationText notification) {
-		Notification.alert(notification.getNotificationText(), actualUser.getEmail());
+		if (this.notification.getNotificationType() == NotificationType.DAILY) {
+			this.notificationLog.add(notification);
+		}
+		else Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 	}
     
-	public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
+	/* public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
 		ArrayList<InternetAddress> addresses = new ArrayList<>();
 		//System.out.println(actualUser.getEmail());
 		for (Ref<Follower> follower : followers) {
@@ -165,5 +172,5 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 			add[i] = addresses.get(i);
 		}
 		return add;
-	}
+	} */
 }
