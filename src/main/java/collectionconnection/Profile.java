@@ -24,14 +24,14 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private Date date;
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notification;
-    private TreeSet<NotificationText> notificationLog = new TreeSet<>();
+    private ArrayList<NotificationText> notificationLog = new ArrayList<>();
     
     private Profile() {}
     public Profile(User user, String username) {
     	this.actualUser = user;
     	this.username = username;
         this.date = new Date();
-        this.notificationLog = new TreeSet<>();
+        this.notificationLog = new ArrayList<>();
         this.collections = new ArrayList<>();
         this.followers = new HashSet<>();
         this.notification = new Notification();
@@ -55,7 +55,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return followers;
     }
     
-    public TreeSet<NotificationText> getNotificationLog() {
+    public ArrayList<NotificationText> getNotificationLog() {
     	return notificationLog;
     }
     

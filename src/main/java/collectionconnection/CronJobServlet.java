@@ -13,8 +13,7 @@ import com.googlecode.objectify.ObjectifyService;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 public class CronJobServlet extends HttpServlet { 
 	//private static final Logger log = Logger.getLogger(BlogPostServlet.class.getName()); 
@@ -43,15 +42,17 @@ public class CronJobServlet extends HttpServlet {
 					Notification.alert(getLogString(p.getNotificationLog()), p.actualUser.getEmail());
 				}
 			}
+			ofy().save().entity(p).now();
 		}
 	}
 	
-	public String getLogString(TreeSet<NotificationText> log) {
+	public String getLogString(ArrayList<NotificationText> log) {
 		StringBuilder str = new StringBuilder();
 		for (NotificationText text : log) {
 			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(text.getDate());
 			str.append(date).append(" ").append(text.getNotificationText()).append("\n");
 		}
+		log.clear();
 		return str.toString();
 	}
 }
