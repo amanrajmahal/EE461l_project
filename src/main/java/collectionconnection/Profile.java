@@ -1,6 +1,4 @@
 package collectionconnection;
-import java.util.Date;
-
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -22,9 +20,9 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     @Load private Set<Ref<Follower>> followers = new HashSet<>();
     
     private Date date;
-    private TreeSet<NotificationText> notificationLog = new TreeSet<>();
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notification;
+    private TreeSet<NotificationText> notificationLog = new TreeSet<>();
     
     private Profile() {}
     public Profile(User user, String username) {
@@ -138,18 +136,16 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 			follower.get().update(notification);
 		}
 		*/
-		this.update(notification);
+		for (Ref<Follower> follower : followers) {
+			Profile profile = (Profile)follower.get();
+			profile.update(notification);
+		}
+		//this.update(notification);
 	}
 	
 	@Override
 	public void update(NotificationText notification) {
-		try {
-			InternetAddress[] realTimeEmails = getFollowerEmails(true);
-			Notification.alert(notification.getNotificationText(), realTimeEmails);
-			notificationLog.add(notification);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 	}
     
 	public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {

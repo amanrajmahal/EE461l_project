@@ -1,6 +1,8 @@
 package collectionconnection;
 
 import java.util.Properties;
+import java.util.TreeSet;
+
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -72,26 +74,22 @@ public class Notification {
 			msg.setSubject("Notifications from Collection Connection");
 			msg.setText(text);
 			Transport.send(msg);
-
-			/* Properties props = new Properties();
-					Session session = Session.getDefaultInstance(props, null);
-					Message msg = new MimeMessage(session);
-					msg.setFrom(new InternetAddress("nickshlapkov@blogpostapplicationee461l.appspotmail.com"));
-					msg.addRecipient(Message.RecipientType.TO, new InternetAddress(strTo));
-					msg.setSubject(strSubject);
-					msg.setText(strBody);
-					Transport.send(msg);
-					*/
-			/*
-			for(InternetAddress address : emails)
-			{
-				msg.setFrom(new InternetAddress("nickshlapkov@blogpostapplicationee461l.appspotmail.com"));
-				msg.addRecipient(Message.RecipientType.TO, address);
-				msg.setSubject("Notifications from Collection Connection");
-				msg.setText(text);
-				Transport.send(msg);
-			}
-			*/
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	 
+	}
+	
+	// new method
+	public static void alert(String text, String email) {
+		Properties properties = new Properties();
+		Session session = Session.getDefaultInstance(properties, null);
+		Message msg = new MimeMessage(session);
+		try {
+			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+			msg.setSubject("Notifications from Collection Connection");
+			msg.setText(text);
+			Transport.send(msg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	 
