@@ -1,24 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
-<%@ page import="java.util.*"%>
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="collectionconnection.Profile"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/scripts/browseScript.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Browse</title>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Settings</title>
 </head>
 <body class="body-margins">
-
 <%
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
@@ -26,8 +24,8 @@
 		String username = profile.getUsername();
 		pageContext.setAttribute("username", username);
 		
-		%>
-		<nav class="navbar navbar-default">
+%>
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
@@ -47,24 +45,28 @@
 				<input type="submit" class="btn btn-default" value="Add Collection">
 			</form>
 		</div>
-		</nav>
-		<h2 class="header">Browse Other Profiles</h2>
-		<br>
-		<br> 
-		<input id="searchText" onkeyup="search()" class="form-control" type="text" name="search" placeholder="Search...">
-		
-		<div class="list-group" id="profileList">
-		<%
-		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
-		for (Profile otherprofile : profiles) {
-			if (!profile.equals(otherprofile)) {
-				pageContext.setAttribute("username", otherprofile.getUsername());
-		%>
-			<a class="list-group-item center" style="width:50%;margin:auto;" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
-		<% 				
-			}
-		}
-		%>
-		</div>
+	</nav>
+
+
+<h2 class="header">Notification Settings</h2>
+<br><br>
+<br><br>
+<h3>Notify me when...</h3>
+<form id="settings" action="/settings" method="post">
+	<label>
+    <input type="radio" name="type" value="none" checked="<%=false%>"/> Turn off notifications
+	</label>
+	<label>
+    <input type="radio" name="type" value="realtime"/> Send real-time notifications
+	</label>
+	<label>
+    <input type="radio" name="type" value="daily"/> Send daily notifications
+	</label>
+	<br>
+	<input type="checkbox" name="getCollections" value="collections"> someone I follow adds a new collection <br>
+	<input type="checkbox" name="getPhotos" value="photos"> someone I follow adds a new photo to a collection <br><br>
+	<input type="submit" value="Save">
+</form>
+
 </body>
 </html>

@@ -55,8 +55,20 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	return notificationLog;
     }
     
-    public void changeNotificationStyle(Notification notification) {
-    		this.notification = notification;
+    public void changeNotificationType(String type) {
+    	if (type.equals("none")) {
+    		this.notification.setNotificationType(NotificationType.NONE); System.out.println("Set to none");
+    	}
+    	else if (type.equals("realtime")) {
+    		this.notification.setNotificationType(NotificationType.REALTIME); System.out.println("Set to realtime");
+    	}
+    	else if (type.equals("daily")) {
+    		this.notification.setNotificationType(NotificationType.DAILY); System.out.println("Set to realtime");
+    	}
+    }
+    
+    public void changeNotificationSettings(boolean sendCollections, boolean sendPhotos, boolean sendComments) {
+    	notification.set(sendCollections, sendPhotos, sendComments);
     }
     
     public boolean addCollection(String collectionName)
@@ -110,6 +122,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	@Override
 	public void addFollower(Ref<Follower> f) {
+		//notifyFollowers(new FollowerNotificationText(username));
 		followers.add(f);
 	}
 	
@@ -120,9 +133,12 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
+		/*
 		for (Ref<Follower> follower : followers) {
 			follower.get().update(notification);
 		}
+		*/
+		this.update(notification);
 	}
 	
 	@Override
@@ -138,6 +154,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
 		ArrayList<InternetAddress> addresses = new ArrayList<>();
+		//System.out.println(actualUser.getEmail());
 		for (Ref<Follower> follower : followers) {
 			Profile profile = (Profile)follower.get();
 			NotificationType type = profile.notification.getNotificationType();
@@ -145,6 +162,12 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				addresses.add(new InternetAddress(profile.actualUser.getEmail()));
 			} 
 		}
-		return (InternetAddress[])addresses.toArray();
+		System.out.println("Sending to: " + addresses.toString());
+		InternetAddress[] add = new InternetAddress[addresses.size()];
+		for(int i = 0; i < addresses.size(); i++)
+		{
+			add[i] = addresses.get(i);
+		}
+		return add;
 	}
 }

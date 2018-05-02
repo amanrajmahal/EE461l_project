@@ -18,6 +18,13 @@ import java.util.TreeSet;
 
 public class CronJobServlet extends HttpServlet { 
 	//private static final Logger log = Logger.getLogger(BlogPostServlet.class.getName()); 
+	static {
+		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
+	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {

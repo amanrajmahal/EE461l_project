@@ -7,6 +7,10 @@
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="collectionconnection.Profile"%>
 <%@ page import="collectionconnection.Collection"%>
+<%@ page import="collectionconnection.CollectionNotificationText"%>
+<%@ page import="collectionconnection.CommentNotificationText"%>
+<%@ page import="collectionconnection.FollowerNotificationText"%>
+<%@ page import="collectionconnection.PhotoNotificationText"%>
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="collectionconnection.Comment"%>
 <%@ page import="java.util.*"%>
@@ -28,12 +32,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/scripts/collectionScript.js"></script>
-
 <title>Collection</title>
 </head>
 <body class="body-margins">
 	<%
 		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		String collectionName = request.getParameter("collection");
@@ -45,20 +52,28 @@
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
 		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
-		if (myProfile.equals(profile)) {
 	%>
-	<nav class="navbar navbar-default">
+	
+		<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<div style="background-color:blue;align:center">
+	<% 
+		if(myProfile.equals(profile))
+		{
+	%>
 			<ul class="nav navbar-nav">
 			<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
 					<span class="glyphicon glyphicon-plus-sign"></span>  File Upload
 			</label></a></li>
 			</ul>
+	<%
+		}
+	%>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a>
@@ -66,12 +81,17 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<%
+		if (myProfile.equals(profile)) {
+	%>
 	<form id="form" action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
 		<input type="file" id="fileIn" name="myFile" accept="image/*"
 				onchange="javascript:this.form.submit();">
 		<input type="hidden" name="collectionName" value="${fn:escapeXml(collection)}" />
 	</form>
+
 	<%
 		}
 		if (profile != null) {
@@ -89,9 +109,14 @@
 						pageContext.setAttribute("photoname", photo.getName());
 		%>
 			<div class="col-sm-4">
-			<!-- <a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}"> -->
 			<div class="show-image">
+			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
 				<img width="250" height="150" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				</a>
+		<%
+						if(myProfile.equals(profile))
+						{
+		%>
 				<form action ="/delete" method = "post">
 					<input class="the-buttons" type="submit" value="X" />
 					<input type="hidden" name="command" value="photo" />
@@ -99,15 +124,17 @@
 					<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 					<input type="hidden" name="photo" value="${fn:escapeXml(blobkey)}" />
 				</form>
+		<%
+						}
+		%>
 			</div>
-			<!--</a>-->
-			 
+			
 			</div>
 		<%
-			}
-					%>
-					</div>
-					</div>
+					}
+		%>
+		</div>	
+		</div>
 		<% 
 
 			pageContext.setAttribute("username", profile.getUsername());

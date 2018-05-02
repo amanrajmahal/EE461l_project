@@ -6,6 +6,10 @@
 <%@ page import="collectionconnection.Profile"%>
 <%@ page import="collectionconnection.Follower"%>
 <%@ page import="collectionconnection.Collection"%>
+<%@ page import="collectionconnection.CollectionNotificationText"%>
+<%@ page import="collectionconnection.CommentNotificationText"%>
+<%@ page import="collectionconnection.FollowerNotificationText"%>
+<%@ page import="collectionconnection.PhotoNotificationText"%>
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -31,6 +35,10 @@
 <body id="body" class="body-margins">
 	<%
 		ObjectifyService.register(Profile.class);
+		ObjectifyService.register(CollectionNotificationText.class);
+		ObjectifyService.register(CommentNotificationText.class);
+		ObjectifyService.register(FollowerNotificationText.class);
+		ObjectifyService.register(PhotoNotificationText.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		String username = request.getParameter("username");
@@ -62,6 +70,7 @@
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp">Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>
@@ -85,6 +94,7 @@
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>

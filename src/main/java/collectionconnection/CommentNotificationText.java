@@ -1,10 +1,14 @@
 package collectionconnection;
 
+import com.googlecode.objectify.annotation.Subclass;
+
+@Subclass
 public class CommentNotificationText extends NotificationText {
 	private String user;
 	private String comment;
 	private String collectionName;
 	
+	private CommentNotificationText() {}
 	
 	public CommentNotificationText(String user, String comment, String collectionName) {
 		super();
