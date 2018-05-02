@@ -74,7 +74,7 @@ div.show-image input {
 }
 
 #searchText:focus {
-    width: 75%;
+    width: 50%;
 }
 
 .searchbar {
