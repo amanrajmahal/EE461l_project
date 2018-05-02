@@ -150,7 +150,12 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	@Override
 	public void update(NotificationText notification) {
 		if (this.notification.getNotificationType() == NotificationType.DAILY) {
-			this.notificationLog.add(notification);
+			 if (notification instanceof CollectionNotificationText && this.notification.includeCollections()) {
+				 this.notificationLog.add(notification);
+			 }
+			 else if (notification instanceof PhotoNotificationText && this.notification.includePhotos()) {
+				 this.notificationLog.add(notification);
+			 }
 		}
 		else Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 	}
