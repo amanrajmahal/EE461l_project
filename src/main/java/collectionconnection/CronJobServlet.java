@@ -38,23 +38,9 @@ public class CronJobServlet extends HttpServlet {
 		List<Profile> profiles = ofy().load().type(Profile.class).list();
 		for (Profile p : profiles) {
 			if (p.getNotificationType() == NotificationType.DAILY) {
-				String log = getLogString(p.getNotificationLog());
-				if (log.length() != 0) {
-					Notification.alert(p.username, log, p.actualUser.getEmail());
-				}
+				p.alert(null);
 			}
 			ofy().save().entity(p).now();
 		}
-	}
-	
-	public String getLogString(ArrayList<NotificationText> log) {
-		StringBuilder str = new StringBuilder();
-		DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-		for (NotificationText text : log) {
-			String date = dateFormat.format(text.getDate());
-			str.append(date).append(":  ").append(text.getNotificationText()).append("\n");
-		}
-		log.clear();
-		return str.toString();
 	}
 }
