@@ -5,6 +5,8 @@
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="collectionconnection.Profile"%>
+<%@ page import="collectionconnection.Notification"%>
+<%@ page import="collectionconnection.NotificationType"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,6 +24,7 @@
 		User user = userService.getCurrentUser();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
 		String username = profile.getUsername();
+		Notification notificationSettings = profile.getNotification();
 		pageContext.setAttribute("username", username);
 		
 %>
@@ -54,19 +57,72 @@
 <h3>Notify me when...</h3>
 <form id="settings" action="/settings" method="post">
 	<label>
-    <input type="radio" name="type" value="none" checked="<%=false%>"/> Turn off notifications
+    <input type="radio" name="type" value="none"
+    <%
+    	if(notificationSettings.getNotificationType() == NotificationType.NONE)
+    	{
+    %>
+    		checked
+    <%
+    	}
+    %>
+    /> Turn off notifications
 	</label>
 	<label>
-    <input type="radio" name="type" value="realtime"/> Send real-time notifications
+    <input type="radio" name="type" value="realtime"
+    <%
+    	if(notificationSettings.getNotificationType() == NotificationType.REALTIME)
+    	{
+    %>
+    		checked
+    <%
+    	}
+    %>
+    /> Send real-time notifications
 	</label>
 	<label>
-    <input type="radio" name="type" value="daily"/> Send daily notifications
+    <input type="radio" name="type" value="daily"
+    <%
+    	if(notificationSettings.getNotificationType() == NotificationType.DAILY)
+    	{
+    %>
+    		checked
+    <%
+    	}
+    %>
+    /> Send daily notifications
 	</label>
 	<br>
-	<input type="checkbox" name="getCollections" value="collections"> someone I follow adds a new collection <br>
-	<input type="checkbox" name="getPhotos" value="photos"> someone I follow adds a new photo to a collection <br><br>
+	<input type="checkbox" name="getCollections" value="collections"
+	<%
+    	if(notificationSettings.includeCollections())
+    	{
+    %>
+    		checked
+    <%
+    	}
+    %>
+	> someone I follow adds a new collection <br>
+	<input type="checkbox" name="getPhotos" value="photos"
+	<%
+    	if(notificationSettings.includePhotos())
+    	{
+    %>
+    		checked
+    <%
+    	}
+    %>
+	> someone I follow adds a new photo to a collection <br><br>
 	<input type="submit" value="Save">
 </form>
+
+<!-- 
+<form id="settings" action="/delete" method="post">
+	<input type="submit" value="Delete Profile">
+	<input type="hidden" name="command" value="profile" />
+	<input type="hidden" name="username" value="${fn:escapeXml(username)}">
+</form>
+-->
 
 </body>
 </html>

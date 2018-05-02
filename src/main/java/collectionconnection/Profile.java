@@ -1,5 +1,6 @@
 package collectionconnection;
 import javax.mail.internet.AddressException;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 import javax.mail.internet.InternetAddress;
 
 import com.google.appengine.api.users.User;
@@ -8,8 +9,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.*;
 
@@ -45,6 +44,10 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     public String getUsername()
     {
     	return username;
+    }
+    
+    public Notification getNotification() {
+    	return notification;
     }
     
     public NotificationType getNotificationType() {
@@ -146,23 +149,22 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 			}
 		}
+		
 		for (Ref<Follower> follower : followers) {
 			Profile profile = (Profile)follower.get();
 			profile.update(notification);
 		}
 	}
 	
-	@Override 
+	@Override
 	public void update(NotificationText notification) {
 		if (notification instanceof CollectionNotificationText && this.notification.includeCollections()
 				|| notification instanceof PhotoNotificationText && this.notification.includePhotos()) {
 			if (this.notification.getNotificationType() == NotificationType.DAILY) {
 				 this.notificationLog.add(notification);
 				 ofy().save().entity(this).now();
-			 }
-			else {
-				Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 			}
+			else Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 		}
 	}
 }

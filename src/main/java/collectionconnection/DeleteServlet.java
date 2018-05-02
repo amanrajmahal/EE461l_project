@@ -35,6 +35,18 @@ public class DeleteServlet extends HttpServlet {
 		
 		switch(command)
 		{
+			case "profile":
+				for(Collection collection : collections)
+				{
+					for(Photo photo : collection.getPhotos())
+					{
+						blobstoreService.delete(new BlobKey(photo.getBlobKey()));
+					}
+				}
+				collections.clear();
+				ofy().delete().entity(profile);
+				resp.sendRedirect("/welcomePage.jsp");
+				break;
 			case "collection":
 				Collection collectionToRemove = null;
 				for(Collection collection : collections)
@@ -52,6 +64,7 @@ public class DeleteServlet extends HttpServlet {
 					}
 				}
 				collections.remove(collectionToRemove);
+				ofy().save().entity(profile).now();
 				resp.sendRedirect("/profilePage.jsp?username=" + username);
 				break;
 			case "photo":
@@ -78,6 +91,7 @@ public class DeleteServlet extends HttpServlet {
 						break;
 					}
 				}
+				ofy().save().entity(profile).now();
 				resp.sendRedirect("collectionPage.jsp?username=" + username + "&collection=" + collectionname);
 				break;
 			case "comment":
@@ -99,13 +113,13 @@ public class DeleteServlet extends HttpServlet {
 						comments.remove(commentToRemove);
 					}
 				}
+				ofy().save().entity(profile).now();
 				resp.sendRedirect("collectionPage.jsp?username=" + username + "&collection=" + collectionname);
 				break;
 			default: 
 				resp.sendRedirect("/profilePage.jsp?username=" + username);
 				break;
 		}
-		ofy().save().entity(profile).now();
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
