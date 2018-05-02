@@ -96,7 +96,6 @@
 			
 		</div>
 	</nav>
-	<h3>${fn:escapeXml(username)}</h3>
 	
 	<!--  <form action="/follower" method="post">
 	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>

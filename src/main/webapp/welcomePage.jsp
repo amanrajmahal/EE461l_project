@@ -34,9 +34,9 @@
 		if (user == null) {
 	%>
 			<div class="center">
-				<h1 class="welcomePageText">Collection Connection</h1>
+				<h1>Collection Connection</h1>
 				<div>
-					<p class="welcomePageText" id = "userWelcome">Hello user!</p>
+					<p id = "userWelcome">Hello user!</p>
 					<a class="btn btn-primary" href="<%=userService.createLoginURL(request.getRequestURI())%>">Sign In</a>
 				</div>
 			</div>
@@ -48,7 +48,7 @@
 			}
 			else {
 	%>
-				<p class ="welcomePageText" class="center">Hello! Please input a Username below.</p>
+				<p class="center">Hello! Please input a Username below.</p>
 				<form class="center" action="/profile" method="post">
 					<input type="text" style="margin: auto; margin-bottom: 1em; width: 40%;"
 						class="form-control center" name="username" placeholder="Username">
