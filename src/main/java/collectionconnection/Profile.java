@@ -9,6 +9,8 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.*;
 
 @Entity
@@ -153,11 +155,10 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				|| notification instanceof PhotoNotificationText && this.notification.includePhotos()) {
 			if (this.notification.getNotificationType() == NotificationType.DAILY) {
 				 this.notificationLog.add(notification);
-				 System.out.println(notification.toString() + " " + notificationLog.first().getNotificationText());
+				 ofy().save().entity(this).now();
 			 }
 			else {
 				Notification.alert(notification.getNotificationText(), actualUser.getEmail());
-				System.out.println(notification.toString());
 			}
 		}
 	}
