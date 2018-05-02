@@ -12,6 +12,7 @@ public class Collection {
 	private ArrayList<Comment> comments = new ArrayList<>();
 	private int commentId = 0;
 	
+	@SuppressWarnings("unused")
 	private Collection() {}
 	
 	public Collection(String collectionName)

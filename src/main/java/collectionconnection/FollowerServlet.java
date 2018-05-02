@@ -15,6 +15,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Ref;
 
+@SuppressWarnings("serial")
 public class FollowerServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Profile.class);

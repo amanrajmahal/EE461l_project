@@ -8,6 +8,7 @@ public class CommentNotificationText extends NotificationText {
 	private String comment;
 	private String collectionName;
 	
+	@SuppressWarnings("unused")
 	private CommentNotificationText() {}
 	
 	public CommentNotificationText(String user, String comment, String collectionName) {

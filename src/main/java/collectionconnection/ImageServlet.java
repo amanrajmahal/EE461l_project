@@ -19,6 +19,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 
+@SuppressWarnings("serial")
 public class ImageServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Profile.class);

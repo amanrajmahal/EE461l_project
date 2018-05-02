@@ -7,6 +7,7 @@ public class CollectionNotificationText extends NotificationText {
 	private String user;
 	private String collectionName;
 	
+	@SuppressWarnings("unused")
 	private CollectionNotificationText() {}
 	
 	public CollectionNotificationText(String user, String collectionName) {

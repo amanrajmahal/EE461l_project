@@ -15,6 +15,7 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 
+@SuppressWarnings("serial")
 public class ProfilePhotoServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Profile.class);

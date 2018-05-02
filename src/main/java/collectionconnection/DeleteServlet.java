@@ -12,11 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 
+@SuppressWarnings("serial")
 public class DeleteServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Profile.class);

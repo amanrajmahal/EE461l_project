@@ -9,6 +9,7 @@ public class Comment implements Comparable<Comment>{
 	private Date date;
 	private int commentId;
 	
+	@SuppressWarnings("unused")
 	private Comment() {}
 	
 	public Comment(User user, String comment, int commentId) {

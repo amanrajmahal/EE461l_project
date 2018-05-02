@@ -1,8 +1,6 @@
 package collectionconnection;
 
 import java.util.Properties;
-import java.util.TreeSet;
-
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;

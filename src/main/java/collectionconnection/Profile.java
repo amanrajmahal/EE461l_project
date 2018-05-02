@@ -1,8 +1,5 @@
 package collectionconnection;
-import javax.mail.internet.AddressException;
 import static com.googlecode.objectify.ObjectifyService.ofy;
-import javax.mail.internet.InternetAddress;
-
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -26,7 +23,9 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private ArrayList<NotificationText> notificationLog = new ArrayList<>();
     private Photo profilePhoto = new Photo("profilePhoto", null);
     
-    private Profile() {}
+    @SuppressWarnings("unused")
+	private Profile() {}
+    
     public Profile(User user, String username) {
     	this.actualUser = user;
     	this.username = username;

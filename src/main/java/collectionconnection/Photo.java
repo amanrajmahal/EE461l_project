@@ -4,6 +4,7 @@ public class Photo {
 	private String name;
 	private String blobKey;
 	
+	@SuppressWarnings("unused")
 	private Photo() {}
 	
 	public Photo(String name, String blobKey)

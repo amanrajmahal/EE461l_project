@@ -7,6 +7,7 @@ public class PhotoNotificationText extends NotificationText {
 	private String user;
 	private String collectionName;
 	
+	@SuppressWarnings("unused")
 	private PhotoNotificationText() {}
 	
 	public PhotoNotificationText(String user, String collectionName) {

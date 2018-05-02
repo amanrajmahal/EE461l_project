@@ -6,6 +6,7 @@ import com.googlecode.objectify.annotation.Subclass;
 public class FollowerNotificationText extends NotificationText {
 	private String user;
 	
+	@SuppressWarnings("unused")
 	private FollowerNotificationText() {}
 	
 	public FollowerNotificationText(String user) {
