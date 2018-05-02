@@ -158,12 +158,33 @@
 						Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", comment.getUser()).first().now();
 
 						pageContext.setAttribute("comment", comment.getComment());
+						pageContext.setAttribute("commentId",comment.getCommentId());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-				<div id="commentTest" style="margin:auto;">
+	
+				<div class="show-image" id="commentTest" style="margin:auto;">
+				
 					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
+					
+		<%
+				if(myProfile.equals(profile)||myProfile.equals(profileOfComment)){
+											
+		%>
+				<form action ="/delete" method = "post">
+					<input class="the-buttons" type="submit" value="X" />
+					<input type="hidden" name="command" value="comment" />
+					<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+					<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+					<input type="hidden" name="commentId" value="${fn:escapeXml(commentId)}" />
+				</form>
+				
 				</div>
+		<%		
+		} 
+		%>
+			
 				<br>
+	
 		<%
 					}
 				}
