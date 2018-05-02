@@ -127,7 +127,7 @@
 		</div>
 	</nav>
 	
-	<h3 class="header">My Profile</h3>
+	<h2 class="header">My Profile</h2>
 	
 	<form action="<%=blobstoreService.createUploadUrl("/profilephoto")%>" method="post" enctype="multipart/form-data">
 		<input type="file" name="myFile" accept="image/*" >
@@ -149,7 +149,7 @@
 	<%
 		}
 	%>
-	<h3 class="header">Collections</h3>
+	<h2 class="header">Collections</h2>
 	<%
 		ArrayList<Collection> collections = profile.getCollections();
 	%>
