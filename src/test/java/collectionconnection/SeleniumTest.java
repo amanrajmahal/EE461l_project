@@ -14,12 +14,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeleniumTest {
 	private static WebDriver driver;
+	private static WebDriverWait wait;
 	
 	
 	@BeforeClass
 	public static void setUp() {
 		driver = new FirefoxDriver();
 		driver.get("http://localhost:8080");
+		wait = new WebDriverWait(driver, 10);
 		WebElement button = driver.findElement(By.linkText("Sign In"));
 		button.click();
 		button = driver.findElement(By.id("btn-login"));		
@@ -37,17 +39,12 @@ public class SeleniumTest {
 	@Test
 	public void testSelenium() {
 		// test adding collection
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("My Profile")));
-		driver.findElement(By.linkText("My Profile")).click();
+		click("My Profile");
 		WebElement textField = driver.findElement(By.name("collection"));
 		textField.sendKeys("testCollection");
 		textField.submit();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("My Profile")));
-		driver.findElement(By.linkText("My Profile")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("testCollection")));
-		WebElement element = driver.findElement(By.linkText("testCollection"));
-		element.click();
+		click("My Profile");
+		click("testCollection");
 		assertEquals(driver.getCurrentUrl(), "http://localhost:8080/collectionPage.jsp?username=bob&collection=testCollection");
 		
 		// test comment
@@ -63,10 +60,8 @@ public class SeleniumTest {
 		
 		// test comment from different user
 		driver.navigate().to("http://localhost:8080");
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Sign Out")));
-		driver.findElement(By.linkText("Sign Out")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Sign In")));
-		driver.findElement(By.linkText("Sign In")).click();
+		click("Sign Out");
+		click("Sign In");
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 		WebElement email = driver.findElement(By.id("email"));
 		email.clear();
@@ -76,10 +71,9 @@ public class SeleniumTest {
 		WebElement text = driver.findElement(By.name("username"));
 		text.sendKeys("jake");
 		text.submit();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("bob")));
-		driver.findElement(By.linkText("bob")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("testCollection")));
-		driver.findElement(By.linkText("testCollection")).click();
+		click("Browse");
+		click("bob");
+		click("testCollection");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("commentTest")));
 		List<WebElement> commentsAgain = driver.findElements(By.id("commentTest"));
 		assertTrue(commentsAgain.size() == 1);
@@ -101,6 +95,11 @@ public class SeleniumTest {
 		followButton = driver.findElement(By.id("followerTest")); 
 		wait.until(ExpectedConditions.attributeToBe(followButton, "value", "Follow"));
 		assertEquals(followButton.getAttribute("value"), "Follow");
+	}
+	
+	private void click(String text) {
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText(text)));
+		driver.findElement(By.linkText(text)).click();
 	}
 	
 	
