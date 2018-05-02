@@ -24,6 +24,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private ArrayList<Collection> collections = new ArrayList<>();
     private Notification notification;
     private ArrayList<NotificationText> notificationLog = new ArrayList<>();
+    private Photo profilePhoto = new Photo("profilePhoto", null);
     
     private Profile() {}
     public Profile(User user, String username) {
@@ -34,11 +35,22 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         this.collections = new ArrayList<>();
         this.followers = new HashSet<>();
         this.notification = new Notification();
+        this.profilePhoto = new Photo("profilePhoto", null);
     }
     
     public User getUser()
     {
     	return actualUser;
+    }
+    
+    public void setProfilePhoto(String blobKey)
+    {
+    	profilePhoto = new Photo("profilePhoto", blobKey);
+    }
+    
+    public Photo getProfilePhoto()
+    {
+    	return profilePhoto;
     }
     
     public String getUsername()
@@ -94,7 +106,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	Collection collection = findCollection(collectionName);
     	if (collection != null) {
     		collection.addPhoto(name, blobKey);
-			notifyFollowers(new PhotoNotificationText(username, collectionName));
+    		notifyFollowers(new PhotoNotificationText(username, collectionName));
 			return true;
     	}
     	return false;

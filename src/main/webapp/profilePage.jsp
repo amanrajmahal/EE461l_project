@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
@@ -13,6 +15,11 @@
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%
+	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+%>
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -111,7 +118,25 @@
 			</form>
 		</div>
 	</nav>
+	
 	<h3 class="header">My Profile</h3>
+	
+	<form action="<%=blobstoreService.createUploadUrl("/profilephoto")%>" method="post" enctype="multipart/form-data">
+		<input type="file" name="myFile" accept="image/*" >
+		<input type="submit" name = "Submit">
+		<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+	</form>
+	
+	<%
+		if(profile.getProfilePhoto().getBlobKey() != null)
+		{
+			pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
+			%>
+				<img width="250" height="150"  src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+			<%
+		}
+	%>
+	
 	<br>
 	<%
 		}
