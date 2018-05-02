@@ -42,7 +42,7 @@
 			</div>
 	<%
 		} else {
-			Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+			Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 			if (profile != null) {
 				response.sendRedirect("/profilePage.jsp?username=" + profile.getUsername());
 			}

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.googlecode.objectify.Key;
 
 @SuppressWarnings("serial")
 public class SettingsServlet extends HttpServlet {
@@ -17,7 +18,7 @@ public class SettingsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		Profile profile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 		String type = request.getParameter("type");
 		profile.changeNotificationType(type);
 		boolean sendCollections = request.getParameter("getCollections") != null;

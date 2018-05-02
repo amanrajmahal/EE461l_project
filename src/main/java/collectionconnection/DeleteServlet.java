@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 @SuppressWarnings("serial")
@@ -26,7 +27,7 @@ public class DeleteServlet extends HttpServlet {
 		String command = req.getParameter("command");
 		String username = req.getParameter("username");
 		String collectionname = req.getParameter("collection");
-		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
+		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		ArrayList<Collection> collections = profile.getCollections();
 		
 		System.out.println("TEST");

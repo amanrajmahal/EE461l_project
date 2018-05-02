@@ -17,6 +17,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 @SuppressWarnings("serial")
@@ -41,7 +42,7 @@ public class ImageServlet extends HttpServlet {
 		else
 		{
 			//ofy().clear();
-			Profile profile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+			Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 			if(profile != null)
 			{
 				profile.addCollection(collectionName);

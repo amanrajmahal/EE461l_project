@@ -22,7 +22,7 @@
 <%
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 		String username = profile.getUsername();
 		Notification notificationSettings = profile.getNotification();
 		pageContext.setAttribute("username", username);
@@ -66,7 +66,7 @@
     <%
     	}
     %>
-    /> Turn off notifications 
+    /> Turn off notifications
 	</label>
 	<label>
     <input type="radio" name="type" value="realtime"
@@ -78,7 +78,7 @@
     <%
     	}
     %>
-    /> Send real-time notifications 
+    /> Send real-time notifications
 	</label>
 	<label>
     <input type="radio" name="type" value="daily"
@@ -90,7 +90,7 @@
     <%
     	}
     %>
-    /> Send daily notifications 
+    /> Send daily notifications
 	</label>
 	<br>
 	<input type="checkbox" name="getCollections" value="collections"

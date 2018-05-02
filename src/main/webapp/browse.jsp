@@ -23,7 +23,7 @@
 <%
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 		String username = profile.getUsername();
 		pageContext.setAttribute("username", username);
 		
@@ -56,7 +56,7 @@
 		
 		<div class="list-group" id="profileList">
 		<%
-		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
+		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).list();
 		for (Profile otherprofile : profiles) {
 			if (!profile.equals(otherprofile)) {
 				pageContext.setAttribute("username", otherprofile.getUsername());
