@@ -1,6 +1,22 @@
-.navbar-text {
+#userNav{
+	position: absolute;
+	width: 100px;
+	left: 50%;
+	margin-left: -50px;
+	text-align: center;
+}
+#followNav{
+	position: absolute;
+	width: 100px;
+	left: 55%;
+	margin-left: -55px;
+	text-align: center;
+	
+}
+.navbar-text p {
 	text-align:center;
 	color:red;
+	
 }
 
 .center {
