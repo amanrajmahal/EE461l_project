@@ -50,29 +50,20 @@
 		<h2 class="header">Browse Other Profiles</h2>
 		<br>
 		<br> 
-		<div class="searchbar">
-			<div class="form-group"><input id="searchText" onkeyup="search()" class="form-control" type="text" name="search" placeholder="Search..."></div>
-		</div>
+		<input id="searchText" onkeyup="search()" class="form-control" type="text" name="search" placeholder="Search...">
 		
-		
-		<ul id="profileList">
-		 
+		<div class="list-group" id="profileList">
 		<%
 		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).list();
-			for (Profile otherprofile : profiles) {
-				if (!profile.equals(otherprofile)) {
-					pageContext.setAttribute("username", otherprofile.getUsername());
-					%>
-					<li class="profile">
-						<!-- <div class="center"> -->
-							<a class="profileLink" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
-						<!-- </div> -->
-					</li>	
-					<% 				
-				}
+		for (Profile otherprofile : profiles) {
+			if (!profile.equals(otherprofile)) {
+				pageContext.setAttribute("username", otherprofile.getUsername());
+		%>
+			<a class="list-group-item center" style="width:50%;margin:auto;" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
+		<% 				
 			}
-					
-					%>
-			</ul>
+		}
+		%>
+		</div>
 </body>
 </html>

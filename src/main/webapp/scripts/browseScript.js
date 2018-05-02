@@ -1,18 +1,16 @@
 function search() {
     // Declare variables
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("searchText");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("profileList");
-    li = ul.getElementsByTagName('li');
-
+    var input, i, item,x;
+    input = document.getElementById("searchText").value.toUpperCase();
+    items = document.getElementsByClassName("list-group-item");
     // Loop through all list items, and hide those who don't match the search query
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
+
+    for(i = 0; i < items.length; i++){
+    	item = items[i].innerHTML.toUpperCase();
+    	if(item.indexOf(input) == -1){
+    		items[i].style.display = "none";
+    	}else{
+    		items[i].style.display = "";
+    	}
     }
 }

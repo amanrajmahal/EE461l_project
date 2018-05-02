@@ -51,20 +51,28 @@ div.show-image input {
     display:none;
 }
 
-input[type=text] {
-    width: 100px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
-
-input[type=text]:focus {
-    width: 75%;
-}
-
-.searchbar {
+/* input[type=text] {
 	align:center;
 	text-align:center;
+	width:10%
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}*/
+
+#searchText{
+	cursor: none;
+	width:10%;
+	align:center;
+	text-align:center;
+	margin:auto;
+	margin-bottom:10px;
 }
+
+#searchText:focus {
+	width:50%;
+	transition:width 0.4s ease-in-out;
+	
+} 
 
 #profileList {
 	list-style-type: none;
