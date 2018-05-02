@@ -2,6 +2,7 @@ package collectionconnection;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class CronJobServlet extends HttpServlet {
 			if (p.getNotificationType() == NotificationType.DAILY) {
 				String log = getLogString(p.getNotificationLog());
 				if (log.length() != 0) {
-					Notification.alert(getLogString(p.getNotificationLog()), p.actualUser.getEmail());
+					Notification.alert(p.username, log, p.actualUser.getEmail());
 				}
 			}
 			ofy().save().entity(p).now();
@@ -48,9 +49,10 @@ public class CronJobServlet extends HttpServlet {
 	
 	public String getLogString(ArrayList<NotificationText> log) {
 		StringBuilder str = new StringBuilder();
+		DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 		for (NotificationText text : log) {
-			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(text.getDate());
-			str.append(date).append(" ").append(text.getNotificationText()).append("\n");
+			String date = dateFormat.format(text.getDate());
+			str.append(date).append(":  ").append(text.getNotificationText()).append("\n");
 		}
 		log.clear();
 		return str.toString();

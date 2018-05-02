@@ -158,7 +158,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				ofy().save().entity(this).now();
 			}
 			else {
-				Notification.alert(notification.getNotificationText(), actualUser.getEmail());
+				Notification.alert(username, notification.getNotificationText(), actualUser.getEmail());
 			}
 		}
 		
@@ -178,7 +178,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				 this.notificationLog.add(notification);
 				 ofy().save().entity(this).now();
 			}
-			else Notification.alert(notification.getNotificationText(), actualUser.getEmail());
+			else Notification.alert(username, notification.getNotificationText(), actualUser.getEmail());
 		}
 	}
 }
