@@ -147,12 +147,19 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 		//this.update(notification);
 	}
 	
-	@Override
+	@Override 
 	public void update(NotificationText notification) {
-		if (this.notification.getNotificationType() == NotificationType.DAILY) {
-			this.notificationLog.add(notification);
+		if (notification instanceof CollectionNotificationText && this.notification.includeCollections()
+				|| notification instanceof PhotoNotificationText && this.notification.includePhotos()) {
+			if (this.notification.getNotificationType() == NotificationType.DAILY) {
+				 this.notificationLog.add(notification);
+				 System.out.println(notification.toString() + " " + notificationLog.first().getNotificationText());
+			 }
+			else {
+				Notification.alert(notification.getNotificationText(), actualUser.getEmail());
+				System.out.println(notification.toString());
+			}
 		}
-		else Notification.alert(notification.getNotificationText(), actualUser.getEmail());
 	}
     
 	/* public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
