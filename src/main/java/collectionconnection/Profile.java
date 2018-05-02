@@ -150,9 +150,11 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 			}
 		}
 		
-		for (Ref<Follower> follower : followers) {
-			Profile profile = (Profile)follower.get();
-			profile.update(notification);
+		else {
+			for (Ref<Follower> follower : followers) {
+				Profile profile = (Profile)follower.get();
+				profile.update(notification);
+			}
 		}
 	}
 	
