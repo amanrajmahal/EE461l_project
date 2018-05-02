@@ -21,7 +21,8 @@ public class SettingsServlet extends HttpServlet {
 		profile.changeNotificationType(type);
 		boolean sendCollections = request.getParameter("getCollections") != null;
 		boolean sendPhotos = request.getParameter("getPhotos") != null;
-		profile.changeNotificationSettings(sendCollections, sendPhotos, false);
+		boolean sendFollowers = request.getParameter("getFollowers") != null;
+		profile.changeNotificationSettings(sendCollections, sendPhotos, sendFollowers);
 		ofy().save().entity(profile).now();
 		response.sendRedirect("/settings.jsp");
 	}

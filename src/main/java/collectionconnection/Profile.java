@@ -74,8 +74,8 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     	}
     }
     
-    public void changeNotificationSettings(boolean sendCollections, boolean sendPhotos, boolean sendComments) {
-    	notification.set(sendCollections, sendPhotos, sendComments);
+    public void changeNotificationSettings(boolean sendCollections, boolean sendPhotos, boolean sendFollowers) {
+    	notification.set(sendCollections, sendPhotos, sendFollowers);
     }
     
     public boolean addCollection(String collectionName)

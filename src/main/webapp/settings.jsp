@@ -112,7 +112,17 @@
     <%
     	}
     %>
-	> someone I follow adds a new photo to a collection <br><br>
+	> someone I follow adds a new photo to a collection  <br><br>
+	<input type="checkbox" name="getFollowers" value="followers"
+	<%
+    	if(notificationSettings.includeFollowers())
+    	{
+    %>
+    		checked
+    <%
+    	}
+    %>
+	> someone follows me <br><br>
 	<input type="submit" value="Save">
 </form>
 

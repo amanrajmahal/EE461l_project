@@ -12,22 +12,19 @@ import javax.mail.internet.MimeMessage;
 
 public class Notification {
 	private NotificationType notificationType;
-	private boolean sendComments;
 	private boolean sendCollections;
 	private boolean sendPhotos;
 	private boolean sendFollowers;
 	
 	public Notification() {
 		this.notificationType = NotificationType.REALTIME;
-		this.sendComments = false;
 		this.sendCollections = false;
 		this.sendPhotos = false;
 		this.sendFollowers = false;
 	}
 	
-	public Notification(NotificationType type, boolean sendComments, boolean sendCollections, boolean sendPhotos, boolean sendFollowers) {
+	public Notification(NotificationType type, boolean sendCollections, boolean sendPhotos, boolean sendFollowers) {
 		this.notificationType = type;
-		this.sendComments = sendComments;
 		this.sendCollections = sendCollections;
 		this.sendPhotos = sendPhotos;
 		this.sendFollowers = sendFollowers;
@@ -35,10 +32,6 @@ public class Notification {
 	
 	public NotificationType getNotificationType() {
 		return notificationType;
-	}
-	
-	public boolean includeComments() {
-		return sendComments;
 	}
 	
 	public boolean includeCollections() {
@@ -49,11 +42,15 @@ public class Notification {
 		return sendPhotos;
 	}
 	
-	public void set(boolean sendCollections, boolean sendPhotos, boolean sendComments) {
+	public boolean includeFollowers() {
+		return sendFollowers;
+	}
+	
+	public void set(boolean sendCollections, boolean sendPhotos, boolean sendFollowers) {
 		this.sendCollections = sendCollections;
 		this.sendPhotos = sendPhotos;
-		this.sendComments = sendComments;
-		System.out.println("Collections: " + this.sendCollections + "\nPhotos: " + this.sendPhotos + "\nComments: " + this.sendComments);
+		this.sendFollowers = sendFollowers;
+		System.out.println("Collections: " + this.sendCollections + "\nPhotos: " + this.sendPhotos + "\nFollowers: " + this.sendFollowers);
 	}
 	
 	public void setNotificationType(NotificationType notificationType) {
