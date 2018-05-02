@@ -1,12 +1,15 @@
 package collectionconnection;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public abstract class NotificationText implements Comparable<NotificationText> {
 	private Date date;
 	
 	public NotificationText() {
-		this.date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.HOUR, -5);
+		date = cal.getTime();
 	}
 	
 	public Date getDate() {
