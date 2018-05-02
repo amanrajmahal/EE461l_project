@@ -93,8 +93,23 @@ input[type=text]:focus {
 	padding-bottom:20px;
 }
 #welcomePageBody{
-	background-color:purple;
+	background-color: white;
 }
+
+#welcomePageBody::after{
+	content: "";
+	background: url("../images/background-welcome.jpg");
+	background-repeat:no-repeat;
+	opacity: 0.5;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;	
+}
+
+
 .welcomePageText{
 	color:white;
 	text-shadow:
