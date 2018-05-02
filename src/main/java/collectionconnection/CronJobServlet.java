@@ -37,12 +37,10 @@ public class CronJobServlet extends HttpServlet {
 		ObjectifyService.register(Profile.class);
 		List<Profile> profiles = ofy().load().type(Profile.class).list();
 		for (Profile p : profiles) {
-			String name = "Hey " + p.getUsername() + "," + '\n' + '\n' + "Here's what you missed" + '\n' + '\n' + '\n';
 			if (p.getNotificationType() == NotificationType.DAILY) {
 				String log = getLogString(p.getNotificationLog());
 				if (log.length() != 0) {
-					log = name + log;
-					Notification.alert(log, p.actualUser.getEmail());
+					Notification.alert(p.username, log, p.actualUser.getEmail());
 				}
 			}
 			ofy().save().entity(p).now();

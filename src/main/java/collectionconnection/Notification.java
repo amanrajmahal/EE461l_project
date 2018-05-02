@@ -58,7 +58,7 @@ public class Notification {
 	}
 	
 	// new method
-	public static void alert(String text, String email) {
+	public static void alert(String username, String body, String email) {
 		Properties properties = new Properties();
 		Session session = Session.getDefaultInstance(properties, null);
 		Message msg = new MimeMessage(session);
@@ -66,8 +66,8 @@ public class Notification {
 			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 			msg.setSubject("Notifications from Collection Connection");
-			String html = "<p style=\"font-family:Georgia; font-size:12px\">" + text + "</p><br><br>" +
-					"<a href=\"https://collection-connection.appspot.com\">Visit Collection Connection</a><br><br>" +
+			String html = "<p style=\"font-family:Georgia; font-size:15px\">Hey " + username + ", <br><br>This is what you missed<br><br><br>" +
+					body + "</p><br><br>" + "<a href=\"https://collection-connection.appspot.com\">Visit Collection Connection</a><br><br>" +
 					"<b style=\\\"font-family:Georgia; font-size:12px\\\">Collection Connection Team</b";
 					
 			msg.setContent(html, "text/html");
