@@ -66,7 +66,7 @@
     <%
     	}
     %>
-    /> Turn off notifications
+    /> Turn off notifications 
 	</label>
 	<label>
     <input type="radio" name="type" value="realtime"
@@ -78,7 +78,7 @@
     <%
     	}
     %>
-    /> Send real-time notifications
+    /> Send real-time notifications 
 	</label>
 	<label>
     <input type="radio" name="type" value="daily"
@@ -90,7 +90,7 @@
     <%
     	}
     %>
-    /> Send daily notifications
+    /> Send daily notifications 
 	</label>
 	<br>
 	<input type="checkbox" name="getCollections" value="collections"
@@ -112,7 +112,7 @@
     <%
     	}
     %>
-	> someone I follow adds a new photo to a collection  <br><br>
+	> someone I follow adds a new photo to a collection  <br>
 	<input type="checkbox" name="getFollowers" value="followers"
 	<%
     	if(notificationSettings.includeFollowers())
