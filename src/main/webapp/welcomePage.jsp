@@ -12,7 +12,6 @@
 <%@ page import="collectionconnection.PhotoNotificationText"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
-
 <head>
 <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" /> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

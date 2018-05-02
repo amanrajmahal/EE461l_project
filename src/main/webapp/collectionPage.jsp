@@ -15,7 +15,6 @@
 <%@ page import="collectionconnection.Comment"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <%
 	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>

@@ -15,7 +15,6 @@
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <%
 	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
@@ -127,6 +126,11 @@
 		<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 	</form>
 	
+	<br>
+	<%
+		}
+	%>
+	
 	<%
 		if(profile.getProfilePhoto().getBlobKey() != null)
 		{
@@ -134,11 +138,6 @@
 			%>
 				<img width="250" height="150"  src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 			<%
-		}
-	%>
-	
-	<br>
-	<%
 		}
 	%>
 	<h3 class="header">Collections</h3>
