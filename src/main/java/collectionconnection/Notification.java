@@ -63,22 +63,6 @@ public class Notification {
 		this.notificationType = notificationType;
 	}
 	
-	public static void alert(String text, InternetAddress[] emails) {
-		if(emails == null || emails.length == 0) return;
-		Properties properties = new Properties();
-		Session session = Session.getDefaultInstance(properties, null);
-		Message msg = new MimeMessage(session);
-		try {
-			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
-			msg.addRecipients(Message.RecipientType.BCC, emails);
-			msg.setSubject("Notifications from Collection Connection");
-			msg.setText(text);
-			Transport.send(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	 
-	}
-	
 	// new method
 	public static void alert(String text, String email) {
 		Properties properties = new Properties();

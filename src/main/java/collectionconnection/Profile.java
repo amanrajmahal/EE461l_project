@@ -126,7 +126,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
 	@Override
 	public void addFollower(Ref<Follower> f) {
-		//notifyFollowers(new FollowerNotificationText(username));
+		notifyFollowers(new FollowerNotificationText(username));
 		followers.add(f);
 	}
 	
@@ -137,16 +137,19 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
-		/*
-		for (Ref<Follower> follower : followers) {
-			follower.get().update(notification);
+		if (notification instanceof FollowerNotificationText) {
+			if (this.notification.getNotificationType() == NotificationType.DAILY) {
+				this.notificationLog.add(notification);
+				ofy().save().entity(this).now();
+			}
+			else {
+				Notification.alert(notification.getNotificationText(), actualUser.getEmail());
+			}
 		}
-		*/
 		for (Ref<Follower> follower : followers) {
 			Profile profile = (Profile)follower.get();
 			profile.update(notification);
 		}
-		//this.update(notification);
 	}
 	
 	@Override 
@@ -162,23 +165,4 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 			}
 		}
 	}
-    
-	/* public InternetAddress[] getFollowerEmails(boolean realTime) throws AddressException {
-		ArrayList<InternetAddress> addresses = new ArrayList<>();
-		//System.out.println(actualUser.getEmail());
-		for (Ref<Follower> follower : followers) {
-			Profile profile = (Profile)follower.get();
-			NotificationType type = profile.notification.getNotificationType();
-			if ((realTime && type == NotificationType.REALTIME) || (!realTime && type == NotificationType.DAILY)) {
-				addresses.add(new InternetAddress(profile.actualUser.getEmail()));
-			} 
-		}
-		System.out.println("Sending to: " + addresses.toString());
-		InternetAddress[] add = new InternetAddress[addresses.size()];
-		for(int i = 0; i < addresses.size(); i++)
-		{
-			add[i] = addresses.get(i);
-		}
-		return add;
-	} */
 }
