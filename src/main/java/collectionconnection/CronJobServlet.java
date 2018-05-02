@@ -2,6 +2,7 @@ package collectionconnection;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -36,10 +37,12 @@ public class CronJobServlet extends HttpServlet {
 		ObjectifyService.register(Profile.class);
 		List<Profile> profiles = ofy().load().type(Profile.class).list();
 		for (Profile p : profiles) {
+			String name = "Hey " + p.getUsername() + "," + '\n' + '\n' + "Here's what you missed" + '\n' + '\n' + '\n';
 			if (p.getNotificationType() == NotificationType.DAILY) {
 				String log = getLogString(p.getNotificationLog());
 				if (log.length() != 0) {
-					Notification.alert(getLogString(p.getNotificationLog()), p.actualUser.getEmail());
+					log = name + log;
+					Notification.alert(log, p.actualUser.getEmail());
 				}
 			}
 			ofy().save().entity(p).now();
@@ -48,9 +51,10 @@ public class CronJobServlet extends HttpServlet {
 	
 	public String getLogString(ArrayList<NotificationText> log) {
 		StringBuilder str = new StringBuilder();
+		DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 		for (NotificationText text : log) {
-			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(text.getDate());
-			str.append(date).append(" ").append(text.getNotificationText()).append("\n");
+			String date = dateFormat.format(text.getDate());
+			str.append(date).append(":  ").append(text.getNotificationText()).append("\n");
 		}
 		log.clear();
 		return str.toString();
