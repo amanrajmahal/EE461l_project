@@ -34,7 +34,7 @@ public class ProfileServlet extends HttpServlet {
 		}
 		else
 		{
-			resp.sendRedirect("/welcomePage.jsp");
+			resp.sendRedirect("/welcomePage.jsp?alert=true");
 		}
 	}
 	

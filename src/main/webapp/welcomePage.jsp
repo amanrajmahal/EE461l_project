@@ -31,6 +31,15 @@
 		ObjectifyService.register(PhotoNotificationText.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
+		String alert = request.getParameter("alert");
+		
+		if(alert != null)
+		{
+	%>
+		<script> alert('This username already exists!'); </script>
+	<%
+		}
+		
 		if (user == null) {
 	%>
 			<div class="center">
