@@ -3,11 +3,13 @@ package collectionconnection;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 @SuppressWarnings("serial")
@@ -27,7 +29,7 @@ public class CollectionServlet extends HttpServlet {
 		//String currentProfile = req.getParameter("currentProfile");
 		
 		//ofy().clear();
-		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
+		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		
 		if(profile != null && collection != null && !collection.isEmpty())
 		{

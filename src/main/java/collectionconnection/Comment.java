@@ -3,13 +3,13 @@ package collectionconnection;
 import java.util.Date;
 import com.google.appengine.api.users.User;
 
+@SuppressWarnings("unused")
 public class Comment implements Comparable<Comment>{
 	private User user;
 	private String comment;
 	private Date date;
 	private int commentId;
 	
-	@SuppressWarnings("unused")
 	private Comment() {}
 	
 	public Comment(User user, String comment, int commentId) {

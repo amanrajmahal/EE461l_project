@@ -1,11 +1,13 @@
 package collectionconnection;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.google.appengine.api.users.User;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.Parent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,6 +21,7 @@ import javax.mail.internet.MimeMessage;
 
 @Entity
 public class Profile implements Comparable<Profile>, Follower, Subject {
+	@Parent Key<Profile> parent;
     @Id Long id;
     @Index User actualUser;
     @Index String username;
@@ -32,7 +35,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private Photo profilePhoto = new Photo("profilePhoto", null);
     
     @SuppressWarnings("unused")
-	private Profile() {}
+    private Profile() {}
     
     public Profile(User user, String username) {
     	this.actualUser = user;
@@ -43,6 +46,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         this.followers = new HashSet<>();
         this.notification = new Notification();
         this.profilePhoto = new Photo("profilePhoto", null);
+        this.parent = Key.create(Profile.class, "profiles");
     }
     
     public User getUser()

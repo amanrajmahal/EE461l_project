@@ -15,7 +15,6 @@
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <%
 	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
@@ -24,8 +23,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -52,9 +51,9 @@
 		String username = request.getParameter("username");
 		pageContext.setAttribute("username", username);
 		//ObjectifyService.ofy().clear();
-		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now(); // who the user is going to follow
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now(); // who the user is going to follow
 		//ObjectifyService.ofy().clear();
-		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now(); // current user who is logged in
+		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now(); // current user who is logged in
 	%>
 	<%
 		if (profile != null) {
@@ -85,6 +84,7 @@
 					Sign Out</a>
 				</li>
 			</ul>
+			
 			<form class="navbar-form navbar-right" id = "followNav"action="/follower" method="post">
 				<div class="form-group">
 				<!-- 	<input id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">-->
@@ -93,9 +93,10 @@
 				<input id = "followerTest" type="submit" class="btn btn-default" value="${fn:escapeXml(buttonValue)}">
 			</form>
 			<p class="navbar-text" id = "userNav"> <b>${fn:escapeXml(username)}</b> </p>
+			
 		</div>
 	</nav>
-	 
+	<h3>${fn:escapeXml(username)}</h3>
 	
 	<!--  <form action="/follower" method="post">
 	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
@@ -136,6 +137,11 @@
 		<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 	</form>
 	
+	<br>
+	<%
+		}
+	%>
+	
 	<%
 		if(profile.getProfilePhoto().getBlobKey() != null)
 		{
@@ -143,11 +149,6 @@
 			%>
 				<img width="250" height="150"  src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 			<%
-		}
-	%>
-	
-	<br>
-	<%
 		}
 	%>
 	<h2 class="header">Collections</h2>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Ref;
 
@@ -31,9 +32,9 @@ public class FollowerServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		
 		//ofy().clear();
-		Profile myProfile = ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile myProfile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 		//ofy().clear();
-		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
+		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		
 		if(myProfile != null && profile != null && !myProfile.equals(profile))
 		{

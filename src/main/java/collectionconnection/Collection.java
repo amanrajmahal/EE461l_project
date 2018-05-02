@@ -1,18 +1,16 @@
 package collectionconnection;
 
 import java.util.*;
-
 import com.google.appengine.api.users.User;
 
 import collectionconnection.Collection;
-
+@SuppressWarnings("unused")
 public class Collection {
 	private String collectionName;
 	private ArrayList<Photo> photos = new ArrayList<>();
 	private ArrayList<Comment> comments = new ArrayList<>();
 	private int commentId = 0;
 	
-	@SuppressWarnings("unused")
 	private Collection() {}
 	
 	public Collection(String collectionName)

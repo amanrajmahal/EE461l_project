@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -35,7 +36,7 @@ public class CronJobServlet extends HttpServlet {
 	
 	private void sendMail() throws AddressException{
 		ObjectifyService.register(Profile.class);
-		List<Profile> profiles = ofy().load().type(Profile.class).list();
+		List<Profile> profiles = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).list();
 		for (Profile p : profiles) {
 			if (p.getNotificationType() == NotificationType.DAILY) {
 				p.alert(null);

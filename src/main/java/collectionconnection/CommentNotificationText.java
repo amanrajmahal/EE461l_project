@@ -3,12 +3,12 @@ package collectionconnection;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
+@SuppressWarnings("unused")
 public class CommentNotificationText extends NotificationText {
 	private String user;
 	private String comment;
 	private String collectionName;
 	
-	@SuppressWarnings("unused")
 	private CommentNotificationText() {}
 	
 	public CommentNotificationText(String user, String comment, String collectionName) {
