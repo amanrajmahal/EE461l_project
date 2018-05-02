@@ -111,3 +111,8 @@ div.show-image input {
 #welcomePageBody{
 	background-color: white;
 }
+
+#settings {
+	display: inline-block;
+    text-align: center;
+}

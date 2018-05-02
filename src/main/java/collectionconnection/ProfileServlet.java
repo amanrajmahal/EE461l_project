@@ -30,8 +30,12 @@ public class ProfileServlet extends HttpServlet {
 		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		if(profile == null) {
 			ofy().save().entity(new Profile(user, username)).now();
+			resp.sendRedirect("/profilePage.jsp?username=" + username);
 		}
-		resp.sendRedirect("/profilePage.jsp?username=" + username);
+		else
+		{
+			resp.sendRedirect("/welcomePage.jsp");
+		}
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
