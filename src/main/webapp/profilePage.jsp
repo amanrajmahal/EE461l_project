@@ -154,23 +154,32 @@
 	%>
 	
 	<h2 class="header">My Profile</h2>
-	
+	<%
+		}
+	%>
 	<br>
-	<%
-		}
-	%>
 	
-	<%
-		if(profile.getProfilePhoto().getBlobKey() != null)
-		{
-			pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
-			%>
-				<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
-					<img width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
-				</a>
-			<%
-		}
-	%>
+	<div class="profileImageWrapper">
+		<%
+			if(profile.getProfilePhoto().getBlobKey() != null)
+			{
+				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
+		%>
+					<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
+						<img class="profileImage" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+					</a>
+		<%
+			}
+			else
+			{
+		%>
+					<a href = "images/profileImage.png" data-lightbox="${fn:escapeXml(username)}">
+						<img class="profileImage" width="250" height="150" src="images/profileImage.png">
+					</a>
+		<%
+			}
+		%>
+	</div>
 	<h2 class="header">Collections</h2>
 	<%
 		ArrayList<Collection> collections = profile.getCollections();
