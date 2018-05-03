@@ -155,22 +155,25 @@
 						//ObjectifyService.ofy().clear();
 						Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", comment.getUser()).first().now();
 
+						String profileImage = profileOfComment.getProfilePhoto().getBlobKey() == null ? "images/profileImage.png" : "serve?blob-key=" + profileOfComment.getProfilePhoto().getBlobKey();
+						
+						pageContext.setAttribute("timeElapsed", comment.getDate().toString());
+						pageContext.setAttribute("profileImageKey", profileImage);
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("commentId",comment.getCommentId());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
 
-				<div  style="align:center;margin:auto;word-wrap:break-word;width:50%">
-				
-				<div class ="show-image"style ="width:100%">
-				
-					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}				
-					
-			<%
+				<div style="align:center;margin:auto;width:50%;">
+					<div style="width:100%;">
+			            <div class="panel panel-white post panel-shadow">
+			                <div class="post-heading">
+			                
+			                				<%
 					if(myProfile.equals(profile) || myProfile.equals(profileOfComment)) {
 			%>
-					<form id="commentForm" action ="/delete" method = "post">
-						<input class="btn btn-xs" id="commentButton" type="submit" value="x" style ="margin-left:10px"/>
+					<form style = "float: right;" id="commentForm" action ="/delete" method = "post">
+						<input class="btn btn-danger btn-xs" type="submit" value="X" />
 						<input type="hidden" name="command" value="comment" />
 						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
@@ -179,8 +182,22 @@
 			<%
 					}
 			%>
-			
-				</div>
+			                    <div class="pull-left image">
+			                        <img src="${fn:escapeXml(profileImageKey)}" class="img-circle avatar" alt="user profile image">
+			                    </div>
+			                    <div class="pull-left meta">
+			                        <div class="title h5">
+			                            <a href="/profilePage.jsp?username=${fn:escapeXml(usernameOfComment)}"><b>${fn:escapeXml(usernameOfComment)}</b></a>
+			                            made a comment.
+			                        </div>
+			                        <h6 class="text-muted time">${fn:escapeXml(timeElapsed)}</h6>
+			                    </div>
+			                </div> 
+			                <div style="word-wrap:break-word;" class="post-description"> 
+			                    <p>${fn:escapeXml(comment)}</p>
+			                </div>
+			            </div>
+					</div>
 				</div>
 		<%
 				}
