@@ -160,7 +160,7 @@
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
 
-				<div  style="align:center;margin:auto;margin-bottom:53px;width:50%">
+				<div  style="align:center;margin:auto;word-wrap:break-word;width:50%">
 				
 				<div class ="show-image"style ="width:100%">
 				
@@ -170,7 +170,7 @@
 					if(myProfile.equals(profile) || myProfile.equals(profileOfComment)) {
 			%>
 					<form id="commentForm" action ="/delete" method = "post">
-						<input class="btn btn-default btn-xs" type="submit" value="x" style = "margin-left:10px"/>
+						<input class="btn btn-xs" id="commentButton" type="submit" value="x" style ="margin-left:10px"/>
 						<input type="hidden" name="command" value="comment" />
 						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
