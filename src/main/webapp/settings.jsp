@@ -54,78 +54,81 @@
 <h2 class="header">Notification Settings</h2>
 <br><br>
 <br><br>
-<h3>Notify me when...</h3>
-<form id="settings" action="/settings" method="post">
-	<label>
-    <input type="radio" name="type" value="none"
-    <%
-    	if(notificationSettings.getNotificationType() == NotificationType.NONE)
-    	{
-    %>
-    		checked
-    <%
-    	}
-    %>
-    /> Turn off notifications
-	</label>
-	<label>
-    <input type="radio" name="type" value="realtime"
-    <%
-    	if(notificationSettings.getNotificationType() == NotificationType.REALTIME)
-    	{
-    %>
-    		checked
-    <%
-    	}
-    %>
-    /> Send real-time notifications
-	</label>
-	<label>
-    <input type="radio" name="type" value="daily"
-    <%
-    	if(notificationSettings.getNotificationType() == NotificationType.DAILY)
-    	{
-    %>
-    		checked
-    <%
-    	}
-    %>
-    /> Send daily notifications
-	</label>
-	<br>
-	<input type="checkbox" name="getCollections" value="collections"
-	<%
-    	if(notificationSettings.includeCollections())
-    	{
-    %>
-    		checked
-    <%
-    	}
-    %>
-	> someone I follow adds a new collection <br>
-	<input type="checkbox" name="getPhotos" value="photos"
-	<%
-    	if(notificationSettings.includePhotos())
-    	{
-    %>
-    		checked
-    <%
-    	}
-    %>
-	> someone I follow adds a new photo to a collection  <br>
-	<input type="checkbox" name="getFollowers" value="followers"
-	<%
-    	if(notificationSettings.includeFollowers())
-    	{
-    %>
-    		checked
-    <%
-    	}
-    %>
-	> someone follows me <br><br>
-	<input type="submit" value="Save">
-</form>
-
+<div id="settingsLayout">
+	<div id="settings">
+		<h3>Notify me when...</h3>
+		<form action="/settings" method="post">
+			<label>
+		    <input type="radio" name="type" value="none"
+		    <%
+		    	if(notificationSettings.getNotificationType() == NotificationType.NONE)
+		    	{
+		    %>
+		    		checked
+		    <%
+		    	}
+		    %>
+		    /> Turn off notifications
+			</label>
+			<label>
+		    <input type="radio" name="type" value="realtime"
+		    <%
+		    	if(notificationSettings.getNotificationType() == NotificationType.REALTIME)
+		    	{
+		    %>
+		    		checked
+		    <%
+		    	}
+		    %>
+		    /> Send real-time notifications
+			</label>
+			<label>
+		    <input type="radio" name="type" value="daily"
+		    <%
+		    	if(notificationSettings.getNotificationType() == NotificationType.DAILY)
+		    	{
+		    %>
+		    		checked
+		    <%
+		    	}
+		    %>
+		    /> Send daily notifications
+			</label>
+			<br>
+			<input type="checkbox" name="getCollections" value="collections"
+			<%
+		    	if(notificationSettings.includeCollections())
+		    	{
+		    %>
+		    		checked
+		    <%
+		    	}
+		    %>
+			> someone I follow adds a new collection <br>
+			<input type="checkbox" name="getPhotos" value="photos"
+			<%
+		    	if(notificationSettings.includePhotos())
+		    	{
+		    %>
+		    		checked
+		    <%
+		    	}
+		    %>
+			> someone I follow adds a new photo to a collection  <br>
+			<input type="checkbox" name="getFollowers" value="followers"
+			<%
+		    	if(notificationSettings.includeFollowers())
+		    	{
+		    %>
+		    		checked
+		    <%
+		    	}
+		    %>
+			> someone follows me <br><br>
+			<input type="submit" value="Save">
+		</form>
+	</div>
+</div>
 <!-- 
 <form id="settings" action="/delete" method="post">
 	<input type="submit" value="Delete Profile">

@@ -112,7 +112,15 @@ div.show-image input {
 	background-color: white;
 }
 
+#settingsLayout {
+	text-align: center;
+}
+
 #settings {
-	display: inline-block;
-    text-align: center;
+	text-align: center;
+  	width: 60%;
+  	background-color: #eee;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
 }
