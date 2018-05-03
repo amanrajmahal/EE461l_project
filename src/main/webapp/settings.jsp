@@ -22,6 +22,7 @@
 </head>
 <body class="body">
 <%
+		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
@@ -53,7 +54,7 @@
 	</nav>
 
 
-<h2 class="header">Notification Settings</h2>
+<h2 class="header">Settings</h2>
 <br><br>
 <br><br>
 <div id="settingsLayout">
