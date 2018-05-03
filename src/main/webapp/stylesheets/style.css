@@ -66,6 +66,13 @@ div.show-image input {
     display:none;
 }
 
+div.post-heading input{
+	display:none;
+}
+div.post-heading:hover input{
+	display:block;
+}
+
 #searchText {
 	margin:auto;
     width: 100px;
