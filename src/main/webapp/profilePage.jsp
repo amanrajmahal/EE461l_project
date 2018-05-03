@@ -66,17 +66,17 @@
 				</li>
 			</ul>
 			
-			<form class="navbar-form navbar-right" id = "followNav"action="/follower" method="post">
-				<div class="form-group">
-				<!-- 	<input id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">-->
-					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
-				</div>
-				<input id = "followerTest" type="submit" class="btn btn-default" value="${fn:escapeXml(buttonValue)}">
-			</form>
-			<p class="navbar-text" id = "userNav"> <b>${fn:escapeXml(username)}</b> </p>
+
 			
 		</div>
 	</nav>
+	<h1 class="header">${fn:escapeXml(username)}</h1>
+	<form  class ="header" action="/follower" method="post">
+			
+	<input class ="btn btn-default"id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">
+
+	<input type="hidden" name="username" value="${fn:escapeXml(username)}">
+	</form>
 	<%
 		} else {
 	%>
@@ -100,11 +100,13 @@
 				</div>
 				<input name="collectionButton" type="submit" class="btn btn-default" value="Add Collection" disabled>
 			</form>
+
 			
 		</div>
 	</nav>
 	
 	<h1 class="header">${fn:escapeXml(username)}</h1>
+
 	<%
 		}
 	%>
