@@ -54,7 +54,7 @@
 		<br>
 		<br> 
 		<input id="searchText" onkeyup="search()" class="form-control" type="text" name="search" placeholder="Search...">
-		
+
 		<div class="list-group" id="profileList">
 		<%
 		List<Profile> profiles = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).list();

@@ -33,7 +33,6 @@ public class CommentServlet extends HttpServlet {
 		String collection = req.getParameter("collection");
 		//ofy().clear();
 		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
-		//shouldn't happen, but just in case
 		if(profile != null)
 		{
 			ArrayList<Collection> collections = profile.getCollections();

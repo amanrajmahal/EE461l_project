@@ -15,9 +15,6 @@
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%
-	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-%>
 
 <html>
 <head>
@@ -42,6 +39,7 @@
 </head>
 <body id="body" class="body">
 	<%
+		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.register(CollectionNotificationText.class);
 		ObjectifyService.register(CommentNotificationText.class);
@@ -62,13 +60,12 @@
 	%>
 	<%
 		if (!myProfile.getUsername().equals(profile.getUsername())) {
-				//System.out.println("userProfile: " + myProfile + "\ntargetProfile: " + profile);
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
 				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
 	<script type="text/javascript">
 	
-	document.getElementById("followerTest").value = buttonValue
+	document.getElementById("followerTest").value = buttonValue;
 	
 	</script>
 	<nav class="navbar navbar-default">
@@ -110,23 +107,12 @@
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>	
 			<ul class="nav navbar-nav navbar-right">
-<%-- 	<% 
-		if(myProfile.equals(profile))//If user == profile's user, show button
-		{
-	%>
-				<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
-						<span class="glyphicon glyphicon-plus-sign"></span>  Edit Photo
-				</label></a></li>
-	<%
-		}
-	%> --%>
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>
-					Sign Out</a>
-				</li>
+					Sign Out</a></li>
 			</ul>
 			
 			<form class="navbar-form navbar-left" action="/collection" method="post">
@@ -139,19 +125,6 @@
 			
 		</div>
 	</nav>
-<%-- 	<% 
-		if(myProfile.equals(profile))
-		{
-	%>
-	<form id="form" action="<%=blobstoreService.createUploadUrl("/profilephoto")%>"
-		method="post" enctype="multipart/form-data">
-		<input type="file" id="fileIn" name="myFile" accept="image/*"
-				onchange="javascript:this.form.submit();">
-		<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
-	</form>
-	<%
-		}
-	%> --%>
 	
 	<h2 class="header">My Profile</h2>
 	<%
@@ -235,16 +208,11 @@
 
 			<%
 				}
+		}
 			%>
 		</div>
 	</div>
 	<br>
 	<br>
-	<%
-			for (Ref<Follower> follower : followers) {
-				System.out.println(((Profile) follower.get()).getUsername());
-			}
-		}
-	%>
 </body>
 </html>

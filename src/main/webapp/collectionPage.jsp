@@ -15,10 +15,6 @@
 <%@ page import="collectionconnection.Comment"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%
-	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-%>
-
 
 <html>
 <head>
@@ -36,6 +32,7 @@
 </head>
 <body class="body">
 	<%
+		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.register(CollectionNotificationText.class);
 		ObjectifyService.register(CommentNotificationText.class);
@@ -99,7 +96,7 @@
 			if (collection != null) {
 				pageContext.setAttribute("collection", collection.getCollectionName());
 	%>
-		<h1 align="center">${fn:escapeXml(collection)}</h1>
+		<h1 align="center"><b>${fn:escapeXml(collection)}</b></h1>
 		<div class="container text-center">
 		<div class="row">
 		<%
@@ -140,7 +137,7 @@
 			pageContext.setAttribute("username", profile.getUsername());
 		%>
 		<br><br><br>
-		<h2 align="center">Comments</h2>
+		<h3 align="center">Comments</h3>
 		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
 			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
 			<input type="submit"  id="txtSub"  value="Post comment" style="margin-top:10px;float:right" class="btn btn-success"   disabled>

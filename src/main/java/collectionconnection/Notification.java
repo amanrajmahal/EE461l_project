@@ -1,13 +1,5 @@
 package collectionconnection;
 
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-
 public class Notification {
 	private NotificationType notificationType;
 	private boolean sendCollections;
@@ -48,7 +40,6 @@ public class Notification {
 		this.sendCollections = sendCollections;
 		this.sendPhotos = sendPhotos;
 		this.sendFollowers = sendFollowers;
-		System.out.println("Collections: " + this.sendCollections + "\nPhotos: " + this.sendPhotos + "\nFollowers: " + this.sendFollowers);
 	}
 	
 	public void setNotificationType(NotificationType notificationType) {

@@ -90,11 +90,13 @@
 	}
 %>
 </div>
+<br>
 <div style="margin:auto;text-align:center;align:center;">
 	<a ><label style="font-weight:normal;margin:auto;"for="fileIn">
-		<span class="glyphicon glyphicon-plus-sign"></span>  Edit Photo
+		<span class="glyphicon glyphicon-plus-sign"></span>  Change Profile Picture
 	</label></a>
 </div>
+<br><br>
 <div id="settingsLayout">
 	<div id="settings">
 		<form action="/settings" method="post">
@@ -137,7 +139,7 @@
 			<br>
 			<h3>Notify me when...</h3>
 			<div class="checkbox">
-			<input type="checkbox" name="getCollections" value="collections"
+			<label><input type="checkbox" name="getCollections" value="collections"
 			<%
 		    	if(notificationSettings.includeCollections())
 		    	{
@@ -146,10 +148,10 @@
 		    <%
 		    	}
 		    %>
-			> someone I follow adds a new collection <br>
+			> someone I follow adds a new collection</label><br>
 			</div>
 			<div class="checkbox">
-			<input type="checkbox" name="getPhotos" value="photos"
+			<label><input type="checkbox" name="getPhotos" value="photos"
 			<%
 		    	if(notificationSettings.includePhotos())
 		    	{
@@ -158,10 +160,10 @@
 		    <%
 		    	}
 		    %>
-			> someone I follow adds a new photo to a collection  <br>
+			> someone I follow adds a new photo to a collection</label><br>
 			</div>
 			<div class="checkbox">
-			<input type="checkbox" name="getFollowers" value="followers"
+			<label><input type="checkbox" name="getFollowers" value="followers"
 			<%
 		    	if(notificationSettings.includeFollowers())
 		    	{
@@ -170,7 +172,7 @@
 		    <%
 		    	}
 		    %>
-			> someone follows me <br><br>
+			> someone follows me</label><br><br>
 			</div>
 			<input class="btn btn-default" type="submit" value="Save">
 		</form>

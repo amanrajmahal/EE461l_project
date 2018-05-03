@@ -1,8 +1,6 @@
 package collectionconnection;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +16,6 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class CronJobServlet extends HttpServlet { 
-	//private static final Logger log = Logger.getLogger(BlogPostServlet.class.getName()); 
 	static {
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.register(CollectionNotificationText.class);
@@ -28,14 +25,6 @@ public class CronJobServlet extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		try {
-			//log.info("Cron job received");
-			sendMail();
-		} catch (Exception e) {}
-	}
-	
-	private void sendMail() throws AddressException{
-		ObjectifyService.register(Profile.class);
 		List<Profile> profiles = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).list();
 		for (Profile p : profiles) {
 			if (p.getNotificationType() == NotificationType.DAILY) {

@@ -87,13 +87,13 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     
     public void changeNotificationType(String type) {
     	if (type.equals("none")) {
-    		this.notification.setNotificationType(NotificationType.NONE); System.out.println("Set to none");
+    		this.notification.setNotificationType(NotificationType.NONE);
     	}
     	else if (type.equals("realtime")) {
-    		this.notification.setNotificationType(NotificationType.REALTIME); System.out.println("Set to realtime");
+    		this.notification.setNotificationType(NotificationType.REALTIME);
     	}
     	else if (type.equals("daily")) {
-    		this.notification.setNotificationType(NotificationType.DAILY); System.out.println("Set to realtime");
+    		this.notification.setNotificationType(NotificationType.DAILY);
     	}
     }
     
