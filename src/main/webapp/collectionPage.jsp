@@ -145,6 +145,7 @@
 			<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 		</form>
 		<br>
+		
 		<%
 			//pull up comments for this profile and this collection
 					ArrayList<Comment> comments = collection.getComments();
@@ -158,16 +159,15 @@
 						pageContext.setAttribute("commentId",comment.getCommentId());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-	
-				<div id="commentWrapper">
-				
+
+				<div style="align:center;margin:auto;margin-bottom:53px;width:50%">
 					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
-					
+						
 			<%
 					if(myProfile.equals(profile) || myProfile.equals(profileOfComment)) {
 			%>
 					<form id="commentForm" action ="/delete" method = "post">
-						<input class="btn-danger" type="submit" value="X" />
+						<input class="btn btn-danger btn-xs" type="submit" value="X" />
 						<input type="hidden" name="command" value="comment" />
 						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
@@ -177,7 +177,6 @@
 					}
 			%>
 				</div>
-				<br>
 		<%
 				}
 			}
