@@ -1,16 +1,27 @@
 package collectionconnection;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.google.appengine.api.users.User;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.Parent;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Entity
 public class Profile implements Comparable<Profile>, Follower, Subject {
+	@Parent Key<Profile> parent;
     @Id Long id;
     @Index User actualUser;
     @Index String username;
@@ -24,7 +35,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
     private Photo profilePhoto = new Photo("profilePhoto", null);
     
     @SuppressWarnings("unused")
-	private Profile() {}
+    private Profile() {}
     
     public Profile(User user, String username) {
     	this.actualUser = user;
@@ -35,6 +46,7 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         this.followers = new HashSet<>();
         this.notification = new Notification();
         this.profilePhoto = new Photo("profilePhoto", null);
+        this.parent = Key.create(Profile.class, "profiles");
     }
     
     public User getUser()
@@ -152,13 +164,13 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 	
 	@Override
 	public void notifyFollowers(NotificationText notification) {
-		if (notification instanceof FollowerNotificationText) {
+		if (notification instanceof FollowerNotificationText && this.notification.includeFollowers()) {
 			if (this.notification.getNotificationType() == NotificationType.DAILY) {
 				this.notificationLog.add(notification);
 				ofy().save().entity(this).now();
 			}
-			else {
-				Notification.alert(username, notification.getNotificationText(), actualUser.getEmail());
+			else if (this.notification.getNotificationType() == NotificationType.REALTIME) {
+				alert(notification);
 			}
 		}
 		
@@ -178,7 +190,48 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
 				 this.notificationLog.add(notification);
 				 ofy().save().entity(this).now();
 			}
-			else Notification.alert(username, notification.getNotificationText(), actualUser.getEmail());
+			else if (this.notification.getNotificationType() == NotificationType.REALTIME) {
+				alert(notification);
+			}
 		}
+	}
+	
+	public void alert(NotificationText notification) {
+		Properties properties = new Properties();
+		Session session = Session.getDefaultInstance(properties, null);
+		Message msg = new MimeMessage(session);
+		String body = "";
+		if (this.notification.getNotificationType() == NotificationType.DAILY) {
+			body = getLogString();
+		}
+		else if (this.notification.getNotificationType() == NotificationType.REALTIME) {
+			body = notification.getNotificationText();
+		}
+		if (body.length() != 0) {
+			try {
+				msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(actualUser.getEmail()));
+				msg.setSubject("Notifications from Collection Connection");
+				String html = "<div style=\"font-family:Georgia; font-size:12px\"><p>Hey " + username + ", <br><br>Here's what you missed.<br><br><br>" +
+						body + "</p><br><br>" + "<a href=\"https://collection-connection.appspot.com\">Visit Collection Connection</a><br><br>" +
+						"<b>Collection Connection Team</b></div>";
+					
+				msg.setContent(html, "text/html");
+				Transport.send(msg);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	 
+		}
+	}
+	
+	public String getLogString() {
+		StringBuilder str = new StringBuilder();
+		DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+		for (NotificationText text : notificationLog) {
+			String date = dateFormat.format(text.getDate());
+			str.append(date).append(":  ").append(text.getNotificationText()).append("<br>");
+		}
+		notificationLog.clear();
+		return str.toString();
 	}
 }

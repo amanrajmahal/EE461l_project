@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 @SuppressWarnings("serial")
@@ -32,7 +33,7 @@ public class ProfilePhotoServlet extends HttpServlet {
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
 		String username = req.getParameter("username");
 		List<BlobKey> blobKeys = blobs.get("myFile");
-		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
+		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		if(profile.getProfilePhoto().getBlobKey() != null)
 		{
 			blobstoreService.delete(new BlobKey(profile.getProfilePhoto().getBlobKey()));

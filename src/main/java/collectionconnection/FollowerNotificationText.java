@@ -3,10 +3,10 @@ package collectionconnection;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
+@SuppressWarnings("unused")
 public class FollowerNotificationText extends NotificationText {
 	private String user;
 	
-	@SuppressWarnings("unused")
 	private FollowerNotificationText() {}
 	
 	public FollowerNotificationText(String user) {

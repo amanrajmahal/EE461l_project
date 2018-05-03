@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 @SuppressWarnings("serial")
@@ -31,7 +32,7 @@ public class CommentServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String collection = req.getParameter("collection");
 		//ofy().clear();
-		Profile profile = ofy().load().type(Profile.class).filter("username", username).first().now();
+		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		//shouldn't happen, but just in case
 		if(profile != null)
 		{

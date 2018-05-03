@@ -49,9 +49,9 @@
 		pageContext.setAttribute("collection", collectionName);
 		//ObjectifyService.ofy().clear();
 
-		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now();
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		//ObjectifyService.ofy().clear();
-		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now();
+		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 	%>
 	
 		<nav class="navbar navbar-default">
@@ -155,7 +155,7 @@
 
 					for (Comment comment : comments) {
 						//ObjectifyService.ofy().clear();
-						Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", comment.getUser()).first().now();
+						Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", comment.getUser()).first().now();
 
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("commentId",comment.getCommentId());

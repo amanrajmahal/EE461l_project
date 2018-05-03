@@ -54,24 +54,4 @@ public class Notification {
 	public void setNotificationType(NotificationType notificationType) {
 		this.notificationType = notificationType;
 	}
-	
-	// new method
-	public static void alert(String username, String body, String email) {
-		Properties properties = new Properties();
-		Session session = Session.getDefaultInstance(properties, null);
-		Message msg = new MimeMessage(session);
-		try {
-			msg.setFrom(new InternetAddress("admin@collection-connection.appspotmail.com","Collection Connection Digest"));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-			msg.setSubject("Notifications from Collection Connection");
-			String html = "<div style=\"font-family:Georgia; font-size:12px\"><p>Hey " + username + ", <br><br>This is what you missed today.<br><br><br>" +
-					body + "</p><br><br>" + "<a href=\"https://collection-connection.appspot.com\">Visit Collection Connection</a><br><br>" +
-					"<b>Collection Connection Team</b></div>";
-					
-			msg.setContent(html, "text/html");
-			Transport.send(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	 
-	}
 }

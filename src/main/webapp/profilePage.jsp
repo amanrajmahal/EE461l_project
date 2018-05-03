@@ -15,7 +15,6 @@
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <%
 	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
@@ -24,8 +23,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -53,9 +52,9 @@
 		String username = request.getParameter("username");
 		pageContext.setAttribute("username", username);
 		//ObjectifyService.ofy().clear();
-		Profile profile = ObjectifyService.ofy().load().type(Profile.class).filter("username", username).first().now(); // who the user is going to follow
+		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now(); // who the user is going to follow
 		//ObjectifyService.ofy().clear();
-		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).filter("actualUser", user).first().now(); // current user who is logged in
+		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now(); // current user who is logged in
 	%>
 	<%
 		if (profile != null) {
@@ -78,14 +77,15 @@
 				<a class="navbar-brand" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>">My Profile</a></li>
+				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-				<li><a href="browse.jsp">Browse</a></li>
+				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
 				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
 					<span class="glyphicon glyphicon-log-out"></span>
 					Sign Out</a>
 				</li>
 			</ul>
+			
 			<form class="navbar-form navbar-right" id = "followNav"action="/follower" method="post">
 				<div class="form-group">
 				<!-- 	<input id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">-->
@@ -94,9 +94,9 @@
 				<input id = "followerTest" type="submit" class="btn btn-default" value="${fn:escapeXml(buttonValue)}">
 			</form>
 			<p class="navbar-text" id = "userNav"> <b>${fn:escapeXml(username)}</b> </p>
+			
 		</div>
 	</nav>
-	 
 	
 	<!--  <form action="/follower" method="post">
 	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
@@ -155,6 +155,11 @@
 	
 	<h2 class="header">My Profile</h2>
 	
+	<br>
+	<%
+		}
+	%>
+	
 	<%
 		if(profile.getProfilePhoto().getBlobKey() != null)
 		{
@@ -164,11 +169,6 @@
 					<img width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 				</a>
 			<%
-		}
-	%>
-	
-	<br>
-	<%
 		}
 	%>
 	<h2 class="header">Collections</h2>
@@ -182,32 +182,40 @@
 					pageContext.setAttribute("collection", collection.getCollectionName());
 			%>
 			<div class="col-sm-4">
-				<%
-					ArrayList<Photo> photos = collection.getPhotos();
-							if (!photos.isEmpty()) {
-								pageContext.setAttribute("blobkey", photos.get(0).getBlobKey());
-								pageContext.setAttribute("photoname", photos.get(0).getName());
-				%>
-				<!-- <a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>-->
-				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
-						role="button">
-				<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
-				</a>
-				<%
-					}
-					else
-					{
-				%>
-				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
-				<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
-				</a>
-				<%
-					}
-				%>
-				<p>
-					<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
-						role="button"> ${fn:escapeXml(collection)} </a></strong>
-				</p>
+				<div class="show-image">
+					<%
+						ArrayList<Photo> photos = collection.getPhotos();
+						if (!photos.isEmpty()) {
+							pageContext.setAttribute("blobkey", photos.get(0).getBlobKey());
+							pageContext.setAttribute("photoname", photos.get(0).getName());
+					%>
+					<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"role="button">
+					<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+					</a>
+					
+					<%
+						}
+						else
+						{
+					%>
+					<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+					<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
+					</a>
+					<%
+						}
+					%>
+					<p>
+						<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
+							role="button"> ${fn:escapeXml(collection)} </a></strong>
+					</p>
+					
+					<form action ="/delete" method = "post">
+						<input class="the-buttons" type="submit" value="X" />
+						<input type="hidden" name="command" value="collection" />
+						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+					</form>
+				</div>
 			</div>
 
 			<%

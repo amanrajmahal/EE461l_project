@@ -112,28 +112,15 @@ div.show-image input {
 	background-color: white;
 }
 
-#welcomePageBody::after{
-	content: "";
-	background: url("../images/background-welcome.jpg");
-	background-repeat:no-repeat;
-	background-size:100% 100%;
-	opacity: 0.2;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	position: absolute;
-	z-index: -1;	
+#settingsLayout {
+	text-align: center;
 }
 
-
-.welcomePageText{
-   -webkit-text-stroke: 1px black;/*Webkit shadows*/
-   color: white;
-   text-shadow:/*The 1st line below is the position and color of the shadow*/
-       1px 1px 0 #000,
-     -1px -1px 0 #000,  
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-       1px 1px 0 #000;
+#settings {
+	text-align: center;
+  	width: 60%;
+  	background-color: #eee;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
 }
