@@ -24,7 +24,7 @@
 <title>Collection Connection</title>
 </head>
 
-<body class="body" >
+<body class="body welcome-page">
 	<%
 		ObjectifyService.register(Profile.class);
 		ObjectifyService.register(CollectionNotificationText.class);
