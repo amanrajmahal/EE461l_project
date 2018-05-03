@@ -110,7 +110,7 @@
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>	
 			<ul class="nav navbar-nav navbar-right">
-	<% 
+<%-- 	<% 
 		if(myProfile.equals(profile))//If user == profile's user, show button
 		{
 	%>
@@ -119,7 +119,7 @@
 				</label></a></li>
 	<%
 		}
-	%>
+	%> --%>
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
@@ -139,7 +139,7 @@
 			
 		</div>
 	</nav>
-	<% 
+<%-- 	<% 
 		if(myProfile.equals(profile))
 		{
 	%>
@@ -151,7 +151,7 @@
 	</form>
 	<%
 		}
-	%>
+	%> --%>
 	
 	<h2 class="header">My Profile</h2>
 	

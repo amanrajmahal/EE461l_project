@@ -40,7 +40,7 @@ public class ProfilePhotoServlet extends HttpServlet {
 		}
 		profile.setProfilePhoto(blobKeys.get(0).getKeyString());
 		ofy().save().entity(profile).now();
-		resp.sendRedirect("/profilePage.jsp?username=" + username);
+		resp.sendRedirect("/settings.jsp");
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
@@ -22,12 +24,14 @@
 </head>
 <body class="body">
 <%
+		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 		String username = profile.getUsername();
 		Notification notificationSettings = profile.getNotification();
 		pageContext.setAttribute("username", username);
+		pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 		
 %>
 	<nav class="navbar navbar-default">
@@ -53,15 +57,29 @@
 	</nav>
 
 
-<h2 class="header">Notification Settings</h2>
+<h2 class="header">Settings</h2>
 <br><br>
 <br><br>
+
+<form id="form" action="<%=blobstoreService.createUploadUrl("/profilephoto")%>"
+	method="post" enctype="multipart/form-data">
+	<input type="file" id="fileIn" name="myFile" accept="image/*"
+			onchange="javascript:this.form.submit();">
+	<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+</form>
+<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
+	<img style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+</a>
+
+<a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
+	<span class="glyphicon glyphicon-plus-sign"></span>  Edit Photo
+</label></a>
 <div id="settingsLayout">
 	<div id="settings">
-		<h3>Notify me when...</h3>
 		<form action="/settings" method="post">
-			<label>
-		    <input type="radio" name="type" value="none"
+			
+			<label class="radio-inline">
+		    	<input type="radio" name="type" value="none"
 		    <%
 		    	if(notificationSettings.getNotificationType() == NotificationType.NONE)
 		    	{
@@ -70,9 +88,8 @@
 		    <%
 		    	}
 		    %>
-		    /> Turn off notifications
-			</label>
-			<label>
+		    	/> Turn off notifications</label>
+			<label class="radio-inline">
 		    <input type="radio" name="type" value="realtime"
 		    <%
 		    	if(notificationSettings.getNotificationType() == NotificationType.REALTIME)
@@ -84,7 +101,7 @@
 		    %>
 		    /> Send real-time notifications
 			</label>
-			<label>
+			<label class="radio-inline">
 		    <input type="radio" name="type" value="daily"
 		    <%
 		    	if(notificationSettings.getNotificationType() == NotificationType.DAILY)
@@ -97,6 +114,8 @@
 		    /> Send daily notifications
 			</label>
 			<br>
+			<h3>Notify me when...</h3>
+			<div class="checkbox">
 			<input type="checkbox" name="getCollections" value="collections"
 			<%
 		    	if(notificationSettings.includeCollections())
@@ -107,6 +126,8 @@
 		    	}
 		    %>
 			> someone I follow adds a new collection <br>
+			</div>
+			<div class="checkbox">
 			<input type="checkbox" name="getPhotos" value="photos"
 			<%
 		    	if(notificationSettings.includePhotos())
@@ -117,6 +138,8 @@
 		    	}
 		    %>
 			> someone I follow adds a new photo to a collection  <br>
+			</div>
+			<div class="checkbox">
 			<input type="checkbox" name="getFollowers" value="followers"
 			<%
 		    	if(notificationSettings.includeFollowers())
@@ -127,7 +150,8 @@
 		    	}
 		    %>
 			> someone follows me <br><br>
-			<input type="submit" value="Save">
+			</div>
+			<input class="btn btn-default" type="submit" value="Save">
 		</form>
 	</div>
 </div>

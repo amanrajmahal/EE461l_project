@@ -121,6 +121,7 @@ div.show-image input {
   	width: 60%;
   	background-color: #eee;
   	display: block;
-  	margin-left: auto;
-  	margin-right: auto;
+  	margin:auto;
+  	padding:10px;
+  	padding-bottom:1px;
 }
