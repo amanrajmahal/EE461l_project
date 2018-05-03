@@ -77,11 +77,6 @@
 			
 		</div>
 	</nav>
-	
-	<!--  <form action="/follower" method="post">
-	    	<input id="followerTest" type="submit" value="${fn:escapeXml(buttonValue)}"/>
-	    	<input type="hidden" name="username" value="${fn:escapeXml(username)}"/>
-	</form>-->
 	<%
 		} else {
 	%>
@@ -109,7 +104,7 @@
 		</div>
 	</nav>
 	
-	<h2 class="header">${fn:escapeXml(username)}</h2>
+	<h1 class="header">${fn:escapeXml(username)}</h1>
 	<%
 		}
 	%>
@@ -122,7 +117,7 @@
 				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 		%>
 					<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
-						<img class="profileImage" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+						<img class="profileImage img-rounded" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 					</a>
 		<%
 			}
@@ -130,13 +125,14 @@
 			{
 		%>
 					<a href = "images/profileImage.png" data-lightbox="${fn:escapeXml(username)}">
-						<img class="profileImage" width="250" height="150" src="images/profileImage.png">
+						<img class="profileImage img-rounded" width="250" height="150" src="images/profileImage.png">
 					</a>
 		<%
 			}
 		%>
 	</div>
-	<h2 class="header">Collections</h2>
+	<br><br><br>
+	<h3 class="header">Collections</h3>
 	<%
 		ArrayList<Collection> collections = profile.getCollections();
 	%>
