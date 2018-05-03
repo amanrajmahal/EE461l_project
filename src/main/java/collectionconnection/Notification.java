@@ -7,7 +7,7 @@ public class Notification {
 	private boolean sendFollowers;
 	
 	public Notification() {
-		this.notificationType = NotificationType.REALTIME;
+		this.notificationType = NotificationType.NONE;
 		this.sendCollections = false;
 		this.sendPhotos = false;
 		this.sendFollowers = false;

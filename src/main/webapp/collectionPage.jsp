@@ -115,7 +115,7 @@
 						{
 		%>
 				<form action ="/delete" method = "post">
-					<input class="btn-danger" type="submit" value="X" />
+					<input class="btn btn-danger btn-xs" type="submit" value="X" />
 					<input type="hidden" name="command" value="photo" />
 					<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 					<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
