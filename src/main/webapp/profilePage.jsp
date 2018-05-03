@@ -161,32 +161,40 @@
 					pageContext.setAttribute("collection", collection.getCollectionName());
 			%>
 			<div class="col-sm-4">
-				<%
-					ArrayList<Photo> photos = collection.getPhotos();
-							if (!photos.isEmpty()) {
-								pageContext.setAttribute("blobkey", photos.get(0).getBlobKey());
-								pageContext.setAttribute("photoname", photos.get(0).getName());
-				%>
-				<!-- <a href="collectionPage.jsp?targetProfile=${fn:escapeXml(currentProfile)}&collectionName=${fn:escapeXml(collectionName)}" role="button"> ${fn:escapeXml(collectionName)} </a>-->
-				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
-						role="button">
-				<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
-				</a>
-				<%
-					}
-					else
-					{
-				%>
-				<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
-				<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
-				</a>
-				<%
-					}
-				%>
-				<p>
-					<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
-						role="button"> ${fn:escapeXml(collection)} </a></strong>
-				</p>
+				<div class="show-image">
+					<%
+						ArrayList<Photo> photos = collection.getPhotos();
+						if (!photos.isEmpty()) {
+							pageContext.setAttribute("blobkey", photos.get(0).getBlobKey());
+							pageContext.setAttribute("photoname", photos.get(0).getName());
+					%>
+					<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"role="button">
+					<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+					</a>
+					
+					<%
+						}
+						else
+						{
+					%>
+					<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+					<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
+					</a>
+					<%
+						}
+					%>
+					<p>
+						<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
+							role="button"> ${fn:escapeXml(collection)} </a></strong>
+					</p>
+					
+					<form action ="/delete" method = "post">
+						<input class="the-buttons" type="submit" value="X" />
+						<input type="hidden" name="command" value="collection" />
+						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
+						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
+					</form>
+				</div>
 			</div>
 
 			<%
