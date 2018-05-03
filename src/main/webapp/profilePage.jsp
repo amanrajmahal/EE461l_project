@@ -208,13 +208,19 @@
 						<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
 							role="button"> ${fn:escapeXml(collection)} </a></strong>
 					</p>
-					
+					<%
+						if(myProfile.equals(profile))
+						{
+					%>
 					<form action ="/delete" method = "post">
 						<input class="the-buttons" type="submit" value="X" />
 						<input type="hidden" name="command" value="collection" />
 						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 					</form>
+					<%
+						}
+					%>
 				</div>
 			</div>
 
