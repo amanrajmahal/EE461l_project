@@ -159,14 +159,14 @@
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
 	
-				<div id="commentTest" style="margin:auto;">
+				<div id="commentWrapper">
 				
 					<b>${fn:escapeXml(usernameOfComment)}: </b>${fn:escapeXml(comment)}
 					
 			<%
 					if(myProfile.equals(profile) || myProfile.equals(profileOfComment)) {
 			%>
-					<form action ="/delete" method = "post">
+					<form id="commentForm" action ="/delete" method = "post">
 						<input class="the-buttons" type="submit" value="X" />
 						<input type="hidden" name="command" value="comment" />
 						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
