@@ -154,23 +154,32 @@
 	%> --%>
 	
 	<h2 class="header">My Profile</h2>
-	
+	<%
+		}
+	%>
 	<br>
-	<%
-		}
-	%>
 	
-	<%
-		if(profile.getProfilePhoto().getBlobKey() != null)
-		{
-			pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
-			%>
-				<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
-					<img width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
-				</a>
-			<%
-		}
-	%>
+	<div class="profileImageWrapper">
+		<%
+			if(profile.getProfilePhoto().getBlobKey() != null)
+			{
+				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
+		%>
+					<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
+						<img class="profileImage" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+					</a>
+		<%
+			}
+			else
+			{
+		%>
+					<a href = "images/profileImage.png" data-lightbox="${fn:escapeXml(username)}">
+						<img class="profileImage" width="250" height="150" src="images/profileImage.png">
+					</a>
+		<%
+			}
+		%>
+	</div>
 	<h2 class="header">Collections</h2>
 	<%
 		ArrayList<Collection> collections = profile.getCollections();
@@ -208,13 +217,19 @@
 						<strong><a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"
 							role="button"> ${fn:escapeXml(collection)} </a></strong>
 					</p>
-					
+					<%
+						if(myProfile.equals(profile))
+						{
+					%>
 					<form action ="/delete" method = "post">
 						<input class="the-buttons" type="submit" value="X" />
 						<input type="hidden" name="command" value="collection" />
 						<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 						<input type="hidden" name="collection" value="${fn:escapeXml(collection)}" />
 					</form>
+					<%
+						}
+					%>
 				</div>
 			</div>
 

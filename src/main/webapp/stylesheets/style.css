@@ -125,3 +125,14 @@ div.show-image input {
   	padding:10px;
   	padding-bottom:1px;
 }
+
+.profileImageWrapper {
+	position:relative;
+}
+
+.profileImage {
+	position:relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

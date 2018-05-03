@@ -25,6 +25,7 @@
 <body class="body">
 <%
 		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+		ObjectifyService.register(Profile.class);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
