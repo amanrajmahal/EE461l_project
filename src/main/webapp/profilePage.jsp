@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/scripts/profileAddCollection.js"></script>
 <script>
 	$(document).ready(function() {
 		//$("#body").css("background-color","lavender");
@@ -107,8 +108,18 @@
 	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
+			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>	
 			<ul class="nav navbar-nav navbar-right">
+	<% 
+		if(myProfile.equals(profile))//If user == profile's user, show button
+		{
+	%>
+				<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
+						<span class="glyphicon glyphicon-plus-sign"></span>  Edit Photo
+				</label></a></li>
+	<%
+		}
+	%>
 				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
@@ -123,25 +134,35 @@
 					<input type="text" name="collection" class="form-control" placeholder="Collection Name">
 					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 				</div>
-				<input type="submit" class="btn btn-default" value="Add Collection">
+				<input name="collectionButton" type="submit" class="btn btn-default" value="Add Collection" disabled>
 			</form>
+			
 		</div>
 	</nav>
-	
-	<h2 class="header">My Profile</h2>
-	
-	<form action="<%=blobstoreService.createUploadUrl("/profilephoto")%>" method="post" enctype="multipart/form-data">
-		<input type="file" name="myFile" accept="image/*" >
-		<input type="submit" name = "Submit">
+	<% 
+		if(myProfile.equals(profile))
+		{
+	%>
+	<form id="form" action="<%=blobstoreService.createUploadUrl("/profilephoto")%>"
+		method="post" enctype="multipart/form-data">
+		<input type="file" id="fileIn" name="myFile" accept="image/*"
+				onchange="javascript:this.form.submit();">
 		<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 	</form>
+	<%
+		}
+	%>
+	
+	<h2 class="header">My Profile</h2>
 	
 	<%
 		if(profile.getProfilePhoto().getBlobKey() != null)
 		{
 			pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 			%>
-				<img width="250" height="150"  src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+				<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
+					<img width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+				</a>
 			<%
 		}
 	%>

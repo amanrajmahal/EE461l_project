@@ -15,6 +15,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/scripts/browseScript.js"></script>
+<script src="/scripts/profileAddCollection.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Browse</title>
 </head>
@@ -45,7 +46,7 @@
 					<input type="text" name="collection" class="form-control" placeholder="Collection Name">
 					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 				</div>
-				<input type="submit" class="btn btn-default" value="Add Collection">
+				<input name="collectionButton" type="submit" class="btn btn-default" value="Add Collection" disabled>
 			</form>
 		</div>
 		</nav>

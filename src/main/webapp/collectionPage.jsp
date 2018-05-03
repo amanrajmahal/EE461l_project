@@ -57,7 +57,7 @@
 		<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
-			<div style="background-color:blue;align:center">
+			<div style="align:center">
 	<% 
 		if(myProfile.equals(profile))
 		{
@@ -112,7 +112,7 @@
 			<div class="show-image">
 			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
 				<img width="250" height="150" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
-				</a>
+			</a>
 		<%
 						if(myProfile.equals(profile))
 						{
