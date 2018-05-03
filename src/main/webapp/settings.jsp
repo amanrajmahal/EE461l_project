@@ -31,8 +31,9 @@
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 		String username = profile.getUsername();
 		Notification notificationSettings = profile.getNotification();
+		String blobKey = profile.getProfilePhoto().getBlobKey();
 		pageContext.setAttribute("username", username);
-		pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
+		pageContext.setAttribute("profilePhoto", blobKey);
 		
 %>
 	<nav class="navbar navbar-default">
@@ -68,13 +69,32 @@
 			onchange="javascript:this.form.submit();">
 	<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 </form>
-<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
-	<img style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
-</a>
 
-<a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
-	<span class="glyphicon glyphicon-plus-sign"></span>  Edit Photo
-</label></a>
+<div class = "profileImageWrapper">
+<%
+	if(blobKey != null)
+	{
+%>
+	<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
+		<img class = "profileImage" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+	</a>
+<%
+	}
+	else
+	{
+%>
+	<a href = "images/profileImage.png" data-lightbox="${fn:escapeXml(username)}">
+		<img class = "profileImage" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="images/profileImage.png">
+	</a>
+<%
+	}
+%>
+</div>
+<div style="margin:auto;text-align:center;align:center;">
+	<a ><label style="font-weight:normal;margin:auto;"for="fileIn">
+		<span class="glyphicon glyphicon-plus-sign"></span>  Edit Photo
+	</label></a>
+</div>
 <div id="settingsLayout">
 	<div id="settings">
 		<form action="/settings" method="post">
