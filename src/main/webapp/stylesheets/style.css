@@ -1,22 +1,15 @@
 #userNav{
-	position: absolute;
+	position: float;
 	width: 100px;
 	left: 50%;
 	margin-left: -50px;
+	margin-top:4px;
 	text-align: center;
 }
 #followNav{
 	position: absolute;
-	width: 100px;
-	left: 55%;
-	margin-left: -55px;
-	text-align: center;
-	
-}
-.navbar-text p {
-	text-align:center;
-	color:red;
-	
+	width: 80px;
+	text-align: center;	
 }
 
 .welcome-page {
@@ -72,6 +65,13 @@ div.show-image input {
     top:0;
     left:0;
     display:none;
+}
+
+div.post-heading input{
+	display:none;
+}
+div.post-heading:hover input{
+	display:block;
 }
 
 #searchText {
