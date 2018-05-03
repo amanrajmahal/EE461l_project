@@ -16,7 +16,8 @@ $(document).ready(function() {
 	}
 	)
 	$(window).keydown(function(event) {
-		if (event.keyCode == 13 && $("input").filter(function () {
+		var char = event.which || event.keyCode;
+		if (char == 13 && $("input").filter(function () {
 			return $.trim($(this).val()).length}) == 0) {
 			event.preventDefault();
 			return false;
