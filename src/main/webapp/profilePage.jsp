@@ -26,14 +26,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/scripts/profileAddCollection.js"></script>
-<script>
-	$(document).ready(function() {
-		//$("#body").css("background-color","lavender");
-		$("#follow").click(function() {
-
-		});
-	});
-</script>
 
 <title>My Profile</title>
 </head>
@@ -49,25 +41,16 @@
 		User user = userService.getCurrentUser();
 		String username = request.getParameter("username");
 		pageContext.setAttribute("username", username);
-		//ObjectifyService.ofy().clear();
 		Profile profile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now(); // who the user is going to follow
-		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now(); // current user who is logged in
 	%>
 	<%
 		if (profile != null) {
 			Set<Ref<Follower>> followers = profile.getFollowers();
-	%>
-	<%
 		if (!myProfile.getUsername().equals(profile.getUsername())) {
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
 				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
-	<script type="text/javascript">
-	
-	document.getElementById("followerTest").value = buttonValue;
-	
-	</script>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -126,7 +109,7 @@
 		</div>
 	</nav>
 	
-	<h2 class="header">My Profile</h2>
+	<h2 class="header">${fn:escapeXml(username)}</h2>
 	<%
 		}
 	%>

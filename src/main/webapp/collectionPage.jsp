@@ -138,7 +138,7 @@
 		%>
 		<br><br><br>
 		<h3 align="center">Comments</h3>
-		<form class="center" style="margin:auto;margin-bottom:53px" action="/comment" method="post">
+		<form class="center" style="margin:auto;margin-bottom:53px;width:50%" action="/comment" method="post">
 			<textarea name="comment" id="txtArea" class="form-control form-horizontal" placeholder="Comment here..." rows="1"></textarea>
 			<input type="submit"  id="txtSub"  value="Post comment" style="margin-top:10px;float:right" class="btn btn-success"   disabled>
 			<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
