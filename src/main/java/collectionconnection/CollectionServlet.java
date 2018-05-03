@@ -26,20 +26,18 @@ public class CollectionServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String username = req.getParameter("username");
 		String collection = req.getParameter("collection");
-		//String currentProfile = req.getParameter("currentProfile");
-		
-		//ofy().clear();
 		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
 		
-		if(profile != null && collection != null && !collection.isEmpty())
+		if(profile != null && collection != null && collection.length() > 0)
 		{
 			profile.addCollection(collection);
-			
-			//ofy().clear();
 			ofy().save().entity(profile).now();
+			res.sendRedirect("/collectionPage.jsp?username=" + username + "&collection="+  collection);
 		}
-		
-		res.sendRedirect("/collectionPage.jsp?username=" + username + "&collection="+  collection);
+		else
+		{
+			res.sendRedirect(req.getHeader("referer"));
+		}
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

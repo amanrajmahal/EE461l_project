@@ -49,6 +49,17 @@ public class Profile implements Comparable<Profile>, Follower, Subject {
         this.parent = Key.create(Profile.class, "profiles");
     }
     
+    public Profile(User user, String username, boolean debug) {
+    	this.actualUser = user;
+    	this.username = username;
+        this.date = new Date();
+        this.notificationLog = new ArrayList<>();
+        this.collections = new ArrayList<>();
+        this.followers = new HashSet<>();
+        this.notification = new Notification();
+        this.profilePhoto = new Photo("profilePhoto", null);
+    }
+    
     public User getUser()
     {
     	return actualUser;

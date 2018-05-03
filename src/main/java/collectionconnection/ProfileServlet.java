@@ -28,7 +28,11 @@ public class ProfileServlet extends HttpServlet {
 		User user = userService.getCurrentUser();
 		String username = req.getParameter("username");
 		Profile profile = ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("username", username).first().now();
-		if(profile == null) {
+		if(username != null && username.length() == 0)
+		{
+			resp.sendRedirect(req.getHeader("referer"));
+		}
+		else if(profile == null) {
 			ofy().save().entity(new Profile(user, username)).now();
 			resp.sendRedirect("/profilePage.jsp?username=" + username);
 		}
