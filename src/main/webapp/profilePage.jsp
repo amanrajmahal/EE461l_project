@@ -55,7 +55,7 @@
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
 				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
-	<nav class="navbar navbar-expand-sm navbar-light bg-light">
+	<nav class="navbar navbar-expand-sm navbar-light">
 		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
@@ -76,31 +76,28 @@
 	</nav>
 	<h1 class="header username-display">${fn:escapeXml(username)}</h1>
 	<form  class ="header" action="/follower" method="post">			
-	<input class ="btn btn-default"id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">
+	<input class ="btn btn-light"id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">
 	<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 	</form>
 	<%
 		} else {
 	%>
 	
-	<nav class="navbar navbar-expand-sm navbar-light bg-light">
+	<nav class="navbar navbar-expand-sm navbar-light" >
 		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<form class="my-auto form-inline" action="/collection" method="post"><!-- Collection Button -->
 				<div class="input-group">
 					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
 					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 					<div class="input-group-append">
-						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
+						<button class="btn btn-outline-secondary" name="collectionButton" type="submit" disabled>Add Collection</button>
 					</div>
 				</div>
 			</form>
-
-			
 	    	<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
 		      		<span class="octicon octicon-person"></span> My Profile</a>
@@ -114,7 +111,7 @@
 		</div>
 	</nav>
 	
-	<h1 class="header username-display">${fn:escapeXml(username)}</h1>
+	<h1 class="header username-display" style="margin:10px auto;">${fn:escapeXml(username)}</h1>
 
 	<%
 		}
@@ -128,7 +125,7 @@
 				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 		%>	
 					
-						<img class="profileImage imgStyle img-rounded" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+						<img class="profileImage img-rounded" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 					
 			
 		<%
@@ -137,7 +134,7 @@
 			{
 		%>
 			
-						<img class="profileImage imgStyle img-rounded" src="images/profileImage.png">
+						<img class="profileImage img-rounded" src="images/profileImage.png">
 					
 			
 		<%
@@ -172,7 +169,7 @@
 						else
 						{
 					%>
-					<a class="imgStyle" href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+					<a class="imgStyle"href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
 						<img class="img-rounded imgStyle" src="images/defaultImage.gif">
 					</a>
 					<%

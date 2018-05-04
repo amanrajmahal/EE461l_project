@@ -34,7 +34,7 @@
 		pageContext.setAttribute("username", username);
 		
 		%>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light">
 		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
@@ -46,7 +46,7 @@
 					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
 					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 					<div class="input-group-append">
-						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
+						<button class="btn btn-outline-secondary" name="collectionButton" type="submit" disabled>Add Collection</button>
 					</div>
 				</div>
 			</form>

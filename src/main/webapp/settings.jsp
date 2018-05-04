@@ -41,24 +41,21 @@
 		pageContext.setAttribute("profilePhoto", blobKey);
 		
 %>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-sm navbar-light" style="background-color:#c0deed;">
 		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<form class="my-auto form-inline" action="/collection" method="post"><!-- Collection Button -->
 				<div class="input-group">
 					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
 					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 					<div class="input-group-append">
-						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
+						<button class="btn btn-outline-secondary" name="collectionButton" type="submit" disabled>Add Collection</button>
 					</div>
 				</div>
 			</form>
-
-			
 	    	<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=profile.getUsername()%>">
 		      		<span class="octicon octicon-person"></span> My Profile</a>

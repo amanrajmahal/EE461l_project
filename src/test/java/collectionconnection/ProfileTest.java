@@ -1,8 +1,6 @@
 package collectionconnection;
 
 import static org.junit.Assert.*;
-import com.googlecode.objectify.ObjectifyService;
-
 import java.util.Date;
 
 import org.junit.Test;
@@ -16,6 +14,7 @@ public class ProfileTest {
 		assertTrue(photo.getBlobKey().equals("Key"));
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void basicCollectionTest()
 	{
