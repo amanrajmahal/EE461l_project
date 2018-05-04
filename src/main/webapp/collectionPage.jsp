@@ -174,7 +174,7 @@
 		%>
 				<div style="align:center;margin:auto;width:50%;">
 					<div style="width:100%;">
-			            <div class="panel panel-white post panel-shadow">
+			            <div class="panel panel-white post panel-shadow" style="margin-bottom:15px">
 			                <div class="post-heading">
 			                
 			                				<%
