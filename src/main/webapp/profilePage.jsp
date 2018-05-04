@@ -114,7 +114,7 @@
 		</div>
 	</nav>
 	
-	<h1 class="header username-display" style="margin:10px auto;">${fn:escapeXml(username)}</h1>
+	<h1 class="header username-display">${fn:escapeXml(username)}</h1>
 
 	<%
 		}
@@ -128,7 +128,7 @@
 				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 		%>	
 					
-						<img class="profileImage img-rounded" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+						<img class="profileImage imgStyle img-rounded" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 					
 			
 		<%
@@ -137,7 +137,7 @@
 			{
 		%>
 			
-						<img class="profileImage img-rounded" src="images/profileImage.png">
+						<img class="profileImage imgStyle img-rounded" src="images/profileImage.png">
 					
 			
 		<%
@@ -172,7 +172,7 @@
 						else
 						{
 					%>
-					<a class="imgStyle"href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+					<a class="imgStyle" href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
 						<img class="img-rounded imgStyle" src="images/defaultImage.gif">
 					</a>
 					<%
