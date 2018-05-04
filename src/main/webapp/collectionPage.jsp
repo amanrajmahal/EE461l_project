@@ -69,10 +69,10 @@
 			<li class="nav-item nav-link"><label style="cursor:pointer;" for="fileIn">
 				<span class="octicon octicon-plus"></span> Upload Photo
 			</label></li>
-			</ul>
 	<%
 		}
 	%>
+			</ul>
 				<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
 		      		<span class="octicon octicon-person"></span> My Profile</a>
