@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
@@ -60,12 +61,12 @@
 			
 	    	<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=profile.getUsername()%>">
-		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
+		      		<span class="octicon octicon-person"></span> My Profile</a>
 		      	</li>
-		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="octicon octicon-gear"></span> Settings</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="octicon octicon-search"></span> Browse</a></li>
 				<li class="nav-item"><a class="nav-link" role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a>
+					<span class="octicon octicon-sign-out"></span> Sign Out</a>
 				</li>
 			</ul>
 		</div>
@@ -105,8 +106,8 @@
 </div>
 <br>
 <div style="margin:auto;text-align:center;align:center;">
-	<a ><label style="font-weight:normal;margin:auto;"for="fileIn">
-		<span class="glyphicon glyphicon-plus-sign"></span>  Change Profile Picture
+	<a class="btn btn-default"><label style="font-weight:normal;margin:auto;"for="fileIn">
+		<span class="octicon octicon-plus"></span>  Change Profile Picture
 	</label></a>
 </div>
 <br><br>

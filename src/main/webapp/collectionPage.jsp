@@ -24,6 +24,7 @@
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
@@ -58,35 +59,28 @@
 		</button>
 		
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<form class="my-auto form-inline" action="/collection" method="post"><!-- Collection Button -->
-				<div class="input-group">
-					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
-					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
-					<div class="input-group-append">
-						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
-					</div>
-				</div>
-			</form>
 
-			
-	    	<ul class="navbar-nav ml-auto justify-content-end">
+		<ul class="navbar-nav mr-auto my-auto form-inline justify-content-end">
+	    	
 	<% 
 		if(myProfile.equals(profile))
 		{
 	%>
-			<li class="nav-item"><a class="nav-link"><label style=""for="fileIn">
-				<span class="glyphicon glyphicon-plus-sign"></span> File Upload
-			</label></a></li>
+			<li class="nav-item nav-link"><label style=""for="fileIn">
+				<span class="octicon octicon-plus"></span> File Upload
+			</label></li>
+			</ul>
 	<%
 		}
 	%>
+				<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
-		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
+		      		<span class="octicon octicon-person"></span> My Profile</a>
 		      	</li>
-		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="octicon octicon-gear"></span> Settings</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="octicon octicon-search"></span> Browse</a></li>
 				<li class="nav-item"><a class="nav-link" role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a>
+					<span class="octicon octicon-sign-out"></span> Sign Out</a>
 				</li>
 			</ul>
 		</div>
