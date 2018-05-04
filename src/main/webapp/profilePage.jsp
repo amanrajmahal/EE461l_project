@@ -125,7 +125,7 @@
 				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 		%>	
 					
-						<img class="profileImage img-rounded" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+						<img class="profileImage img-rounded imgStyle" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 					
 			
 		<%
@@ -134,7 +134,7 @@
 			{
 		%>
 			
-						<img class="profileImage img-rounded" src="images/profileImage.png">
+						<img class="profileImage img-rounded imgStyle" src="images/profileImage.png">
 					
 			
 		<%
