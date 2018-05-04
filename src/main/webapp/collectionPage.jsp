@@ -20,6 +20,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> 
@@ -29,6 +30,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/scripts/collectionScript.js"></script>
 <title>Collection</title>
 </head>
@@ -170,7 +172,6 @@
 						pageContext.setAttribute("commentId",comment.getCommentId());
 						pageContext.setAttribute("usernameOfComment", profileOfComment.getUsername());
 		%>
-
 				<div style="align:center;margin:auto;width:50%;">
 					<div style="width:100%;">
 			            <div class="panel panel-white post panel-shadow">
@@ -189,10 +190,12 @@
 			<%
 					}
 			%>
-			                    <div class="pull-left image">
+			                    <div class="float-left image">
+			                    
 			                        <img src="${fn:escapeXml(profileImageKey)}" class="img-circle avatar" alt="user profile image">
+			                    
 			                    </div>
-			                    <div class="pull-left meta">
+			                    <div class="float-left meta">
 			                        <div class="title h5">
 			                            <a href="/profilePage.jsp?username=${fn:escapeXml(usernameOfComment)}"><b>${fn:escapeXml(usernameOfComment)}</b></a>
 			                            made a comment.
@@ -206,6 +209,7 @@
 			            </div>
 					</div>
 				</div>
+
 		<%
 				}
 			}
