@@ -73,7 +73,7 @@
 	</nav>
 
 
-<h1 class="header" style="margin-top:10px;">Settings</h1>
+<h1 class="header">Settings</h1>
 
 <form id="form" action="<%=blobstoreService.createUploadUrl("/profilephoto")%>"
 	method="post" enctype="multipart/form-data">

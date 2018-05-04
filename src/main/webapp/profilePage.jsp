@@ -56,7 +56,7 @@
 				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
 	<nav class="navbar navbar-expand-sm navbar-light bg-light">
-		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
+		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -74,7 +74,7 @@
 			</ul>
 		</div>
 	</nav>
-	<h1 class="header username-display" style="margin:10px auto;">${fn:escapeXml(username)}</h1>
+	<h1 class="header username-display">${fn:escapeXml(username)}</h1>
 	<form  class ="header" action="/follower" method="post">			
 	<input class ="btn btn-default"id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">
 	<input type="hidden" name="username" value="${fn:escapeXml(username)}">

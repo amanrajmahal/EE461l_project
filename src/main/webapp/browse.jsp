@@ -64,7 +64,7 @@
 			</ul>
 		</div>
 	</nav>
-	<h1 class="header" style="margin-top:10px;">Browse Other Profiles</h1>
+	<h1 class="header">Browse Other Profiles</h1>
 	<br>
 	<br> 
 	<input id="searchText" onkeyup="search()" class="form-control" type="text" name="search" placeholder="Search..." style="margin-bottom:10px;">
@@ -76,7 +76,7 @@
 		if (!profile.equals(otherprofile)) {
 			pageContext.setAttribute("username", otherprofile.getUsername());
 	%>
-		<a class="list-group-item center username-display" style="width:50%;margin:auto;" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
+		<a class="username-display list-group-item center"  style="width:50%;margin:auto;" href="profilePage.jsp?username=${fn:escapeXml(username)}">${fn:escapeXml(username)}</a>
 	<% 				
 		}
 	}
