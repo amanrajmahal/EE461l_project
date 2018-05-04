@@ -71,10 +71,10 @@
 			<li class="nav-item nav-link"><label style="cursor:pointer;" for="fileIn">
 				<span class="octicon octicon-plus"></span> Upload Photo
 			</label></li>
-			</ul>
 	<%
 		}
 	%>
+			</ul>
 				<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
 		      		<span class="octicon octicon-person"></span> My Profile</a>
@@ -165,8 +165,8 @@
 						Profile profileOfComment = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", comment.getUser()).first().now();
 
 						String profileImage = profileOfComment.getProfilePhoto().getBlobKey() == null ? "images/profileImage.png" : "serve?blob-key=" + profileOfComment.getProfilePhoto().getBlobKey();
-						
-						pageContext.setAttribute("timeElapsed", comment.getDate().toString());
+		
+						pageContext.setAttribute("timeElapsed", comment.getDate());
 						pageContext.setAttribute("profileImageKey", profileImage);
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("commentId",comment.getCommentId());
