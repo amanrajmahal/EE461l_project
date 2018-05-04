@@ -26,6 +26,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 <script src="/scripts/profileAddCollection.js"></script>
 
 <title>My Profile</title>
@@ -52,30 +54,39 @@
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
 				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
-			</div>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
-				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>
-					Sign Out</a>
-				</li>
-			</ul>
-			
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<form class="my-auto form-inline" action="/collection" method="post"><!-- Collection Button -->
+				<div class="input-group">
+					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
+					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
+					<div class="input-group-append">
+						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
+					</div>
+				</div>
+			</form>
 
 			
+	    	<ul class="navbar-nav ml-auto justify-content-end">
+		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
+		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
+		      	</li>
+		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
+				<li class="nav-item"><a class="nav-link" role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
+					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a>
+				</li>
+			</ul>
 		</div>
 	</nav>
 	<h1 class="header">${fn:escapeXml(username)}</h1>
-	<form  class ="header" action="/follower" method="post">
-			
+	<form  class ="header" action="/follower" method="post">			
 	<input class ="btn btn-default"id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">
-
 	<input type="hidden" name="username" value="${fn:escapeXml(username)}">
 	</form>
 	<%
