@@ -43,6 +43,7 @@ div.center {
 
 .header {
 	text-align: center;
+	margin:10px auto;
 }
 
 #fileIn {
