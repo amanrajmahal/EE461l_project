@@ -14,6 +14,8 @@
 <%@ page import="collectionconnection.Photo"%>
 <%@ page import="collectionconnection.Comment"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.DateFormat"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <html>
@@ -164,7 +166,8 @@
 
 						String profileImage = profileOfComment.getProfilePhoto().getBlobKey() == null ? "images/profileImage.png" : "serve?blob-key=" + profileOfComment.getProfilePhoto().getBlobKey();
 						
-						pageContext.setAttribute("timeElapsed", comment.getDate().toString());
+						DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+						pageContext.setAttribute("timeElapsed", dateFormat.format(comment.getDate()));
 						pageContext.setAttribute("profileImageKey", profileImage);
 						pageContext.setAttribute("comment", comment.getComment());
 						pageContext.setAttribute("commentId",comment.getCommentId());
