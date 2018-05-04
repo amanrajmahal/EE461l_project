@@ -20,13 +20,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="/scripts/collectionScript.js"></script>
 <title>Collection</title>
 </head>
@@ -50,30 +51,42 @@
 		//ObjectifyService.ofy().clear();
 		Profile myProfile = ObjectifyService.ofy().load().type(Profile.class).ancestor(Key.create(Profile.class, "profiles")).filter("actualUser", user).first().now();
 	%>
-	
-		<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">Collection Connection</a>
-			<div style="align:center">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<form class="my-auto form-inline" action="/collection" method="post"><!-- Collection Button -->
+				<div class="input-group">
+					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
+					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
+					<div class="input-group-append">
+						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
+					</div>
+				</div>
+			</form>
+
+			
+	    	<ul class="navbar-nav ml-auto justify-content-end">
 	<% 
 		if(myProfile.equals(profile))
 		{
 	%>
-			<ul class="nav navbar-nav">
-			<li><a><label style="font-weight:normal;"for="fileIn" class="nav navbar-nav">
-					<span class="glyphicon glyphicon-plus-sign"></span>  File Upload
+			<li class="nav-item"><a class="nav-link"><label style=""for="fileIn">
+				<span class="glyphicon glyphicon-plus-sign"></span> File Upload
 			</label></a></li>
-			</ul>
 	<%
 		}
 	%>
-			</div>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profilePage.jsp?username=<%=myProfile.getUsername()%>"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-				<li><a href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-				<li><a href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
-				<li><a role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span> Sign Out</a>
+		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
+		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
+		      	</li>
+		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
+				<li class="nav-item"><a class="nav-link" role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
+					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a>
 				</li>
 			</ul>
 		</div>

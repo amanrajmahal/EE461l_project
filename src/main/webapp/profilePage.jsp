@@ -21,13 +21,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="/scripts/profileAddCollection.js"></script>
 
 <title>My Profile</title>
@@ -60,18 +60,7 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<form class="my-auto form-inline" action="/collection" method="post"><!-- Collection Button -->
-				<div class="input-group">
-					<input class="form-control" type="text" name="collection" placeholder="Collection Name">
-					<input type="hidden" name="username" value="${fn:escapeXml(username)}">
-					<div class="input-group-append">
-						<button class="btn btn-default" name="collectionButton" type="submit" disabled>Add Collection</button>
-					</div>
-				</div>
-			</form>
-
-			
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">			
 	    	<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
 		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
