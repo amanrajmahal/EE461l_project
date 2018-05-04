@@ -54,7 +54,7 @@
 				String buttonValue = followers.contains(Ref.create(myProfile)) ? "Unfollow" : "Follow";
 				pageContext.setAttribute("buttonValue", buttonValue);			
 	%>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-sm navbar-light bg-light">
 		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
@@ -63,12 +63,12 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">			
 	    	<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
-		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
+		      		<span class="octicon octicon-person"></span> My Profile</a>
 		      	</li>
-		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="octicon octicon-gear"></span> Settings</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="octicon octicon-search"></span> Browse</a></li>
 				<li class="nav-item"><a class="nav-link" role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a>
+					<span class="octicon octicon-sign-out"></span> Sign Out</a>
 				</li>
 			</ul>
 		</div>
@@ -82,7 +82,7 @@
 		} else {
 	%>
 	
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-sm navbar-light bg-light">
 		<a class="navbar-brand navbar-header" href="profilePage.jsp?username=<%=profile.getUsername()%>">Collection Connection</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
@@ -102,12 +102,12 @@
 			
 	    	<ul class="navbar-nav ml-auto justify-content-end">
 		      	<li class="nav-item"><a class="nav-link" href="profilePage.jsp?username=<%=myProfile.getUsername()%>">
-		      		<span class="glyphicon glyphicon-user"></span> My Profile</a>
+		      		<span class="octicon octicon-person"></span> My Profile</a>
 		      	</li>
-		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="glyphicon glyphicon-search"></span> Browse</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="settings.jsp"><span class="octicon octicon-gear"></span> Settings</a></li>
+		      	<li class="nav-item"><a class="nav-link" href="browse.jsp"><span class="octicon octicon-search"></span> Browse</a></li>
 				<li class="nav-item"><a class="nav-link" role="button" href="<%=userService.createLogoutURL("/welcomePage.jsp")%>">
-					<span class="glyphicon glyphicon-log-out"></span>Sign Out</a>
+					<span class="octicon octicon-sign-out"></span> Sign Out</a>
 				</li>
 			</ul>
 		</div>
