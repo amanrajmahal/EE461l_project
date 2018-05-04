@@ -126,18 +126,20 @@
 			if(profile.getProfilePhoto().getBlobKey() != null)
 			{
 				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
-		%>
-					<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
-						<img class="profileImage img-rounded" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
-					</a>
+		%>	
+					
+						<img class="profileImage img-rounded" width="250" height="100" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+					
+			
 		<%
 			}
 			else
 			{
 		%>
-					<a href = "images/profileImage.png" data-lightbox="${fn:escapeXml(username)}">
-						<img class="profileImage img-rounded" width="250" height="150" src="images/profileImage.png">
-					</a>
+			
+						<img class="profileImage img-rounded" width="250" height="100" src="images/profileImage.png">
+					
+			
 		<%
 			}
 		%>
