@@ -1,5 +1,8 @@
 package collectionconnection;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import com.google.appengine.api.users.User;
 
@@ -13,9 +16,11 @@ public class Comment implements Comparable<Comment>{
 	private Comment() {}
 	
 	public Comment(User user, String comment, int commentId) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.HOUR, -5);
 		this.user = user;
 		this.comment = comment;
-		this.date = new Date();
+		this.date = cal.getTime();
 		this.commentId = commentId;
 	}
 	
@@ -27,8 +32,9 @@ public class Comment implements Comparable<Comment>{
 		return comment;
 	}
 	
-	public Date getDate() {
-		return date;
+	public String getDate() {
+		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a");
+		return dateFormat.format(date);
 	}
 
 	public int getCommentId() {
