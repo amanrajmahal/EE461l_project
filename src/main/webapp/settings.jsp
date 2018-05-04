@@ -87,17 +87,17 @@
 	if(blobKey != null)
 	{
 %>
-	<a href = "serve?blob-key=${fn:escapeXml(profilePhoto)}" data-lightbox="${fn:escapeXml(username)}">
+	
 		<img class = "profileImage" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
-	</a>
+	
 <%
 	}
 	else
 	{
 %>
-	<a href = "images/profileImage.png" data-lightbox="${fn:escapeXml(username)}">
+	
 		<img class = "profileImage" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="images/profileImage.png">
-	</a>
+	
 <%
 	}
 %>
