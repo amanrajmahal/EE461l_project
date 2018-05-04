@@ -155,13 +155,6 @@ div.post-heading:hover input{
     display:inline;   
 }
 
-
-
-
-
-
-
-
 .panel-shadow {
     box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
 }
@@ -264,4 +257,11 @@ div.post-heading:hover input{
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
+}
+
+.username-display {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 50%;
 }

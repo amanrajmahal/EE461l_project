@@ -66,8 +66,8 @@
 		if(myProfile.equals(profile))
 		{
 	%>
-			<li class="nav-item nav-link"><label style=""for="fileIn">
-				<span class="octicon octicon-plus"></span> File Upload
+			<li class="nav-item nav-link"><label style="cursor:pointer;" for="fileIn">
+				<span class="octicon octicon-plus"></span> Upload Photo
 			</label></li>
 			</ul>
 	<%

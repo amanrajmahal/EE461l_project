@@ -73,9 +73,7 @@
 	</nav>
 
 
-<h2 class="header">Settings</h2>
-<br><br>
-<br><br>
+<h1 class="header" style="margin-top:10px;">Settings</h1>
 
 <form id="form" action="<%=blobstoreService.createUploadUrl("/profilephoto")%>"
 	method="post" enctype="multipart/form-data">
@@ -106,7 +104,7 @@
 </div>
 <br>
 <div style="margin:auto;text-align:center;align:center;">
-	<a class="btn btn-default"><label style="font-weight:normal;margin:auto;"for="fileIn">
+	<a class="btn btn-light"><label style="cursor:pointer; font-weight:normal;margin:auto;"for="fileIn">
 		<span class="octicon octicon-plus"></span>  Change Profile Picture
 	</label></a>
 </div>
@@ -115,7 +113,7 @@
 	<div id="settings">
 		<form action="/settings" method="post">
 			
-			<label class="radio-inline">
+			<label class="radio-inline" style="padding:0px 10px">
 		    	<input type="radio" name="type" value="none"
 		    <%
 		    	if(notificationSettings.getNotificationType() == NotificationType.NONE)
@@ -126,7 +124,7 @@
 		    	}
 		    %>
 		    	/> Turn off notifications</label>
-			<label class="radio-inline">
+			<label class="radio-inline" style="padding:0px 10px">
 		    <input type="radio" name="type" value="realtime"
 		    <%
 		    	if(notificationSettings.getNotificationType() == NotificationType.REALTIME)
@@ -138,7 +136,7 @@
 		    %>
 		    /> Send real-time notifications
 			</label>
-			<label class="radio-inline">
+			<label class="radio-inline" style="padding:0px 10px">
 		    <input type="radio" name="type" value="daily"
 		    <%
 		    	if(notificationSettings.getNotificationType() == NotificationType.DAILY)
@@ -188,7 +186,7 @@
 		    %>
 			> someone follows me</label><br><br>
 			</div>
-			<input class="btn btn-default" type="submit" value="Save">
+			<input class="btn btn-secondary" type="submit" value="Save">
 		</form>
 	</div>
 </div>

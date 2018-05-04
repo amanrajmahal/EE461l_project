@@ -74,7 +74,7 @@
 			</ul>
 		</div>
 	</nav>
-	<h1 class="header">${fn:escapeXml(username)}</h1>
+	<h1 class="header username-display" style="margin:10px auto;">${fn:escapeXml(username)}</h1>
 	<form  class ="header" action="/follower" method="post">			
 	<input class ="btn btn-default"id = "followerTest" type="submit" value="${fn:escapeXml(buttonValue)}">
 	<input type="hidden" name="username" value="${fn:escapeXml(username)}">
@@ -114,7 +114,7 @@
 		</div>
 	</nav>
 	
-	<h1 class="header">${fn:escapeXml(username)}</h1>
+	<h1 class="header username-display" style="margin:10px auto;">${fn:escapeXml(username)}</h1>
 
 	<%
 		}
