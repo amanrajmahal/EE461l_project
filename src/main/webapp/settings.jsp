@@ -82,13 +82,13 @@
 	<input type="hidden" name="username" value="${fn:escapeXml(username)}" />
 </form>
 
-<div class = "profileImageWrapper">
+<div class = "profileImageWrapper imgStyle">
 <%
 	if(blobKey != null)
 	{
 %>
 	
-		<img class = "profileImage" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+		<img class = "profileImage imgStyle" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 	
 <%
 	}
@@ -96,7 +96,7 @@
 	{
 %>
 	
-		<img class = "profileImage" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="images/profileImage.png">
+		<img class = "profileImage imgStyle" style="align:center;text-align:center;margin:auto;display:block;" width="250" height="150" src="images/profileImage.png">
 	
 <%
 	}

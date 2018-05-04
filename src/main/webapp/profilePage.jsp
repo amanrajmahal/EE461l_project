@@ -121,14 +121,14 @@
 	%>
 	<br>
 	
-	<div class="profileImageWrapper">
+	<div class="profileImageWrapper imgStyle">
 		<%
 			if(profile.getProfilePhoto().getBlobKey() != null)
 			{
 				pageContext.setAttribute("profilePhoto", profile.getProfilePhoto().getBlobKey());
 		%>	
 					
-						<img class="profileImage img-rounded" width="250" height="100" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
+						<img class="profileImage img-rounded" src="serve?blob-key=${fn:escapeXml(profilePhoto)}">
 					
 			
 		<%
@@ -137,7 +137,7 @@
 			{
 		%>
 			
-						<img class="profileImage img-rounded" width="250" height="100" src="images/profileImage.png">
+						<img class="profileImage img-rounded" src="images/profileImage.png">
 					
 			
 		<%
@@ -163,8 +163,8 @@
 							pageContext.setAttribute("blobkey", photos.get(0).getBlobKey());
 							pageContext.setAttribute("photoname", photos.get(0).getName());
 					%>
-					<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"role="button">
-					<img width="200" height="150" class="img-rounded" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+					<a class="imgStyle" href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}"role="button">
+						<img class="img-rounded imgStyle" src="serve?blob-key=${fn:escapeXml(blobkey)}">
 					</a>
 					
 					<%
@@ -172,8 +172,8 @@
 						else
 						{
 					%>
-					<a href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
-					<img width="200" height="150" class="img-rounded" src="images/defaultImage.gif">
+					<a class="imgStyle"href="collectionPage.jsp?username=${fn:escapeXml(username)}&collection=${fn:escapeXml(collection)}" role="button">
+						<img class="img-rounded imgStyle" src="images/defaultImage.gif">
 					</a>
 					<%
 						}

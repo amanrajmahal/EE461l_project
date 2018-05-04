@@ -115,7 +115,7 @@
 			<div class="col-sm-4">
 			<div class="show-image">
 			<a href = "serve?blob-key=${fn:escapeXml(blobkey)}" data-lightbox="${fn:escapeXml(collection)}">
-				<img width="250" height="150" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
+				<img class="imgStyle" title="${fn:escapeXml(photoname)}" src="serve?blob-key=${fn:escapeXml(blobkey)}">
 			</a>
 		<%
 						if(myProfile.equals(profile))

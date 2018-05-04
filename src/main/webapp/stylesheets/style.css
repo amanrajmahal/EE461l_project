@@ -265,3 +265,13 @@ div.post-heading:hover input{
 	text-overflow: ellipsis;
 	max-width: 50%;
 }
+img{
+	width:auto;
+	height:100%;
+}
+.imgStyle{
+	max-width:100%;
+	max-height:200px;
+	margin:auto;
+	background-size:contain;
+}
